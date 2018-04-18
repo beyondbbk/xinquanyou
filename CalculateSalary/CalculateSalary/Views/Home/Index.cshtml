@@ -1,17 +1,43 @@
 ﻿@{
     ViewData["PageTitle"] = "新全优";
 }
+@section css
+    {
 
-<div class="row">
+    <link href="~/xqy/css/fileinput.min.css" rel="stylesheet" />
+}
 
-    <div class="col-md-3">
+@section body
+    {
+    <div class="row">
 
-    </div>
-    <div class="col-md-6">
-        <div class="input-group">
-            <input type="text" class="form-control input-lg" placeholder="输入想要搜索的内容，多关键字请以空格隔开..."><span class="input-group-addon btn btn-primary">&nbsp;搜索一下&nbsp;</span>
+        <div class="col-md-3">
+
         </div>
+        <div class="col-md-6">
+            <form id="form" action="" method="post" enctype="multipart/form-data">
+                <div class="row form-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" align="center">
+                            <label style="text-align: center;font-size: 18px;">请上传</label>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <input id="input-id" name="file" multiple type="file" data-show-caption="true">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
     </div>
-    <div class="col-md-3"></div>
-</div>
-<br /><br />
+    <br /><br />
+}
+
+@section script
+    {
+    <script src="~/xqy/js/fileinput.min.js"></script>
+    <script src="~/xqy/js/zh.js"></script>
+    <script src="~/xqy/js/home/index.js"></script>
+}

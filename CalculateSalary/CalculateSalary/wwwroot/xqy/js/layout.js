@@ -1,23 +1,11 @@
-﻿$(function() {
-
-    navWidth();
-});
-
-function navWidth() {
-    var btnwidth = $("#navbtngroup").css("width");
-    console.log(btnwidth);
-    $("#navdropmemu").css("min-width", btnwidth);
-    var tempwidth = $("#navdropmemu").css("width");
-    console.log(tempwidth);
-}
-
+﻿
 function loadRes() {
     GlobalShowInfo("正在导入物料，请稍候...", "");
     GlobalAutoHide();
 }
 
 
-//顶端显示全局消息
+//顶端显示全局消息-msgtype ok 或者 fail
 function GlobalShowInfo(msg, msgtype)
 {
     var oldtimeid = $("#globaltitletimeid").attr("tag");

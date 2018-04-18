@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "CalFile";
+    @model CalculateSalary.Models.CalFileViewModel;
+
+}
+@section body
+    {
+    @foreach (var result in Model.Results)
+    {
+        <div class="row">
+            <h5 class="text-center">- - - - - @(result.Key)计算结果如下 - - - - -</h5>
+            <br/>
+        </div>
+
+        <div class="row">
+
+            @foreach (var rowInfo in result.Value)
+            {
+                <div class="col-md-2">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>结果</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@rowInfo.Name</td>
+                                <td>@rowInfo.Salary</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+
+
+    }
+}
+
+
