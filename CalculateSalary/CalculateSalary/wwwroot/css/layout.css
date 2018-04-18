@@ -1,0 +1,176 @@
+﻿body {
+    font-family:  "Microsoft YaHei","黑体","宋体",sans-serif;
+    overflow-x:hidden;
+}
+
+.clearfix {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+
+th, td {
+text-align: center;
+}
+
+
+.right {
+text-align:right;
+}
+.middle {
+text-align:center;
+}
+.left {
+text-align:left;
+}
+
+
+.nav-main {
+    padding-left:0px;
+}
+
+.nav-main h3 {
+    margin-top: 10px;
+}
+
+    .nav-main h3 small {
+        font-size: 14px;
+    }
+
+        .nav-main h3 small strong {
+            color: #337AB7;
+        }
+
+
+
+.page-header {
+    margin-top: 10px;
+    padding-bottom: 15px;
+}
+
+.nav-btn {
+    text-align: right;
+    margin-top: 5px;
+    padding-right: 0px;
+}
+
+#LoginedNav {
+    display: none;
+}
+
+.nav-bottom {
+    margin-top: 30px;
+}
+
+
+.navbar-footer {
+    font-size: 12px;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+#globaltitle {
+    width: auto;
+    float: none;
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    z-index: 9999;
+    margin-top: -35px;
+}
+
+.modal-body {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.modal-dialog {
+    margin-top: 60px;
+}
+
+
+.modaltitle {
+    color: darkred;
+}
+
+#login .modal-dialog {
+    width: 300px;
+}
+
+#register .modal-dialog {
+    width: 300px;
+}
+
+#msgmodal .modal-dialog {
+    width: 400px;
+}
+
+#personalmodal .modal-dialog {
+    width: 1200px;
+}
+
+#changepwd .modal-dialog {
+    width: 300px;
+}
+
+a:hover {
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.thlenddata {
+    min-width:80px;
+}
+.threturndata {
+    min-width:180px;
+}
+.thremark {
+    min-width:100px;
+}
+
+#personalmodal .panel-heading {
+    padding-bottom:30px;
+    padding-left:0px;
+}
+
+#personalmodal .panel-heading .col-md-12{
+padding-left:7px;
+}
+
+#personalmodal .left {
+padding-left:0px;
+}
+
+
+#personalmodal .middle {
+    text-align:center;
+}
+#personalmodal .right {
+    text-align:right;
+}
+
+#personalmodal .col-md-12,.col-md-4 {
+    padding-right:0px;
+}
+#personalmodal .right h6 {
+    margin-top:5px;
+}
+.describe {
+    color:darkred;
+    font-weight:bold;
+    vertical-align:middle;
+    display:table-cell;
+}
+
+.dueres {
+    color:darkred;
+}
+
+.normalxslabel {
+font-size:10px;
+font-weight:normal;
+}
+
+#navdropmemu {
+    width: 30px;
+}
