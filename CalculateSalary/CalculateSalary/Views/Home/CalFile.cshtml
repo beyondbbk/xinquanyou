@@ -4,13 +4,21 @@
     @model CalculateSalary.Models.CalFileViewModel;
 
 }
+
+@section css
+    {
+
+    <link href="~/xqy/css/calfile/calfile.css" rel="stylesheet" />
+
+}
 @section body
     {
     @foreach (var result in Model.Results)
     {
         <div class="row">
             <h5 class="text-center">- - - - - @(result.Key)计算结果如下 - - - - -</h5>
-            <br/>
+            <h5 class="text-center text-danger">注意：部分课时无法识别</h5>
+            <br />
         </div>
 
         <div class="row">
@@ -18,11 +26,12 @@
             @foreach (var rowInfo in result.Value)
             {
                 <div class="col-md-2">
+
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>姓名</th>
-                                <th>结果</th>
+                                <th class="nameth">姓名</th>
+                                <th class="resultth">结果</th>
                             </tr>
                         </thead>
                         <tbody>

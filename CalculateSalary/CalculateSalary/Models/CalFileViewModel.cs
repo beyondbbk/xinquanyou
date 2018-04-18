@@ -8,9 +8,9 @@ namespace CalculateSalary.Models
     public class CalFileViewModel
     {
         //string 为filename，list为结果集
-        public Dictionary<string,List<RowInfo>> Results=new Dictionary<string, List<RowInfo>>();
+        public Dictionary<string,List<WorkerInfo>> Results=new Dictionary<string, List<WorkerInfo>>();
     }
-    public class RowInfo
+    public class WorkerInfo
     {
         public string Name { get; set; }
 

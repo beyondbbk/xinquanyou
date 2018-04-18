@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using CalculateSalary.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Mvc;
+using MySoft.Common;
 
-namespace CalculateSalary.Controllers
+namespace MySoft.CalculateSalary.Controllers
 {
     public class HomeController : Controller
     {
@@ -21,6 +18,7 @@ namespace CalculateSalary.Controllers
         }
         public IActionResult Index()
         {
+            MyLogHelper.Debug("342");
             return View();
         }
 
@@ -62,45 +60,45 @@ namespace CalculateSalary.Controllers
             }
             var result = new CalFileViewModel();
    
-            result.Results.Add("test.xlsx",new List<RowInfo>
+            result.Results.Add("test.xlsx",new List<WorkerInfo>
             {
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},
-                new RowInfo(){Name = "yangjian",Salary = 4.7},new RowInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangj321ian",Salary = 4321.7},
+                new WorkerInfo(){Name = "yanjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "ygjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yajian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yanian",Salary = 4.7},
+                new WorkerInfo(){Name = "yang90ian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangj0980ian",Salary = 4.7},
+                new WorkerInfo(){Name = "ya0980ngjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4098.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4098.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yang0980890jian",Salary = 4098.7},
 
             });
             return View(result);
