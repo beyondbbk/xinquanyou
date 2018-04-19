@@ -13,6 +13,6 @@ namespace CalculateSalary.Models
 
         public string ErrMsg { get; set; }
 
-        public Dictionary<string,double> WorkerSalary  = new Dictionary<string, double>();
+        public object Extend { get; set; }
     }
 }

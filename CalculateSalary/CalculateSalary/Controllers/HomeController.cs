@@ -4,7 +4,6 @@ using System.IO;
 using CalculateSalary.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using MySoft.CalculateSalary.Services;
 using MySoft.Common;
 
 namespace MySoft.CalculateSalary.Controllers
@@ -19,6 +18,7 @@ namespace MySoft.CalculateSalary.Controllers
         }
         public IActionResult Index()
         {
+            MyLogHelper.Debug("342");
             return View();
         }
 
@@ -27,10 +27,8 @@ namespace MySoft.CalculateSalary.Controllers
         {
             var time = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             var files = Request.Form.Files;
-            
             foreach (var file in files)
             {
-                MyLogHelper.Debug("收到文件上传：" + file.FileName);
                 var filename = file.FileName.Trim('"');
                 var pathname = $"{_host.WebRootPath}\\xqy\\temp\\{time}";
                 if (!Directory.Exists(pathname)) Directory.CreateDirectory(pathname);
@@ -60,20 +58,50 @@ namespace MySoft.CalculateSalary.Controllers
                 ViewData["Message"] = "文件已经被清理，请重新上传";
                 return View("Error");
             }
-            var vmList = new List<CalFileViewModel>();
-            var files = Directory.GetFiles(pathname, "*.xlsx");
-            foreach (var file in files)
+            var result = new CalFileViewModel();
+   
+            result.Results.Add("test.xlsx",new List<WorkerInfo>
             {
-                var calFileViewModel = new CalFileViewModel();
-                calFileViewModel.ExcelName = Path.GetFileName(file);
-                var resultDto = CalFileService.GetCalResult(file);
-                calFileViewModel.IsSuccess = resultDto.IsSuccess;
-                calFileViewModel.ErrMsg = resultDto.ErrMsg;
-                calFileViewModel.Msg = resultDto.Msg;
-                calFileViewModel.WorkerSalary = resultDto.WorkerSalary;
-                vmList.Add(calFileViewModel);
-            }
-            return View(vmList);
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangj321ian",Salary = 4321.7},
+                new WorkerInfo(){Name = "yanjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "ygjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yajian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yanian",Salary = 4.7},
+                new WorkerInfo(){Name = "yang90ian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangj0980ian",Salary = 4.7},
+                new WorkerInfo(){Name = "ya0980ngjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4098.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4098.7},
+                new WorkerInfo(){Name = "yangjian",Salary = 4.7},new WorkerInfo(){Name = "yang0980890jian",Salary = 4098.7},
+
+            });
+            return View(result);
         }
 
         public IActionResult Error()
