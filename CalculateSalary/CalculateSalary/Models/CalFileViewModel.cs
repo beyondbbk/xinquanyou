@@ -7,13 +7,15 @@ namespace CalculateSalary.Models
 {
     public class CalFileViewModel
     {
-        //string 为filename，list为结果集
-        public Dictionary<string,List<WorkerInfo>> Results=new Dictionary<string, List<WorkerInfo>>();
-    }
-    public class WorkerInfo
-    {
-        public string Name { get; set; }
+        public string ExcelName { get; set; }
 
-        public double Salary { get; set; }
+        public bool IsSuccess { get; set; }
+
+        public string Msg { get; set; }
+
+        public string ErrMsg { get; set; }
+
+        //string 为filename，list为结果集
+        public Dictionary<string, double> WorkerSalary = new Dictionary<string, double>();
     }
 }
