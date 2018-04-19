@@ -37,14 +37,14 @@ function initFileInput(ctrlName) {
                 extra = data.extra,
                 response = data.response,
                 reader = data.reader;
-            
         }).on("fileuploaded",
-        function(event, data, previewId, index) { //一个文件上传成功  
+        function (event, data, previewId, index) { //一个文件上传成功
+            GlobalShowInfo("正在拼命解析数据中，请稍候...", "ok");
             window.location.href = "/xqy/home/calfile";
 
         }).on('fileerror',
         function(event, data, msg) { //一个文件上传失败  
-            GlobalShowInfo("文件上传失败，请重试", "fail");
+            GlobalShowInfo("文件上传失败了，请重试...", "fail");
             GlobalAutoHide();
         });
 }

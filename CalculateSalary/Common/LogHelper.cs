@@ -6,11 +6,11 @@ using log4net.Repository;
 
 namespace MySoft.Common
 {
-    public class MyLogHelper
+    public class LogHelper
     {
         private static readonly ILog log;
 
-        static MyLogHelper()
+        static LogHelper()
         {
             ILoggerRepository repository = LogManager.CreateRepository("NETCoreRepository");
             BasicConfigurator.Configure(repository);

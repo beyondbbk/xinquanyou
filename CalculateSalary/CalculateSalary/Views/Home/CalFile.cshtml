@@ -31,20 +31,26 @@
         {
             <div class="row">
 
-                @foreach (var workerInfo in calFileViewModel.WorkerSalary)
+                @foreach (var teacherDetail in calFileViewModel.TeacherDetails)
                 {
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="nameth">姓名</th>
-                                    <th class="resultth">结果</th>
+                                    <th style="width: 25%">教师</th>
+                                    <th style="width: 15%">学生</th>
+                                    <th style="width: 15%">年级</th>
+                                    <th style="width: 20%">详情</th>
+                                    <th style="width: 25%">工资</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>@workerInfo.Key</td>
-                                    <td>@workerInfo.Value</td>
+                                    <td>@teacherDetail.Key</td>
+                                    <td>@teacherDetail.Value.Students.Count 个</td>
+                                    <td>@teacherDetail.Value.ClassNames.Count 个</td>
+                                    <td onclick="NomarlMsg('@teacherDetail.Value.Detail')"> <button class="btn btn-xs btn-success" type="button">明细</button></td>
+                                    <td>@teacherDetail.Value.RowSalaryInfos.Sum(u => u.FinalSalay) 元</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -53,6 +59,53 @@
             </div>
         }
     }
+    <!--详情对话Modal-->
+    <div class="modal fade" id="detailmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="msgtitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <form id="msgform">
+                        <div class="form-group">
+                            <label  class="control-label"></label>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>学生</th>
+                                    <th>年级</th>
+                                    <th>总课时</th>
+                                    <th>当月课时</th>
+                                    <th>梯度</th>
+                                    <th>详细过程((起始课时费+梯度奖励)x课时)</th>
+                                    <th>收入</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbbody">
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="msgno" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="msgyes" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                    <input id="msgvalue" type="hidden" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--一般对话框Modal end-->
 }
 
+@section script
+    {
+
+    <script src="~/xqy/js/calfile/calfile.js"></script>
+}
 

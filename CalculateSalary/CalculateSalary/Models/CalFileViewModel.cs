@@ -16,6 +16,6 @@ namespace CalculateSalary.Models
         public string ErrMsg { get; set; }
 
         //string 为filename，list为结果集
-        public Dictionary<string, double> WorkerSalary = new Dictionary<string, double>();
+        public Dictionary<string, TeacherInfo> TeacherDetails = new Dictionary<string, TeacherInfo>();
     }
 }

@@ -30,7 +30,7 @@ namespace MySoft.CalculateSalary.Controllers
             
             foreach (var file in files)
             {
-                MyLogHelper.Debug("收到文件上传：" + file.FileName);
+                LogHelper.Debug("收到文件上传：" + file.FileName);
                 var filename = file.FileName.Trim('"');
                 var pathname = $"{_host.WebRootPath}\\xqy\\temp\\{time}";
                 if (!Directory.Exists(pathname)) Directory.CreateDirectory(pathname);
@@ -41,7 +41,7 @@ namespace MySoft.CalculateSalary.Controllers
                     fs.Flush();
                 }
             }
-            //将guid作为cookie返回，下次解析时将以此为凭据
+            //将time作为cookie返回，下次解析时将以此为凭据
             Response.Cookies.Append("FileId", time);
             return Json(new{});
         }
@@ -70,7 +70,7 @@ namespace MySoft.CalculateSalary.Controllers
                 calFileViewModel.IsSuccess = resultDto.IsSuccess;
                 calFileViewModel.ErrMsg = resultDto.ErrMsg;
                 calFileViewModel.Msg = resultDto.Msg;
-                calFileViewModel.WorkerSalary = resultDto.WorkerSalary;
+                calFileViewModel.TeacherDetails = resultDto.TeacherDetails;
                 vmList.Add(calFileViewModel);
             }
             return View(vmList);

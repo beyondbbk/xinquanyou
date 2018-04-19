@@ -32,3 +32,5 @@ function GlobalAutoHide() {
         }, 10000);
     $("#globaltitletimeid").attr("tag", globaltitletimeid);
 }
+
+

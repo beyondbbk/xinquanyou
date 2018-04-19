@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="logfile\" />
     <Folder Include="wwwroot\xqy\temp\" />
   </ItemGroup>
 
