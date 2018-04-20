@@ -9,7 +9,7 @@ function initFileInput(ctrlName) {
         language: 'zh', //设置语言
         uploadUrl: "/xqy/home/upload", //上传的地址
         allowedFileExtensions: ['xlsx'], //接收的文件后缀
-        maxFilesNum: 5, //上传最大的文件数量
+        maxFilesNum: 1, //上传最大的文件数量
         //uploadExtraData:{"id": 1, "fileName":'123.mp3'},
         uploadAsync: true, //默认异步上传
         showUpload: true, //是否显示上传按钮
@@ -41,7 +41,7 @@ function initFileInput(ctrlName) {
         function (event, data, previewId, index) { //一个文件上传成功
             GlobalShowInfo("正在拼命解析数据中，请稍候...", "ok");
             window.location.href = "/xqy/home/calfile";
-
+    
         }).on('fileerror',
         function(event, data, msg) { //一个文件上传失败  
             GlobalShowInfo("文件上传失败了，请重试...", "fail");

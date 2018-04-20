@@ -43,10 +43,11 @@ namespace MySoft.CalculateSalary.Services
                 //1 识别文件是否符合预设规范
                 var resultDto = Check();
                 if (!resultDto.IsSuccess) return resultDto;
+                var currentMonthCol = GetCurrentMonthCol();
                 //2 开始解析，记录无法识别的年级
-                for (var i = 2; i < _sheet.LastRowNum; i++)
+                for (var i = 2; i <= ((_sheet.LastRowNum>200)?200:_sheet.LastRowNum+1); i++)
                 {
-                    var rowSalaryInfo = AnalyRow(i);
+                    var rowSalaryInfo = AnalyRow(i, currentMonthCol);
                     LogHelper.Debug($"第{i}行的解析结果：{JsonConvert.SerializeObject(rowSalaryInfo)}");
                     if (!rowSalaryInfo.IsSuccess)//如果该行解析不成功，将无法识别的信息记录下来，继续解析下面的信息
                     {
@@ -64,12 +65,42 @@ namespace MySoft.CalculateSalary.Services
 
 
         /// <summary>
+        /// 获取已经合算了几个月的薪资了
+        /// </summary>
+        /// <returns></returns>
+        private static int GetCurrentMonthCol()
+        {
+            for (int col = 7; col < 24; col++)//24是12月份，最后一列
+            {
+                Debug.WriteLine(col);
+                var hasData = false;//假设每列都是空的
+                for (int row = 2; row <= ((_sheet.LastRowNum > 200) ? 200 : _sheet.LastRowNum+1); row++)
+                {
+                    //不为空表示该列有数据，就不是最新的一个月
+                    if (!string.IsNullOrEmpty(GetCellValue(row, col)))
+                    {
+                        hasData = true;
+                        break;
+                    };
+                    
+                }
+                if (!hasData)
+                {
+                    return col - 1;//该列为最新一个月所在的列 
+                }
+                
+            }
+            return 0;
+        }
+
+        /// <summary>
         /// 解析每一行的薪资信息
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        private static RowSalaryInfo AnalyRow(int row)
+        private static RowSalaryInfo AnalyRow(int row,int currentMonthCol)
         {
+            Debug.WriteLine(row);
             var rowSalaryInfo = new RowSalaryInfo();
             rowSalaryInfo.TeacherName = GetCellValue(row, 5);
             if (string.IsNullOrEmpty(rowSalaryInfo.TeacherName))
@@ -94,7 +125,9 @@ namespace MySoft.CalculateSalary.Services
             rowSalaryInfo.Subject = GetCellValue(row, 7);
             var hourlist = GetHourList(row);
             rowSalaryInfo.TotalHour = hourlist.Sum();
-            rowSalaryInfo.CurrentHour = hourlist.LastOrDefault();
+            //如果课时记录的数目符合月份数，证明学生一直在上课
+            //如果不想等，证明学生已经停课了
+            rowSalaryInfo.CurrentHour = string.IsNullOrEmpty(GetCellValue(row,currentMonthCol))? 0: hourlist.LastOrDefault();
             rowSalaryInfo.Step = (int)Math.Ceiling((double)rowSalaryInfo.TotalHour / _stepHour);
             rowSalaryInfo.FinalSalay = GetFinalyMoney(rowSalaryInfo);
             return rowSalaryInfo;
@@ -147,7 +180,7 @@ namespace MySoft.CalculateSalary.Services
         private static List<double> GetHourList(int row)
         {
             var list = new List<double>();
-            for (var i = 8; i < _sheet.GetRow(row).LastCellNum; i++)
+            for (var i = 8; i < ((_sheet.GetRow(row-1).LastCellNum>30)?30: _sheet.GetRow(row-1).LastCellNum); i++)
             {
                 var hour = GetCellValue(row, i);
                 if (string.IsNullOrWhiteSpace(hour?.Trim()))
@@ -204,7 +237,7 @@ namespace MySoft.CalculateSalary.Services
                 return (cell.NumericCellValue.ToString());
             //if (cell.CellType == CellType.Boolean)
             //    return cell.BooleanCellValue.ToString();
-            LogHelper.Error("读取数据时类型不在候选之列，类型为"+cell.CellType.ToString());
+            //LogHelper.Error("读取数据时类型不在候选之列，类型为"+cell.CellType.ToString());
 
             return null;
         }
