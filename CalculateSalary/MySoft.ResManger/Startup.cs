@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MySoft.CalculateSalary
+namespace MySoft.ResManger
 {
     public class Startup
     {
@@ -28,7 +32,6 @@ namespace MySoft.CalculateSalary
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -38,16 +41,14 @@ namespace MySoft.CalculateSalary
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
             app.UseStaticFiles();
 
- 
-   
-
-        app.UseMvc(routes =>
+            app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "xqy/{controller=Home}/{action=Index}/{id?}");
+                    template: "yh/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

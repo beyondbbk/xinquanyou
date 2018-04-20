@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoft.CalculateSalary", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoft.Common", "Common\MySoft.Common.csproj", "{C389CC8E-3065-489E-A113-7889290B8284}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoft.ResManger", "MySoft.ResManger\MySoft.ResManger.csproj", "{7157C217-0E83-42CF-AF25-09DAAEFC4158}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C389CC8E-3065-489E-A113-7889290B8284}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C389CC8E-3065-489E-A113-7889290B8284}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C389CC8E-3065-489E-A113-7889290B8284}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7157C217-0E83-42CF-AF25-09DAAEFC4158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7157C217-0E83-42CF-AF25-09DAAEFC4158}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7157C217-0E83-42CF-AF25-09DAAEFC4158}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7157C217-0E83-42CF-AF25-09DAAEFC4158}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

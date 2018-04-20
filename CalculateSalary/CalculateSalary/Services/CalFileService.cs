@@ -126,7 +126,7 @@ namespace MySoft.CalculateSalary.Services
             var hourlist = GetHourList(row);
             rowSalaryInfo.TotalHour = hourlist.Sum();
             //如果课时记录的数目符合月份数，证明学生一直在上课
-            //如果不想等，证明学生已经停课了
+            //如果不相等，证明学生已经停课了
             rowSalaryInfo.CurrentHour = string.IsNullOrEmpty(GetCellValue(row,currentMonthCol))? 0: hourlist.LastOrDefault();
             rowSalaryInfo.Step = (int)Math.Ceiling((double)rowSalaryInfo.TotalHour / _stepHour);
             rowSalaryInfo.FinalSalay = GetFinalyMoney(rowSalaryInfo);
