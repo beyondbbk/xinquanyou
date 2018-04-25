@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoft.Common", "Common\MyS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoft.ResManger", "MySoft.ResManger\MySoft.ResManger.csproj", "{7157C217-0E83-42CF-AF25-09DAAEFC4158}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject2", "UnitTestProject2\UnitTestProject2.csproj", "{83137A2D-6B5F-45D0-81A8-E144290688B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7157C217-0E83-42CF-AF25-09DAAEFC4158}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7157C217-0E83-42CF-AF25-09DAAEFC4158}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7157C217-0E83-42CF-AF25-09DAAEFC4158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83137A2D-6B5F-45D0-81A8-E144290688B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83137A2D-6B5F-45D0-81A8-E144290688B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83137A2D-6B5F-45D0-81A8-E144290688B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83137A2D-6B5F-45D0-81A8-E144290688B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

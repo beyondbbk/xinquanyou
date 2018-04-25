@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using CalculateSalary.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,29 +33,30 @@ namespace MySoft.CalculateSalary.Controllers
             {
                 LogHelper.Debug("收到文件上传：" + file.FileName);
                 var filename = file.FileName.Trim('"');
-                var pathname = $"{_host.WebRootPath}\\xqy\\temp\\{time}";
+                var pathname = Path.Combine(_host.WebRootPath, "xqy", "temp", time);
+                //var pathname = $"{_host.WebRootPath}\\xqy\\temp\\{time}";
                 if (!Directory.Exists(pathname)) Directory.CreateDirectory(pathname);
 
-                using (FileStream fs = System.IO.File.Create(pathname+"//"+filename))
+                using (var fs = System.IO.File.Create(Path.Combine(pathname, filename)))
                 {
                     file.CopyTo(fs);
                     fs.Flush();
                 }
             }
             //将time作为cookie返回，下次解析时将以此为凭据
-            Response.Cookies.Append("FileId", time);
+            Response.Cookies.Append("time", time);
             return Json(new{});
         }
 
         public IActionResult CalFile()
         {
-            var fileId= Request.Cookies["FileId"];
-            if (string.IsNullOrEmpty(fileId))
+            var time= Request.Cookies["time"];
+            if (string.IsNullOrEmpty(time))
             {
                 ViewData["Message"] = "请先上传文件";
                 return View("Error");
             }
-            var pathname = $"{_host.WebRootPath}\\xqy\\temp\\{fileId}";
+            var pathname = Path.Combine(_host.WebRootPath, "xqy", "temp", time);
             if (!Directory.Exists(pathname))
             {
                 ViewData["Message"] = "文件已经被清理，请重新上传";

@@ -4,26 +4,40 @@
 @section css
     {
 
+    <link href="~/excel/css/fileinput.min.css" rel="stylesheet" />
 
 }
 
 @section body
     {
-
     <div class="row">
-        <div class="col-md-12">
-            @*1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br />
-            1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br />
-            1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br />
-            1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br />
-            1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br />*@ 
-            
-            1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br /> 1<br />
+
+        <div class="col-md-3">
+
         </div>
+        <div class="col-md-6">
+            <form id="form" action="" method="post" enctype="multipart/form-data">
+                <div class="row form-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" align="center">
+                            <label style="text-align: center;font-size: 18px;">请先上传表格文件</label>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <input id="input-id" name="file" multiple type="file" data-show-caption="true">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
     </div>
 }
 
 @section script
     {
-
+    <script src="~/excel/js/fileinput.min.js"></script>
+    <script src="~/excel/js/zh.js"></script>
+    <script src="~/excel/js/home/index.js"></script>
 }

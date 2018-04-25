@@ -27,6 +27,7 @@ hr {
 }
 
 #maindiv {
+    margin-top: 5px;
     margin-bottom: 50px;
 }
 
@@ -37,4 +38,14 @@ hr {
 #nav-right-btn {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#globaltitle {
+    width: auto;
+    float: none;
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    z-index: 9999;
+    margin-top: -35px;
 }

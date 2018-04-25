@@ -48,7 +48,7 @@ namespace MySoft.ResManger
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "yh/{controller=Home}/{action=Index}/{id?}");
+                    template: "excel/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

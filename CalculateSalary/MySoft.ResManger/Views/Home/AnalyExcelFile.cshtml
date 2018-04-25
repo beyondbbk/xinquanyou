@@ -1,0 +1,89 @@
+﻿@model MySoft.ResManger.Models.ExcelInfo
+
+@{
+    ViewData["Title"] = "Test";
+
+}
+@section css
+    {
+    <link href="~/excel/css/home.css" rel="stylesheet" />
+
+}
+
+@section body
+    {
+    <div class="row" id="btnmemu">
+
+        <div class="col-md-6">
+            @*<div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        ODU
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>*@
+
+        </div>
+        <div class="col-md-6 text-right">
+            <a class="btn btn-primary btn-sm" href="#" target="_blank" role="button">表格上传</a>
+            <a class="btn btn-primary btn-sm" href="#" target="_blank" role="button">表格下载</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2" style="width: 12%">
+            <ul class="list-group">
+                @foreach (var sheetInfo in Model.SheetInfos)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@sheetInfo.RowCount</span>
+                        @sheetInfo.SheetName
+                    </li>
+                }
+                
+            </ul>
+        </div>
+        <div class="col-md-10" style="width: 88%">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <h6 class="text-center"></h6>
+                </div>
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        @foreach (var head in Model.Headers)
+                        {
+                            <th>@head</th>
+                        }
+               
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var dic in Model.RowInfos)
+                    {
+                        <tr>
+                        @foreach (var cell in dic.Value)
+                        {
+                            <td>@cell</td>
+                        }
+                        </tr>
+                    }
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@section script
+    {
+
+}
