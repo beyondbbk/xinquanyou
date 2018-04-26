@@ -13,17 +13,22 @@ namespace MySoft.ResManger.Services
         public static ExcelInfo GetView(string excelpath,string currentSheetName="",int pageNum=1)
         {
             var excelInfo = new ExcelInfo();
-            using (ExcelPackage package = new ExcelPackage(new FileStream(excelpath, FileMode.Open)))
+            using (var fs =  new FileStream(excelpath, FileMode.Open))
             {
-                excelInfo.SheetInfos = GetSheetInfos(package.Workbook.Worksheets);
-                var currentSheet = package.Workbook.Worksheets[currentSheetName] ?? package.Workbook.Worksheets[0];
-                currentSheetName = currentSheet.Name;
-                excelInfo.CurrentSheetName = currentSheetName;
-                excelInfo.CurrentRowsCount = excelInfo.SheetInfos.FirstOrDefault(u => u.SheetName == currentSheetName).RowCount;
-                excelInfo.CurrentColsCount = excelInfo.SheetInfos.FirstOrDefault(u => u.SheetName == currentSheetName).ColCount;
-                excelInfo.Headers = GetHeaders(currentSheet);
-                excelInfo.RowInfos = GetRowInfos(currentSheet, pageNum);
+                using (var package = new ExcelPackage(fs))
+                {
+                    excelInfo.SheetInfos = GetSheetInfos(package.Workbook.Worksheets);
+                    var currentSheet = package.Workbook.Worksheets[currentSheetName] ?? package.Workbook.Worksheets[0];
+                    currentSheetName = currentSheet.Name;
+                    excelInfo.CurrentSheetName = currentSheetName;
+                    excelInfo.CurrentRowsCount = excelInfo.SheetInfos.FirstOrDefault(u => u.SheetName == currentSheetName).RowCount;
+                    excelInfo.CurrentColsCount = excelInfo.SheetInfos.FirstOrDefault(u => u.SheetName == currentSheetName).ColCount;
+                    excelInfo.Headers = GetHeaders(currentSheet);
+                    excelInfo.RowInfos = GetRowInfos(currentSheet, pageNum);
+                    package.Dispose();
+                }
             }
+           
             return excelInfo;
         }
 

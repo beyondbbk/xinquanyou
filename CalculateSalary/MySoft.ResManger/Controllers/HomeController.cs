@@ -23,7 +23,7 @@ namespace MySoft.ResManger.Controllers
 
         public IActionResult AnalyExcelFile(string companyName)
         {
-            var excelpath = Path.Combine(_host.WebRootPath, "excel", "company", companyName,".xlsx");
+            var excelpath = Path.Combine(_host.WebRootPath, "excel", companyName+".xlsx");
             
             return View(AnalyExcelService.GetView(excelpath));
         }
@@ -40,10 +40,10 @@ namespace MySoft.ResManger.Controllers
             var file = Request.Form.Files[0];
 
             LogHelper.Debug("收到文件上传：" + file.FileName);
-            var pathname = Path.Combine(_host.WebRootPath, "excel", "company");
+            var pathname = Path.Combine(_host.WebRootPath, "excel");
             if (!Directory.Exists(pathname)) Directory.CreateDirectory(pathname);
 
-            using (var fs = System.IO.File.Create(Path.Combine(pathname, companyName,".xlsx")))
+            using (var fs = System.IO.File.Create(Path.Combine(pathname, companyName+".xlsx")))
             {
                 file.CopyTo(fs);
                 fs.Flush();
