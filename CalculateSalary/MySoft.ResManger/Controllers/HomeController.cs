@@ -21,11 +21,11 @@ namespace MySoft.ResManger.Controllers
             this._host = _host;
         }
 
-        public IActionResult AnalyExcelFile(string companyName)
+        public IActionResult AnalyExcelFile(string companyName, string currentSheetName, int pageNum)
         {
             var excelpath = Path.Combine(_host.WebRootPath, "excel", "company", companyName,".xlsx");
             
-            return View(AnalyExcelService.GetView(excelpath));
+            return View(AnalyExcelService.GetView(excelpath,currentSheetName,pageNum));
         }
 
         public IActionResult Index()

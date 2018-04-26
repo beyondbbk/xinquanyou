@@ -40,7 +40,7 @@
             <ul class="list-group">
                 @foreach (var sheetInfo in Model.SheetInfos)
                 {
-                    <li class="list-group-item">
+                    <li class="list-group-item" href="/excel/home/analyExcelFile?companyName=yh">
                         <span class="badge">@sheetInfo.RowCount</span>
                         @sheetInfo.SheetName
                     </li>

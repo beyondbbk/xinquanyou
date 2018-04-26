@@ -13,7 +13,7 @@ namespace MySoft.ResManger.Services
         public static ExcelInfo GetView(string excelpath,string currentSheetName="",int pageNum=1)
         {
             var excelInfo = new ExcelInfo();
-            using (ExcelPackage package = new ExcelPackage(new FileStream(excelpath, FileMode.Open)))
+            using (var package = new ExcelPackage(new FileStream(excelpath, FileMode.Open)))
             {
                 excelInfo.SheetInfos = GetSheetInfos(package.Workbook.Worksheets);
                 var currentSheet = package.Workbook.Worksheets[currentSheetName] ?? package.Workbook.Worksheets[0];
