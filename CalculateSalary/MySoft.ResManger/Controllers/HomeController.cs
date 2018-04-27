@@ -24,9 +24,15 @@ namespace MySoft.ResManger.Controllers
         public IActionResult AnalyExcelFile(string companyName, string currentSheetName, int pageNum)
         {
             var excelpath = Path.Combine(_host.WebRootPath, "excel", companyName+".xlsx");
-            
+            if (pageNum == 0) pageNum = 1;
             return View(AnalyExcelService.GetView(excelpath,currentSheetName,pageNum));
         }
+
+        public IActionResult SetExcelValue(string companyName,string sheetName,int row,int col)
+        {
+            
+        }
+
 
         public IActionResult Index()
         {
