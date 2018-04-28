@@ -33,4 +33,15 @@ function GlobalAutoHide() {
     $("#globaltitletimeid").attr("tag", globaltitletimeid);
 }
 
-
+function AjaxHelper(url, data, successfun) {
+    $.ajax({
+        type: "post",
+        url: url,
+        data: data,
+        success: successfun,
+        error: function () {
+            GlobalShowInfo("服务器发生异常(＞﹏＜)", "fail");
+            GlobalAutoHide();
+        }
+    });
+}

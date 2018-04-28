@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using MySoft.Common;
 using MySoft.ResManger.Models;
 using MySoft.ResManger.Services;
+using Newtonsoft.Json;
 
 namespace MySoft.ResManger.Controllers
 {
@@ -21,16 +22,18 @@ namespace MySoft.ResManger.Controllers
             this._host = _host;
         }
 
-        public IActionResult AnalyExcelFile(string companyName, string currentSheetName, int pageNum)
+        public IActionResult AnalyExcelFile(string companyName, string sheetName, int pageNum,string searchWords)
         {
             var excelpath = Path.Combine(_host.WebRootPath, "excel", companyName+".xlsx");
             if (pageNum == 0) pageNum = 1;
-            return View(AnalyExcelService.GetView(excelpath,currentSheetName,pageNum));
+            return View(AnalyExcelService.GetView(excelpath,sheetName,pageNum, searchWords));
         }
 
-        public IActionResult SetExcelValue(string companyName,string sheetName,int row,int col)
+        public IActionResult SetExcelValue(string companyName,string sheetName,int row,int col,string newData)
         {
-            
+            var excelpath = Path.Combine(_host.WebRootPath, "excel", companyName + ".xlsx");
+            AnalyExcelService.SetCellValue(excelpath, sheetName, row, col, newData);
+            return Json(new Result() {IsSuccess = true});
         }
 
 
