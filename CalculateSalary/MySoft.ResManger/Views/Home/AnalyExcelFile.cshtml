@@ -1,4 +1,4 @@
-﻿@model MySoft.ResManger.Models.ExcelInfo
+﻿@model MySoft.ResManger.Models.ExcelViewInfo
 
 @{
     ViewData["Title"] = "Test";
@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-4">
             <div class="input-group">
-                <input id="searchinput" type="text" class="form-control" placeholder="关键字请用空格隔开...">
+                <input id="searchinput" type="text" class="form-control" placeholder="关键字请用空格隔开..." value="@Model.SearchWords">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" onclick="GetView('yh','@Model.CurrentSheetName','1')">搜索一下</button>
                 </span>
@@ -34,7 +34,7 @@
             <ul class="list-group">
                 @foreach (var sheetInfo in Model.SheetInfos)
                 {
-                    <li class="list-group-item sheetli" onclick="GetView('yh','@sheetInfo.SheetName','1')">
+                    <li class="list-group-item sheetli @(Model.CurrentSheetName==sheetInfo.SheetName?"active":"")" onclick="GetView('@sheetInfo.SheetName')">
                         <span class="badge">@sheetInfo.RowCount</span>
                         @sheetInfo.SheetName
                     </li>
@@ -47,7 +47,20 @@
             <div class="panel panel-default">
                 <!-- Default panel contents -->
                 <div class="panel-heading">
-                    <h6 class="text-center"></h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-sm @(Model.IsFirstPage?"disabled":"")" onclick="GetView('', '@(Model.PageNum - 1)')">上一页</button>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <button type="button" class="btn btn-primary btn-sm">当前第 @(Model.PageNum) 页</button>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <button type="button" class="btn btn-primary btn-sm @(Model.IsEndPage?"disabled":"")" onclick="GetView('', '@(Model.PageNum + 1)')">下一页</button>
+                        </div>
+                    </div>
+                    
+                    
+                   
                 </div>
 
                 <table class="table table-bordered">
@@ -69,7 +82,7 @@
                                 @foreach (var cell in dic.Value)
                                 {
 
-                                    <td class="sheetli" onmousemove="ShowTitle()" onclick="EditData(this,'@Model.CurrentSheetName', '@dic.Key', '@col')">@cell</td>
+                                    <td class="sheetli" onmousemove="ShowTitle()" onclick="EditData(this, '@dic.Key', '@col')">@Html.Raw(@cell)</td>
                                     col++;
                                 }
                             </tr>
@@ -110,6 +123,10 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <input type="hidden" id="sheetname" value="@Model.CurrentSheetName" />
+    <input type="hidden" id="pagenum" value="@Model.PageNum" />
+
 }
 
 @section script

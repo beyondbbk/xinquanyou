@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MySoft.ResManger.Models
 {
-    public class ExcelInfo
+    public class ExcelViewInfo
     {
         public bool IsSuccess { get; set; } = true;//默认成功
 
@@ -22,6 +22,12 @@ namespace MySoft.ResManger.Models
         public int CurrentColsCount { get; set; }
 
         public int PageNum { get; set; }
+
+        public string SearchWords { get; set; }
+
+        public bool IsFirstPage { get; set; }//是否是第一页
+
+        public bool IsEndPage { get; set; }
 
         public List<string> Headers { get; set; }
 

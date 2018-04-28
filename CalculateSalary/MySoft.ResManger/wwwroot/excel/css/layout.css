@@ -1,7 +1,7 @@
 ﻿
 html {
     height: 100%;
-
+    overflow-y: scroll;
 }
 
 body {
@@ -49,4 +49,29 @@ hr {
     top: 0%;
     z-index: 9999;
     margin-top: -35px;
+}
+
+.vcenter {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.vleft {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    float: none;
+}
+
+.vright {
+    display: inline-block;
+    text-align: right;
+    vertical-align: middle;
+    float: none;
 }

@@ -11,9 +11,12 @@ namespace MySoft.ResManger.Services
     public class AnalyExcelService
     {
         #region 获取Excel数据
-        public static ExcelInfo GetView(string excelpath,string sheetName="",int pageNum=1,string searchWords="")
+        public static ExcelViewInfo GetView(string excelpath,string sheetName="",int pageNum=1,string searchWords="")
         {
-            var excelInfo = new ExcelInfo();
+            var excelInfo = new ExcelViewInfo();
+            excelInfo.PageNum = pageNum;
+            if (pageNum == 1) excelInfo.IsFirstPage = true;
+            excelInfo.SearchWords = searchWords;
             using (var fs =  new FileStream(excelpath, FileMode.Open))
             {
                 using (var package = new ExcelPackage(fs))
@@ -25,8 +28,7 @@ namespace MySoft.ResManger.Services
                     excelInfo.CurrentRowsCount = excelInfo.SheetInfos.FirstOrDefault(u => u.SheetName == sheetName).RowCount;
                     excelInfo.CurrentColsCount = excelInfo.SheetInfos.FirstOrDefault(u => u.SheetName == sheetName).ColCount;
                     excelInfo.Headers = GetHeaders(currentSheet);
-                    excelInfo.RowInfos = GetRowInfos(currentSheet, pageNum,searchWords);
-                    package.Dispose();
+                    excelInfo.RowInfos = GetRowInfos(currentSheet, excelInfo);
                 }
             }
            
@@ -34,23 +36,56 @@ namespace MySoft.ResManger.Services
         }
 
 
-        private static Dictionary<int,List<string>> GetRowInfos(ExcelWorksheet sheet,int pageNum,string searchWords)
+        private static Dictionary<int,List<string>> GetRowInfos(ExcelWorksheet sheet,ExcelViewInfo excelInfo)
         {
             var dic = new Dictionary<int,List<string>>();
-            var step = 200;//默认每页显示20条
-            var start = ((pageNum - 1) * step) != 0 ? ((pageNum - 1) * step) : 1;
-            var searchList = string.IsNullOrEmpty(searchWords)?new string[0]: searchWords.Split(' ', StringSplitOptions.RemoveEmptyEntries);//搜索关键字切割
-            for (var i = start+1; i < pageNum*step; i++)
+            var step = 18;//默认每页显示条数
+            var start = ((excelInfo.PageNum - 1) * step) != 0 ? ((excelInfo.PageNum - 1) * step) : 1;
+            var searchList = string.IsNullOrEmpty(excelInfo.SearchWords) ?new string[0]: excelInfo.SearchWords.Split(' ', StringSplitOptions.RemoveEmptyEntries);//搜索关键字切割
+            if (searchList.Length == 0)//有无关键字需要采取不同的策略
             {
-                if(i>sheet.Dimension.Rows)break;
-                dic.Add(i,new List<string>());
-                for (var j = 1; j < sheet.Dimension.Columns; j++)
+                for (var i = start + 1; i <= excelInfo.PageNum * step; i++)
                 {
-                    if(!ContainKeyWord(sheet,i,searchList)) continue;
-                    dic[i].Add(sheet.GetValue(i,j)==null?"": sheet.GetValue(i, j).ToString());
+                    if (i == sheet.Dimension.Rows) excelInfo.IsEndPage = true;
+                    dic.Add(i, new List<string>());
+                    for (var j = 1; j < sheet.Dimension.Columns; j++)
+                    {
+                        if (!ContainKeyWord(sheet, i, searchList)) continue;
+                        dic[i].Add(sheet.GetValue(i, j) == null ? "" : sheet.GetValue(i, j).ToString());
+                    }
+                }
+            }
+            else
+            {
+                int rowCount = 1;//记录符合关键字的行数，第一行列头
+                for (var i = 1; i <= sheet.Dimension.Rows; i++)
+                {
+                    if (i == sheet.Dimension.Rows){excelInfo.IsEndPage = true;}
+                    if (!ContainKeyWord(sheet, i, searchList)) continue;
+                    rowCount++;
+                    if (rowCount > excelInfo.PageNum * step) break;
+                    if (rowCount >= start + 1 && rowCount <= excelInfo.PageNum * step)
+                    {
+                        dic.Add(i, new List<string>());
+                        for (var j = 1; j < sheet.Dimension.Columns; j++)
+                        {
+                            var temp = sheet.GetValue(i, j) == null ? "" : sheet.GetValue(i, j).ToString();
+                            temp = HighLight(temp, searchList);
+                            dic[i].Add(temp);
+                        }
+                    }
                 }
             }
             return dic;
+        }
+
+        private static string HighLight(string txt,string[] searchWords)
+        {
+            foreach (var searchWord in searchWords)
+            {
+                txt = txt.Replace(searchWord, "<mark>"+ searchWord + "</mark>");
+            }
+            return txt;
         }
 
         private static bool ContainKeyWord(ExcelWorksheet sheet,int row,string[] searchList)
@@ -60,7 +95,7 @@ namespace MySoft.ResManger.Services
             var rowUnionStr = "";
             for (int i = 1; i < sheet.Dimension.Columns; i++)
             {
-                rowUnionStr += (sheet.GetValue(row, i) == null ? "" : sheet.GetValue(row, i).ToString());
+                rowUnionStr += (sheet.GetValue(row, i) == null ? "" : sheet.GetValue(row, i).ToString())+" ";
             }
             foreach (var search in searchList)
             {
