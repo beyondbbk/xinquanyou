@@ -1,4 +1,5 @@
 ﻿
+
 function loadRes() {
     GlobalShowInfo("正在导入物料，请稍候...", "");
     GlobalAutoHide();

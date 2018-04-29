@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Common\MySoft.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\excel\font\" />
+  </ItemGroup>
+
 </Project>

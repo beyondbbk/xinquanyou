@@ -10,3 +10,21 @@
     margin-bottom: 0px;
     margin-top: 0px;
 }
+
+#searchinput, #search {
+    height: 37px;
+    font-size: large;
+}
+
+.searchcol {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.uploadcol,.downcol {
+    margin-top: 8px;
+}
+
+#maintb {
+    min-width:calc(100% - 200px)
+}

@@ -7,7 +7,7 @@ html {
 body {
     min-height: 100%;
     position: relative;
-    font-family: "Microsoft YaHei","黑体","宋体",sans-serif;
+    font-family: "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
 h3 small {

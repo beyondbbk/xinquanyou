@@ -20,92 +20,116 @@
 </head>
 
 <body role="document">
-@*页面头部*@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6">
-            <h3>
-                Test <small>这是一个测试系统</small>
-            </h3>
-        </div>
-        <div class="col-md-6 text-right">
-            <div id="nav-right-btn">
-                <a class="btn btn-primary btn-sm" href="https://github.com/beyondbbk/xinquanyou" target="_blank" role="button">GitHub</a>
-           
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#admiremodal">测试</button>
+    @*页面头部*@
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    物料中心 <small>成都颐和电子科技有限责任公司</small>
+                </h3>
             </div>
+            <div class="col-md-6 text-right">
+                <div id="nav-right-btn">
+                    <a class="btn btn-primary btn-sm" href="https://github.com/beyondbbk/xinquanyou" target="_blank" role="button">GitHub</a>
 
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#admiremodal">捐助</button>
+                </div>
+
+            </div>
+        </div>
+        <hr />
+    </div>
+    @*主体内容*@
+    <div class="container-fluid" id="maindiv">
+        @RenderSection("body", true)
+    </div>
+    @*页面底部*@
+    <div class="container-fluid">
+        <div class="row footer">
+            <div class="col-md-12">
+                <hr />
+                <h5 class="text-center">推荐谷歌浏览器</h5>
+            </div>
         </div>
     </div>
-    <hr/>
-</div>
-@*主体内容*@
-<div class="container-fluid" id="maindiv">
-    @RenderSection("body", true)
-</div>
-@*页面底部*@
-<div class="container-fluid">
-    <div class="row footer">
-        <div class="col-md-12">
-            <hr />
-            <h5 class="text-center">推荐谷歌浏览器</h5>
-        </div>
-    </div>
-</div>
-    
-    
-    
-@*捐助对话框*@
-<div class="modal fade" id="admiremodal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">测试</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="vcenter" style="width: 44%">
-                        <h6>微信</h6>
-                        <img src="/excel/img/weixin.png" class="img-rounded">
-                    </div>
-                    <div class="vcenter" style="width: 10%">
-                       
-                    </div>
-                    <div class="vcenter" style="width: 44%">
-                        <h6>支付宝</h6>
-                        <img src="/excel/img/zhifubao.png" class="img-rounded">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 vcenter">
-                        <h6>有能力的话就支持一波吧</h6>
-                    </div>
-                    
-                </div>
-             
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-             
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-    
-<!--全局提示栏-->
-<div>
-    <button id="globaltitle" class="btn btn-sm btn-success">警告，网络故障。</button>
-    <input id="globaltitletimeid" type="hidden" />
-</div><!--全局提示栏end-->
 
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="~/excel/js/layout.js"></script>
 
-@RenderSection("script", false)
+
+    @*捐助对话框*@
+    <div class="modal fade" id="admiremodal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">有能力就支持一波吧</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="vcenter" style="width: 44%">
+                                <span class="label label-success">微信</span><br /><br />
+                                <img src="/excel/img/weixin.png" class="img-rounded">
+                            </div>
+                            <div class="vcenter" style="width: 10%">
+                                
+                            </div>
+                            <div class="vcenter" style="width: 42%">
+                                <span class="label label-info">支付宝</span><br /><br />
+                                <img src="/excel/img/zhifubao.png" class="img-rounded">
+                            </div>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading text-center">每天更新，更新于2018-04-0-28 10:23:09</div>
+
+                                <!-- Table -->
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr >
+                                        <th class="text-center">捐助者账号</th>
+                                        <th class="text-center">金额</th>
+                                        <th class="text-center">时间</th>
+                                        <th class="text-center">来源</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">beyondbbk6</td>
+                                            <td class="text-center">5.00</td>
+                                            <td class="text-center">2018-04-27 14:52:20</td>
+                                            <td class="text-center">支付宝</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--全局提示栏-->
+    <div>
+        <button id="globaltitle" class="btn btn-sm btn-success">警告，网络故障。</button>
+        <input id="globaltitletimeid" type="hidden" />
+    </div><!--全局提示栏end-->
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/excel/js/layout.js"></script>
+
+    @RenderSection("script", false)
 </body>
 
 </html>

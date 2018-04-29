@@ -13,28 +13,29 @@
 @section body
     {
     <div class="row" id="btnmemu">
-        <div class="col-md-4">
+        <div class="col-md-4 uploadcol">
+            <a class="btn btn-primary btn-sm" href="/excel/home/index" target="_blank" role="button">重新上传表格</a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 searchcol">
             <div class="input-group">
                 <input id="searchinput" type="text" class="form-control" placeholder="关键字请用空格隔开..." value="@Model.SearchWords">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" onclick="GetView('yh','@Model.CurrentSheetName','1')">搜索一下</button>
+                    <button id="search" class="btn btn-default" type="button" onclick="GetSearchView()">搜索一下</button>
                 </span>
             </div><!-- /input-group -->
 
         </div>
-        <div class="col-md-4 text-right">
-            <a class="btn btn-primary btn-sm" href="/excel/home/index" target="_blank" role="button">重新上传</a>
-            <a class="btn btn-primary btn-sm" href="/excel/yh.xlsx" target="_blank" role="button">下载表格</a>
+        <div class="col-md-4 text-right downcol">
+            
+            <a class="btn btn-primary btn-sm" href="/excel/yh.xlsx" target="_blank" role="button">导出当前数据</a>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2" style="width: 12%">
+        <div class="col-md-2" style="width: 200px">
             <ul class="list-group">
                 @foreach (var sheetInfo in Model.SheetInfos)
                 {
-                    <li class="list-group-item sheetli @(Model.CurrentSheetName==sheetInfo.SheetName?"active":"")" onclick="GetView('@sheetInfo.SheetName')">
+                    <li class="list-group-item sheetli @(Model.CurrentSheetName==sheetInfo.SheetName?"active":"")" onclick="GetSheetView('@sheetInfo.SheetName')">
                         <span class="badge">@sheetInfo.RowCount</span>
                         @sheetInfo.SheetName
                     </li>
@@ -43,19 +44,19 @@
 
             </ul>
         </div>
-        <div class="col-md-10" style="width: 88%">
+        <div id="maintb" class="col-md-10" >
             <div class="panel panel-default">
                 <!-- Default panel contents -->
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-md-4">
-                            <button type="button" class="btn btn-primary btn-sm @(Model.IsFirstPage?"disabled":"")" onclick="GetView('', '@(Model.PageNum - 1)')">上一页</button>
+                            <button type="button" class="btn btn-primary btn-sm @(Model.IsFirstPage?"disabled":"")" onclick="GetPageView('@(Model.PageNum - 1)','pre')">上一页</button>
                         </div>
                         <div class="col-md-4 text-center">
                             <button type="button" class="btn btn-primary btn-sm">当前第 @(Model.PageNum) 页</button>
                         </div>
                         <div class="col-md-4 text-right">
-                            <button type="button" class="btn btn-primary btn-sm @(Model.IsEndPage?"disabled":"")" onclick="GetView('', '@(Model.PageNum + 1)')">下一页</button>
+                            <button type="button" class="btn btn-primary btn-sm @(Model.IsEndPage?"disabled":"")" onclick="GetPageView('@(Model.PageNum + 1)','next')">下一页</button>
                         </div>
                     </div>
                     
@@ -126,7 +127,8 @@
 
     <input type="hidden" id="sheetname" value="@Model.CurrentSheetName" />
     <input type="hidden" id="pagenum" value="@Model.PageNum" />
-
+        <input id="isfirstpage" type="hidden" value="@Model.IsFirstPage.ToString()"/>
+    <input id="isendpage" type="hidden" value="@Model.IsEndPage.ToString()"/>
 }
 
 @section script
