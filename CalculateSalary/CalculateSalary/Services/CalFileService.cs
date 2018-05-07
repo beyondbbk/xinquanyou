@@ -21,9 +21,9 @@ namespace MySoft.CalculateSalary.Services
         static CalFileService()
         {
             _dic.Add(new List<string>(){ "小一", "一年级", "小二", "二年级", "小三", "三年级", "小四", "四年级", "小五", "五年级", "小六", "六年级"}, 50);
-            _dic.Add(new List<string>() { "初一", "初二", "初三" }, 65);
+            _dic.Add(new List<string>() { "初一", "初二"}, 65);
             _dic.Add(new List<string>() { "高一", "高二", "高三" }, 70);
-            _dic.Add(new List<string>() { "初三新" }, 70);
+            _dic.Add(new List<string>() { "初三" }, 70);
             _dic.Add(new List<string>() { "高三新" }, 80);
         }
 

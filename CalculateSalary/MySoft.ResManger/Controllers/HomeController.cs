@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -7,12 +8,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MySoft.Common;
+using MySoft.ResManger.Filters;
 using MySoft.ResManger.Models;
 using MySoft.ResManger.Services;
 using Newtonsoft.Json;
 
 namespace MySoft.ResManger.Controllers
 {
+    [ModelFilter]
     public class HomeController : Controller
     {
         //依赖注入
@@ -65,5 +68,16 @@ namespace MySoft.ResManger.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Test(TestModel test)
+        {
+            return Content("Finished");
+        }
+    }
+
+    public class TestModel
+    {
+        [Required(ErrorMessage = "Name必须")]
+        public string Name { get; set; }
     }
 }

@@ -79,7 +79,7 @@ function CommonGetView() {
     var pageNum = $("#pagenum").val();
     GlobalShowInfo("正在拉取数据中，请稍候...", "ok");
 
-    window.location = "/excel/home/analyexcelfile?companyname=yh&sheetname=" + encodeURIComponent(sheetName) + "&pagenum=" + pageNum + "&searchWords=" + searchWords;
+    window.location = "/excel/home/analyexcelfile?companyname=yh&sheetname=" + encodeURIComponent(sheetName) + "&pagenum=" + pageNum + "&searchWords=" + encodeURIComponent(searchWords);
 
 }
 
