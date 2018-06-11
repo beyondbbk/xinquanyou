@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "数据详情";
+}
+@section css
+    {
+
+
+}
+
+@section body
+    {
+    <div class="row">
+
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+            <form id="form" action="" method="post" enctype="multipart/form-data">
+                <div class="row form-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" align="center">
+                            <label style="text-align: center;font-size: 18px;">请先上传你的物料表格</label>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <input id="input-id" name="file" multiple type="file" data-show-caption="true">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+}
+
+@section script
+    {
+    <script src="~/tjqxj/js/home/index.js"></script>
+}
