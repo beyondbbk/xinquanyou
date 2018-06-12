@@ -13,16 +13,16 @@
     <title>灾情反馈</title>
     <link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb"></script>
+    <script src="~/tjqxj/js/feedback/feedback.js"></script>
 </head>
 <body>
     <div class="weui-panel weui-panel_access">
         @*位置*@
         <div class="weui-panel__bd">
             <div class="weui-media-box weui-media-box_text">
-                <h4 class="weui-media-box__title">位置</h4>
+                <h4 class="weui-media-box__title">当前位置</h4>
                 <p class="weui-media-box__desc" id="addressDetail">正在确定您的位置...</p>
             </div>
         </div>
@@ -30,7 +30,7 @@
         @*灾害类型*@
         <div class="weui-panel__bd">
             <div class="weui-media-box weui-media-box_text">
-                <h4 class="weui-media-box__title">灾害类型</h4>
+                <h4 class="weui-media-box__title" id="kindName">灾害类型</h4>
                 <div class="weui-grids">
                     <a href="javascript:;" class="weui-grid">
                         <div class="weui-grid__icon">
@@ -111,12 +111,20 @@
         @*灾害类型-end*@
         @*现场图片*@
         <div class="weui-panel__bd">
+            <div class="weui-gallery" id="gallery">
+                <span class="weui-gallery__img" id="galleryImg"></span>
+                <div class="weui-gallery__opr">
+                    <a href="javascript:" class="weui-gallery__del">
+                        @*<i class="weui-icon-delete weui-icon_gallery-delete"></i>*@
+                    </a>
+                </div>
+            </div>
             <div class="weui-media-box weui-media-box_text">
                 @*<h4 class="weui-media-box__title">现场图片</h4>*@
                 <div class="weui-uploader">
                     <div class="weui-uploader__hd">
                         <p class="weui-uploader__title">现场图片</p>
-                        <div class="weui-uploader__info">0/2</div>
+                        <div class="weui-uploader__info">0/8</div>
                     </div>
                     <div class="weui-uploader__bd">
                         <ul class="weui-uploader__files" id="uploaderFiles"></ul>
@@ -137,7 +145,7 @@
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
                             <textarea class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>
-                            <div class="weui-textarea-counter"><span>0</span>/200</div>
+                            <div class="weui-textarea-counter"><span id="inputNum">0</span>/100</div>
                         </div>
                     </div>
                 </div>
@@ -149,7 +157,18 @@
 
         </div>
         @*用户备注-end*@
-
+        
+        @*弹窗通知*@
+        <div style="display: none;" id="msg">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">title</strong></div>
+                <div class="weui-dialog__bd">msg</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                </div>
+            </div>
+        </div>
 
     </div>
 </body>
@@ -345,65 +364,38 @@
         });
     }
 
-    //动态添加缩略图
-    $(function () {
-        var tmpl = '<li class="weui-uploader__file weui-uploader__file_status" style="background-image:url(#url#)"></li>',
-            $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
-            $uploaderInput = $("#uploaderInput"),
-            $uploaderFiles = $("#uploaderFiles")
-            ;
+    ////动态添加缩略图
+    //$(function () {
+    //    var tmpl = '<li class="weui-uploader__file weui-uploader__file_status" style="background-image:url(#url#)"></li>',
+    //        $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
+    //        $uploaderInput = $("#uploaderInput"),
+    //        $uploaderFiles = $("#uploaderFiles")
+    //        ;
 
-        $uploaderInput.on("change", function (e) {
-            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
-            for (var i = 0, len = files.length; i < len; ++i) {
-                var file = files[i];
+    //    $uploaderInput.on("change", function (e) {
+    //        var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+    //        for (var i = 0, len = files.length; i < len; ++i) {
+    //            var file = files[i];
 
-                if (url) {
-                    src = url.createObjectURL(file);
-                } else {
-                    src = e.target.result;
-                }
+    //            if (url) {
+    //                src = url.createObjectURL(file);
+    //            } else {
+    //                src = e.target.result;
+    //            }
 
-                $uploaderFiles.append($(tmpl.replace('#url#', src)));
-            }
-        });
-        $uploaderFiles.on("click", "li", function () {
-            $galleryImg.attr("style", this.getAttribute("style"));
-            $gallery.fadeIn(100);
-        });
-        $gallery.on("click", function () {
-            $gallery.fadeOut(100);
-        });
-    });
+    //            $uploaderFiles.append($(tmpl.replace('#url#', src)));
+    //        }
+    //    });
+    //    $uploaderFiles.on("click", "li", function () {
+    //        $galleryImg.attr("style", this.getAttribute("style"));
+    //        $gallery.fadeIn(100);
+    //    });
+    //    $gallery.on("click", function () {
+    //        $gallery.fadeOut(100);
+    //    });
+    //});
 
-    //获取地理位置
-    function getLocation() {
-        wx.getLocation({
-            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-            success: function (res) {
-                console.debug(res.latitude);
-                baiduLocation(res.longitude, res.latitude);
-            }
-        });
-    }
-
-    //根据经纬度去百度获取详细位置
-    function baiduLocation(longitude, latitude) {
-        var url =
-            'http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=' + latitude + ',' + longitude +'&output=json&pois=1&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb';
-        $.ajax(url,
-            {
-                dataType: 'jsonp',
-                crossDomain: true,
-                success: function (data) {
-                    if (data.status == '0') {
-                        $("#addressDetail").html(data.result.formatted_address);
-                        return;
-                    }
-                    $("#addressDetail").html("定位失败，请重试...");
-                }
-            });
-    };
+    
 
     //选择图片
     function ChoosePic() {
