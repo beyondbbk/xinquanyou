@@ -1,42 +1,36 @@
 ﻿
 //打开网页后，自动获取实时地理位置
 {
+    var timeId = 0;
     //获取地理位置
     function getLocation() {
-        //var geolocation = new BMap.Geolocation();
-        //geolocation.getCurrentPosition(function(r) {
-        //        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-        //            var mk = new BMap.Marker(r.point);
-        //            //map.addOverlay(mk);
-        //            //map.panTo(r.point);
-        //            alert('您的位置：' + r.point.lng + ',' + r.point.lat);
-        //            baiduLocation(r.point.lng, r.point.lat);
-        //        } else {
-        //            alert('failed' + this.getStatus());
-        //        }
-        //    },
-        //    { enableHighAccuracy: true });
-
-
-        wx.getLocation({
-            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-            success: function (res) {
-                console.debug(res.latitude);
-                baiduLocation(res.longitude, res.latitude);
-            }
-        });
+        timeId = setTimeout(function() {
+                wx.getLocation({
+                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function(res) {
+                        console.debug(res.latitude);
+                        //偶尔会有坐标获取不到的问题
+                        if (res.latitude == "0.0" || res.longitude == "0.0") {
+                            alert("定位重试...")
+                            return;
+                        }
+                        baiduLocation(res.longitude, res.latitude);
+                    }
+                });
+            },
+            2000);//2秒后重试
     }
 
     //根据微信经纬度去百度获取详细位置
     function baiduLocation(longitude, latitude) {
-        //增加坐标转换
+        clearTimeout(timeId);
+        //增加百度坐标转换（腾讯坐标转为百度坐标）
         var convertor = new BMap.Convertor();
         var pointArr = [];
         var ggPoint = new BMap.Point(longitude, latitude);
         pointArr.push(ggPoint);
         convertor.translate(pointArr, 1, 5, translateCallback);
     };
-
     //百度经纬度转换之后的回调
     function translateCallback(data) {
 
@@ -57,24 +51,23 @@
     }
 }
 
-//灾害类型，点击后变色
+//灾害类型图片，点击后变色
 {
-    $(function() {
+    $(function () {
         $(".weui-grid").bind("click",
             function () {
                 $(".weui-grid").css("background", "");
                 $(this).css("background", "#ECECEC");
                 var temp = $(this).children("p");
-                $("#kindName").html("灾害类型" + "(" + temp.html().replace(/(^\s*)|(\s*$)/g, "")+ ")");
+                $("#kindName").html("灾害类型" + "（" + temp.html().replace(/(^\s*)|(\s*$)/g, "") + ")");
             });
     });
 }
 
-//存储已选择的图片File
+//存储已选择的图片File-Object
 var choosedPics = [];
 //存储已选择的图片路径名
-var choosedPicPaths = [];
-
+var choosedPicNames = [];
 //添加图片后动态加载缩略图，缩略图预览，图片数目限定，去重等
 {
     //动态添加缩略图，weui-uploader__file_status
@@ -88,27 +81,30 @@ var choosedPicPaths = [];
         $uploaderInput.on("change", function (e) {
             var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
 
-            alert("数量2：" + files.length);
-            alert("对象属性"+getStr(files[0]));
+            var totalNum = files.length + $("#uploaderFiles li").length;
+            if (totalNum > 8) {
+                ShowMsg('图片超限', '最多只能上传8张图片', 400);
+                return;
+            }
+            
+            
             //开始添加图片
             for (var i = 0, len = files.length; i < len; ++i) {
-                //更新图片数，检查是否超限
-                var num = $("#uploaderFiles li").length+1;
-                alert("总数：" + num);
-                $(".weui-uploader__info").html(num + "/8");
-                if (num >8) {
-                    ShowMsg('图片超限', '最多只能上传8张图片', 400);
-                    return;
-                }
+                ////更新图片数，检查是否超限
+                //var num = $("#uploaderFiles li").length + 1;
+                //alert("总数：" + num);
+                //$(".weui-uploader__info").html(num + "/8");
+                //if (num > 8) {
+                    
+                //}
                 var file = files[i];
-                alert("文件名"+file.name);
                 //判定图片是否重复，不重复就将图片文件名记录下来
-                var index = $.inArray(file.name, choosedPicPaths);
-                if (index!=-1) {
+                var index = $.inArray(file.name, choosedPicNames);
+                if (index != -1) {
                     continue;
                 }
                 choosedPics.push(file);
-                choosedPicPaths.push(file.name);
+                choosedPicNames.push(file.name);
                 if (url) {
                     src = url.createObjectURL(file);
                 } else {
@@ -117,7 +113,11 @@ var choosedPicPaths = [];
 
                 $uploaderFiles.append($(tmpl.replace('#url#', src)));
 
-            }
+            };
+            //更新已选图片数量提示
+            var imgNum = $("#uploaderFiles li").length;
+            $(".weui-uploader__info").html(imgNum + "/8");
+
         });
         $uploaderFiles.on("click", "li", function () {
             $galleryImg.attr("style", this.getAttribute("style"));
@@ -133,17 +133,16 @@ var setTimeId = 0;
 var isShow = false;
 //文本框字数限定符
 {
-    $(function() {
+    $(function () {
         $(".weui-textarea").on("propertychange input",
             function () {
                 clearTimeout(setTimeId);
-                setTimeId = setTimeout(function() {
+                setTimeId = setTimeout(function () {
                     var length = $(".weui-textarea").val().length;
                     if (parseInt(length) > 100) {
                         if (!isShow) {
                             ShowMsg('文字超限', '请尽量简洁的描述现场情况', 300);
                         }
-                       
                         isShow = true;
                         $(".weui-textarea-counter").css("color", "#f43530");
                     } else {
@@ -152,7 +151,7 @@ var isShow = false;
                     }
                     $("#inputNum").html(length);
                 }, 1500);
-                
+
             });
     });
 }
@@ -176,7 +175,12 @@ var isShow = false;
 {
     function getStr(obj) {
         var temp = "";
-        for (var p in obj) { temp += (p+":"+obj[p] + '\n\r'); }
+        for (var p in obj) { temp += (p + ":" + obj[p] + '\n\r'); }
         return temp;
     }
+}
+
+//上传功能
+{
+
 }

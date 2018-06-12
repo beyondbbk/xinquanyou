@@ -47,7 +47,7 @@ namespace Mysoft.Txqxj.Controllers
             var file = Request.Form.Files[0];
             var json = Request.Form["json"];
 
-            using (var fs = System.IO.File.Create(@"c:/1.jpeg"))
+            using (var fs = System.IO.File.Create(@"c:/"+file.Name))
             {
                 file.CopyTo(fs);
                 fs.Flush();

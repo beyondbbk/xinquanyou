@@ -12,10 +12,14 @@
     <meta http-equiv="Access-Control-Allow-Origin" content="api.map.baidu.com">
     <title>灾情反馈</title>
     <link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
+    @*工具类js，提前加载*@
+    <script src="~/tjqxj/js/feedback/common.js"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb"></script>
     <script src="~/tjqxj/js/feedback/feedback.js"></script>
+    <script src="~/tjqxj/js/feedback/imgupload.js"></script>
+
 </head>
 <body>
     <div class="weui-panel weui-panel_access">
@@ -149,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="weui-btn weui-btn_primary" onclick="UpladFile()">提交</a>
+                <a class="weui-btn weui-btn_primary" onclick="SumbitInfo()">提交</a>
                 <progress id="progressBar" value="0" max="100" style="width: 300px;"></progress>
                 <span id="percentage"></span><span id="time"></span>
                 <br /><br />
@@ -176,11 +180,9 @@
 </html>
 <script type="text/javascript">
     /*
-    三个参数
     file：一个是文件(类型是图片格式)，
     w：一个是文件压缩的后宽度，宽度越小，字节越小
     objDiv：一个是容器或者回调函数
-    photoCompress()
      */
     function photoCompress(file, w, objDiv) {
         var ready = new FileReader();
@@ -252,7 +254,7 @@
             photoCompress(fileObj, {
                 quality: 0.2
             }, function (base64Codes) {
-                //console.log("压缩后：" + base.length / 1024 + " " + base);
+
                 var bl = convertBase64UrlToBlob(base64Codes);
                 form.append("file", bl, "file_" + Date.parse(new Date()) + ".jpg"); // 文件对象
                 xhr = new XMLHttpRequest();  // XMLHttpRequest 对象
@@ -397,31 +399,31 @@
 
     
 
-    //选择图片
-    function ChoosePic() {
-        wx.chooseImage({
-            count: 9, // 默认9
-            sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
-                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                alert("选择图片信息：" + localIds);
-            }
-        });
-    }
+    ////选择图片
+    //function ChoosePic() {
+    //    wx.chooseImage({
+    //        count: 9, // 默认9
+    //        sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+    //        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+    //        success: function (res) {
+    //            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+    //            alert("选择图片信息：" + localIds);
+    //        }
+    //    });
+    //}
 
-    //预览图片
-    function previewImage() {
-        wx.previewImage({
-            current: 'http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSK8jCzLMb60WcfOX33TZvbkAWicYGGlWGlp8nov2jOIykS7jgTmcmr9sNKibavvsVRMzw/0?wx_fmt=jpeg', // 当前显示图片的http链接
-            urls: ['http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSK8jCzLMb60WcfOX33TZvbkAWicYGGlWGlp8nov2jOIykS7jgTmcmr9sNKibavvsVRMzw/0?wx_fmt=jpeg','http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSK8jCzLMb60WcfOX33TZvbkAWicYGGlWGlp8nov2jOIykS7jgTmcmr9sNKibavvsVRMzw/0?wx_fmt=jpeg'] // 需要预览的图片http链接列表
-        });
-    }
+    ////预览图片
+    //function previewImage() {
+    //    wx.previewImage({
+    //        current: 'http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSK8jCzLMb60WcfOX33TZvbkAWicYGGlWGlp8nov2jOIykS7jgTmcmr9sNKibavvsVRMzw/0?wx_fmt=jpeg', // 当前显示图片的http链接
+    //        urls: ['http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSK8jCzLMb60WcfOX33TZvbkAWicYGGlWGlp8nov2jOIykS7jgTmcmr9sNKibavvsVRMzw/0?wx_fmt=jpeg','http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSK8jCzLMb60WcfOX33TZvbkAWicYGGlWGlp8nov2jOIykS7jgTmcmr9sNKibavvsVRMzw/0?wx_fmt=jpeg'] // 需要预览的图片http链接列表
+    //    });
+    //}
 
     $(function() {
         console.debug("加载成功");
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: '@Model.AppId', // 必填，公众号的唯一标识
             timestamp: @Model.TimeStamp, // 必填，生成签名的时间戳
             nonceStr: '@Model.NonceStr', // 必填，生成签名的随机串
