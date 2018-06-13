@@ -53,6 +53,9 @@ namespace Mysoft.Txqxj
             {
                 milliSeconds = Environment.TickCount - startMilliSecond;
             }
+
+            response.StatusCode = 200;
+
             var request = context.HttpContext.Request;
             LogHelper.Info($"耗时：{milliSeconds}毫秒{Environment.NewLine}" +
                                 $"请求地址：{request.Host + request.Path}{(!request.QueryString.HasValue ? "" : request.QueryString.ToString())}{Environment.NewLine}" +

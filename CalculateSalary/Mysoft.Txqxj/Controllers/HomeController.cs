@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Mysoft.Tjqxj.Models.ViewModel;
 using Mysoft.Tjqxj.Services;
@@ -18,9 +19,11 @@ namespace Mysoft.Txqxj.Controllers
     [ModelVerify]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        //依赖注入
+        public IHostingEnvironment _host;
+        public HomeController(IHostingEnvironment _host)
         {
-            return View();
+            this._host = _host;
         }
 
         public IActionResult VerifyWx()
@@ -47,14 +50,14 @@ namespace Mysoft.Txqxj.Controllers
             var file = Request.Form.Files[0];
             var json = Request.Form["json"];
 
-            using (var fs = System.IO.File.Create(@"c:/"+file.Name))
+            using (var fs = System.IO.File.Create(Path.Combine(_host.WebRootPath, "tjqxj","uploadimg", file.FileName)))
             {
                 file.CopyTo(fs);
                 fs.Flush();
             }
 
-            return Json(new { });
-  
+            return new ClientResult(ResultDto.DefaultSuccess("success"));
+
         }
     }
 }

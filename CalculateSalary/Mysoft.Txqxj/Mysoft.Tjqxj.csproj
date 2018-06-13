@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Common\MySoft.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\tjqxj\uploadimg\" />
+  </ItemGroup>
+
 </Project>

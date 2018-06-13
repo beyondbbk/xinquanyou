@@ -7,7 +7,7 @@ var blobPics = [];//存放压缩后的图片二进制数据
             quality: 0.2//压缩质量
         }, function (base64Codes) {
             var bl = convertBase64UrlToBlob(base64Codes);
-            PostInfo(bl,choosedPicNames[picNum]);
+            PostInfo(bl,picNum);
         });
     }
 
@@ -72,101 +72,55 @@ var blobPics = [];//存放压缩后的图片二进制数据
 }
 
 
-var timestamp = Date.parse(new Date()) + RndNum(5);
+var unicodeId = Date.parse(new Date()) + RndNum(5);
 //上传页面信息
 {
     //文件信息存放于choosedPics数组
     function SumbitInfo() {
         var tmpl = '<div class="weui-uploader__file-content">@temp</div>';
         $(".weui-uploader__file").addClass("weui-uploader__file_status");
-        $(".weui-uploader__file").append($(tmpl.replace("@temp", "压缩")));
+        $(".weui-uploader__file").append($(tmpl.replace("@temp", "上传")));
+
         //先处理图片，并行压缩后上传
-        
         for (var picNum = 0; picNum < choosedPics.length;picNum++) {
             CompressPic(choosedPics[picNum], picNum, PostInfo);
         };
+
+        //再上传其它信息
     }
 
     var xhr;
     //开始上传
-    function PostInfo(blob,fileName) {
-        alert(timestamp + fileName);
-        //<div class="weui-uploader__file-content">50%</div>
-        var url = "/tjqxj/home/upload"; // 接收上传文件的后台地址
+    function PostInfo(blob,fileNum) {
+        var url = "/tjqxj/home/upload"; //接收上传文件的后台地址
         var form = new FormData(); // FormData 对象
-        form.append("file", blob, timestamp +"-"+ fileName); // 文件对象
-
+        form.append("file", blob, unicodeId + "-" + choosedPicNames[fileNum]); //文件对象
         xhr = new XMLHttpRequest();  // XMLHttpRequest 对象
-        xhr.open("post", url, true); //post方式，url为服务器请求地址，true 该参数规定请求是否异步处理。
-        xhr.onload = uploadComplete; //请求完成
-        xhr.onerror = uploadFailed; //请求失败
-
-        //xhr.upload.onprogress = progressFunction;//【上传进度调用方法实现】
-        //xhr.upload.onloadstart = function () {//上传开始执行方法
-        //    ot = new Date().getTime();   //设置上传开始时间
-        //    oloaded = 0;//设置上传开始时，以上传的文件大小为0
-        //};
-
+        xhr.open("post", url, true); //true异步处理
+        //xhr.upload.onprogress = progressFunction;//上传进度
+        xhr.upload.addEventListener("progress", function (evt) {
+            uploadProgress(evt, fileNum);
+        }, false);
+        xhr.upload.addEventListener("loadend", function (evt) {
+            uploadComplete(evt, fileNum);
+        }, false);
+        //xhr.upload.onloadend = uploadComplete;
         xhr.send(form); //开始上传，发送form数据
 
     }
 
-
     //上传成功响应
-    function uploadComplete(evt) {
-        //服务断接收完文件返回的结果
-
-        var data = JSON.parse(evt.target.responseText);
-        if (data.State == "0") {
-            alert("上传成功！");
-        } else {
-            alert("上传失败！");
-        }
-
-    }
-    //上传失败
-    function uploadFailed(evt) {
-        alert("上传失败！");
-    }
-    //取消上传
-    function cancleUploadFile() {
-        xhr.abort();
+    function uploadComplete(evt,fileNum) {
+        $(".weui-uploader__file-content").eq(fileNum).html(100);
+        console.debug("上传完成");
     }
 
-    //上传进度实现方法，上传过程中会频繁调用该方法
-    function progressFunction(evt) {
-        $(".weui-uploader__file-content").html("10");
-
-        var progressBar = document.getElementById("progressBar");
-        var percentageDiv = document.getElementById("percentage");
+    //上传进度实现
+    function uploadProgress(evt, fileNum) {
         // event.total是需要传输的总字节，event.loaded是已经传输的字节。如果event.lengthComputable不为真，则event.total等于0
         if (evt.lengthComputable) {//
-            progressBar.max = evt.total;
-            progressBar.value = evt.loaded;
-            percentageDiv.innerHTML = Math.round(evt.loaded / evt.total * 100) + "%";
+            var percent = Math.round(evt.loaded / evt.total * 100);
+            $(".weui-uploader__file-content").eq(fileNum).html(percent);
         }
-        var time = document.getElementById("time");
-        var nt = new Date().getTime();//获取当前时间
-        var pertime = (nt - ot) / 1000; //计算出上次调用该方法时到现在的时间差，单位为s
-        ot = new Date().getTime(); //重新赋值时间，用于下次计算
-        var perload = evt.loaded - oloaded; //计算该分段上传的文件大小，单位b
-        oloaded = evt.loaded;//重新赋值已上传文件大小，用以下次计算
-        //上传速度计算
-        var speed = perload / pertime;//单位b/s
-        var bspeed = speed;
-        var units = 'b/s';//单位名称
-        if (speed / 1024 > 1) {
-            speed = speed / 1024;
-            units = 'k/s';
-        }
-        if (speed / 1024 > 1) {
-            speed = speed / 1024;
-            units = 'M/s';
-        }
-        speed = speed.toFixed(1);
-        //剩余时间
-        var resttime = ((evt.total - evt.loaded) / bspeed).toFixed(1);
-        time.innerHTML = '，速度：' + speed + units + '，剩余时间：' + resttime + 's';
-        if (bspeed == 0) time.innerHTML = '上传已取消';
     }
 }

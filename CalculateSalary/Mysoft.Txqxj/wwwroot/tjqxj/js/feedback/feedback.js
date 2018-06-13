@@ -82,8 +82,8 @@ var choosedPicNames = [];
             var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
 
             var totalNum = files.length + $("#uploaderFiles li").length;
-            if (totalNum > 8) {
-                ShowMsg('图片超限', '最多只能上传8张图片', 400);
+            if (totalNum > 3) {
+                ShowMsg('图片超限', '最多只能上传3张图片', 400);
                 return;
             }
             
@@ -116,7 +116,7 @@ var choosedPicNames = [];
             };
             //更新已选图片数量提示
             var imgNum = $("#uploaderFiles li").length;
-            $(".weui-uploader__info").html(imgNum + "/8");
+            $(".weui-uploader__info").html(imgNum + "/3");
 
         });
         $uploaderFiles.on("click", "li", function () {
