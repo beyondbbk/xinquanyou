@@ -2,12 +2,14 @@
 var blobPics = [];//存放压缩后的图片二进制数据
 {
     //传入单图片文件进行压缩
-    function CompressPic(file, picNum, PostImgInfo) {
+    function CompressPic(file,picNum) {
         photoCompress(file, {
-            quality: 0.2//压缩质量
+            quality: 0.1//压缩质量
         }, function (base64Codes) {
-            var bl = convertBase64UrlToBlob(base64Codes);
-            PostImgInfo(bl,picNum);
+            var blob = convertBase64UrlToBlob(base64Codes);
+            choosedPicBlobs[picNum] = blob;
+            var url = window.URL || window.webkitURL || window.mozURL;
+            choosedPicUrls[picNum] = url.createObjectURL(blob);
         });
     }
 
@@ -36,7 +38,6 @@ var blobPics = [];//存放压缩后的图片二进制数据
                 scale = w / h;
             w = obj.width || w;
             h = obj.height || (w / scale);
-            var quality = 0.7;  // 默认图片质量为0.7
             //生成canvas
             var canvas = document.createElement('canvas');
             var ctx = canvas.getContext('2d');
@@ -83,14 +84,14 @@ var imgCompressDoneNum = 0;
         $(".weui-uploader__file").append($(tmpl.replace("@temp", "上传")));
 
         //先处理图片，并行压缩后上传
-        for (var picNum = 0; picNum < choosedPics.length;picNum++) {
-            CompressPic(choosedPics[picNum], picNum, PostImgInfo);
+        for (var picNum = 0; picNum < choosedPicBlobs.length;picNum++) {
+            PostImgInfo(choosedPicBlobs[picNum], picNum);
         };
 
         //再上传其它信息
         var timeId = setInterval(function() {
             //等待图片先上传完毕
-            if (imgCompressDoneNum==choosedPics.length) {
+            if (imgCompressDoneNum==choosedPicBlobs.length) {
                 //上传其他信息
                 clearInterval(timeId);
                 var ob = new Object();
@@ -101,7 +102,7 @@ var imgCompressDoneNum = 0;
           
                 PostTextInfo(JSON.stringify(ob));
             }
-        }, 1000);
+        }, 500);
     }
 
     var xhr;

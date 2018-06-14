@@ -4,20 +4,20 @@
     var timeId = 0;
     //获取地理位置
     function getLocation() {
-        timeId = setInterval(function() {
-                wx.getLocation({
-                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-                    success: function(res) {
-                        console.debug(res.latitude);
-                        //偶尔会有坐标获取不到的问题，增加重试机制
-                        if (res.latitude == "0.0" || res.longitude == "0.0") {
-                            $("#addressDetail").html("定位失败，正发起重试...");
-                        } else {
-                            baiduLocation(res.longitude, res.latitude);
-                        }
+        timeId = setInterval(function () {
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    console.debug(res.latitude);
+                    //偶尔会有坐标获取不到的问题，增加重试机制
+                    if (res.latitude == "0.0" || res.longitude == "0.0") {
+                        $("#addressDetail").html("定位失败，正发起重试...");
+                    } else {
+                        baiduLocation(res.longitude, res.latitude);
                     }
-                });
-            },
+                }
+            });
+        },
             2000);//2秒后重试
     }
 
@@ -67,29 +67,47 @@ var choosedCalamity = "";
     });
 }
 
-//存储已选择的图片File-Object
-var choosedPics = [];
+////存储已选择的图片File-Object
+//var choosedPics = [];
 //存储已选择的图片路径名
 var choosedPicNames = [];
-//添加图片后动态加载缩略图，缩略图预览，图片数目限定，去重等
+//存储已经压缩的Blob数据
+var choosedPicBlobs = [];
+//图片url
+var choosedPicUrls = [];
+var currentChoosedPicNum = 0;
+
+//图片数目限定，去重，添加图片后，压缩图片，加载缩略图
+var tempTimeId = 0;
 {
+
+    function Test() {
+        if (currentChoosedPicNum == 3) {
+            //阻止后续事件
+            event.stopPropagation();
+            event.preventDefault();
+            ShowMsg("图片超限", "最多只能上3张图片");
+            return false;
+        }
+    };
+
     //动态添加缩略图，weui-uploader__file_status
     $(function () {
-        var tmpl = '<li class="weui-uploader__file " style="background-image:url(#url#)"></li>',
+        var tmpl = '<li class="weui-uploader__file " style="background-image:url(/tjqxj/images/imgpre.png)"></li>',
             $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
             $uploaderInput = $("#uploaderInput"),
             $uploaderFiles = $("#uploaderFiles")
             ;
 
         $uploaderInput.on("change", function (e) {
-            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
-
-            var totalNum = files.length + $("#uploaderFiles li").length;
-            if (totalNum > 3) {
-                ShowMsg('图片超限', '最多只能上传3张图片', 400);
+            var files = e.target.files;
+            var currentNum = $("#uploaderFiles li").length;
+            var addNum = files.length;
+            if ((currentNum + addNum) > 3) {
+                ShowMsg('图片超限', '最多只能上传3张图片');
                 return;
             }
-            
+
             //开始添加图片
             for (var i = 0, len = files.length; i < len; ++i) {
                 //}
@@ -99,27 +117,38 @@ var choosedPicNames = [];
                 if (index != -1) {
                     continue;
                 }
-                choosedPics.push(file);
                 choosedPicNames.push(file.name);
-                if (url) {
-                    src = url.createObjectURL(file);
-                } else {
-                    src = e.target.result;
-                }
-                $uploaderFiles.append($(tmpl.replace('#url#', src)));
+                //压缩图片
+                var fileNum = currentNum + i;
+                CompressPic(file, fileNum);
+                $uploaderFiles.append($(tmpl));
             };
             //更新已选图片数量提示
-            var imgNum = $("#uploaderFiles li").length;
-            $(".weui-uploader__info").html(imgNum + "/3");
-
+            currentChoosedPicNum = $("#uploaderFiles li").length;
+            $("#imgchoosednum").html(currentChoosedPicNum + "/3");
+            tempTimeId = setInterval(function () {
+                isCompleted = true;
+                for (var fileNum = 0; fileNum < choosedPicNames.length; fileNum++) {
+                    if (typeof (choosedPicUrls[fileNum]) != "undefined") {
+                        $("#uploaderFiles li").eq(fileNum)
+                            .css("background-image", "url(" + choosedPicUrls[fileNum] + ")");
+                    } else {
+                        isCompleted = false;
+                    }
+                };
+                if (isCompleted) {
+                    clearInterval(tempTimeId);
+                }
+            }, 300);
         });
         $uploaderFiles.on("click", "li", function () {
             $galleryImg.attr("style", this.getAttribute("style"));
-            $gallery.fadeIn(300);
+            $gallery.fadeIn(0);
         });
         $gallery.on("click", function () {
             $gallery.fadeOut(300);
         });
+        
     });
 }
 
@@ -128,23 +157,23 @@ var isShow = false;
 //文本框字数限定符
 {
     $(function () {
-        $(".weui-textarea").on("propertychange input",
+        $("#remark").on("propertychange input",
             function () {
                 clearTimeout(setTimeId);
                 setTimeId = setTimeout(function () {
-                    var length = $(".weui-textarea").val().length;
+                    var length = $("#remark").val().length;
                     if (parseInt(length) > 100) {
                         if (!isShow) {
-                            ShowMsg('文字超限', '请尽量简洁的描述现场情况', 300);
+                            ShowMsg('文字超限', '请尽量简洁的描述现场情况');
                         }
                         isShow = true;
-                        $(".weui-textarea-counter").css("color", "#f43530");
+                        $("#inputword").css("color", "#f43530");
                     } else {
                         isShow = false;
-                        $(".weui-textarea-counter").css("color", "#b2b2b2");
+                        $("#inputword").css("color", "#b2b2b2");
                     }
                     $("#inputNum").html(length);
-                }, 1500);
+                }, 1000);
 
             });
     });
@@ -152,16 +181,16 @@ var isShow = false;
 
 //通用弹窗
 {
-    function ShowMsg(title, msg, time) {
+    function ShowMsg(title, msg) {
         //图片超限对话框关闭事件
         $("#msg").on("click",
             function () {
-                $(this).fadeOut(300);
+                $(this).fadeOut(0);
             });
 
-        $(".weui-dialog__title").html(title);
-        $(".weui-dialog__bd").html(msg);
-        $("#msg").fadeIn(time);
+        $("#msgtitle").html(title);
+        $("#msgtxt").html(msg);
+        $("#msg").fadeIn(0);
     }
 }
 
