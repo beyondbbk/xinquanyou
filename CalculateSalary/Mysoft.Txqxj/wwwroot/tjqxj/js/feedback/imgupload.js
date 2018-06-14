@@ -120,6 +120,7 @@ var imgCompressDoneNum = 0;
             uploadComplete(evt, fileNum);
         }, false);
         //xhr.upload.onloadend = uploadComplete;
+       
         xhr.send(form); //开始上传，发送form数据
     }
 

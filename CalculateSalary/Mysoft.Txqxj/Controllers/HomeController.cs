@@ -48,7 +48,6 @@ namespace Mysoft.Txqxj.Controllers
 
         public IActionResult Upload()
         {
-            
             if (Request.Form.Files.Any())
             {
                 var file = Request.Form.Files[0];
@@ -66,9 +65,7 @@ namespace Mysoft.Txqxj.Controllers
                 var temp = JsonHelper.DeserializeStringToDictionary<string,string>(Request.Form["json"]);
                 LogHelper.Info("收到灾情反馈："+ Request.Form["json"]);
             }
-
             return new ClientResult(ResultDto.DefaultSuccess("success"));
-
         }
 
         public IActionResult Success()
