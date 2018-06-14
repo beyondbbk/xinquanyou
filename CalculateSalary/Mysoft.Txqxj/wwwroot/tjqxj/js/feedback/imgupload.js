@@ -2,12 +2,12 @@
 var blobPics = [];//存放压缩后的图片二进制数据
 {
     //传入单图片文件进行压缩
-    function CompressPic(file, picNum, PostInfo) {
+    function CompressPic(file, picNum, PostImgInfo) {
         photoCompress(file, {
             quality: 0.2//压缩质量
         }, function (base64Codes) {
             var bl = convertBase64UrlToBlob(base64Codes);
-            PostInfo(bl,picNum);
+            PostImgInfo(bl,picNum);
         });
     }
 
@@ -67,31 +67,46 @@ var blobPics = [];//存放压缩后的图片二进制数据
         }
         return new Blob([u8arr], { type: mime });
     }
-
-
 }
 
-
-var unicodeId = Date.parse(new Date()) + RndNum(5);
-//上传页面信息
+var unicodeId = Date.parse(new Date()) + RndNum(5);//唯一标识
+var imgCompressDoneNum = 0;
+//开始上传
 {
     //文件信息存放于choosedPics数组
     function SumbitInfo() {
+        $(".weui-btn_primary").addClass("weui-btn_loading");
+        $(".weui-btn_primary").append($("<i class=\"weui-loading\"></i>"));
+
         var tmpl = '<div class="weui-uploader__file-content">@temp</div>';
         $(".weui-uploader__file").addClass("weui-uploader__file_status");
         $(".weui-uploader__file").append($(tmpl.replace("@temp", "上传")));
 
         //先处理图片，并行压缩后上传
         for (var picNum = 0; picNum < choosedPics.length;picNum++) {
-            CompressPic(choosedPics[picNum], picNum, PostInfo);
+            CompressPic(choosedPics[picNum], picNum, PostImgInfo);
         };
 
         //再上传其它信息
+        var timeId = setInterval(function() {
+            //等待图片先上传完毕
+            if (imgCompressDoneNum==choosedPics.length) {
+                //上传其他信息
+                clearInterval(timeId);
+                var ob = new Object();
+                ob.id = unicodeId;
+                ob.address = $("#addressDetail").html();
+                ob.calamity = choosedCalamity;
+                ob.remark = $("#remark").val();
+          
+                PostTextInfo(JSON.stringify(ob));
+            }
+        }, 1000);
     }
 
     var xhr;
     //开始上传
-    function PostInfo(blob,fileNum) {
+    function PostImgInfo(blob,fileNum) {
         var url = "/tjqxj/home/upload"; //接收上传文件的后台地址
         var form = new FormData(); // FormData 对象
         form.append("file", blob, unicodeId + "-" + choosedPicNames[fileNum]); //文件对象
@@ -106,13 +121,13 @@ var unicodeId = Date.parse(new Date()) + RndNum(5);
         }, false);
         //xhr.upload.onloadend = uploadComplete;
         xhr.send(form); //开始上传，发送form数据
-
     }
 
     //上传成功响应
     function uploadComplete(evt,fileNum) {
         $(".weui-uploader__file-content").eq(fileNum).html(100);
-        console.debug("上传完成");
+        imgCompressDoneNum++;
+        console.debug("图片" + fileNum+"上传完成");
     }
 
     //上传进度实现
@@ -122,5 +137,20 @@ var unicodeId = Date.parse(new Date()) + RndNum(5);
             var percent = Math.round(evt.loaded / evt.total * 100);
             $(".weui-uploader__file-content").eq(fileNum).html(percent);
         }
+    }
+
+    //开始上传其它信息
+    function PostTextInfo(jsonData) {
+        var url = "/tjqxj/home/upload"; //接收上传文件的后台地址
+        var form = new FormData(); // FormData 对象
+        form.append("json", jsonData); //文件对象
+        xhr = new XMLHttpRequest();  // XMLHttpRequest 对象
+        xhr.open("post", url, true); //true异步处理
+        xhr.upload.onloadend = uploadTextComplete;
+        xhr.send(form); //开始上传，发送form数据
+    }
+
+    function uploadTextComplete(evt) {
+        window.location.href = "/tjqxj/home/success";
     }
 }

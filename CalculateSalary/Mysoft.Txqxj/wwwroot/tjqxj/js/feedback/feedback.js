@@ -4,17 +4,17 @@
     var timeId = 0;
     //获取地理位置
     function getLocation() {
-        timeId = setTimeout(function() {
+        timeId = setInterval(function() {
                 wx.getLocation({
                     type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                     success: function(res) {
                         console.debug(res.latitude);
-                        //偶尔会有坐标获取不到的问题
+                        //偶尔会有坐标获取不到的问题，增加重试机制
                         if (res.latitude == "0.0" || res.longitude == "0.0") {
-                            alert("定位重试...")
-                            return;
+                            $("#addressDetail").html("定位失败，正发起重试...");
+                        } else {
+                            baiduLocation(res.longitude, res.latitude);
                         }
-                        baiduLocation(res.longitude, res.latitude);
                     }
                 });
             },
@@ -23,7 +23,7 @@
 
     //根据微信经纬度去百度获取详细位置
     function baiduLocation(longitude, latitude) {
-        clearTimeout(timeId);
+        clearInterval(timeId);
         //增加百度坐标转换（腾讯坐标转为百度坐标）
         var convertor = new BMap.Convertor();
         var pointArr = [];
@@ -51,6 +51,8 @@
     }
 }
 
+
+var choosedCalamity = "";
 //灾害类型图片，点击后变色
 {
     $(function () {
@@ -59,7 +61,8 @@
                 $(".weui-grid").css("background", "");
                 $(this).css("background", "#ECECEC");
                 var temp = $(this).children("p");
-                $("#kindName").html("灾害类型" + "（" + temp.html().replace(/(^\s*)|(\s*$)/g, "") + ")");
+                choosedCalamity = temp.html().replace(/(^\s*)|(\s*$)/g, "");
+                $("#kindName").html("灾害类型" + "（" + choosedCalamity + ")");
             });
     });
 }
@@ -87,15 +90,8 @@ var choosedPicNames = [];
                 return;
             }
             
-            
             //开始添加图片
             for (var i = 0, len = files.length; i < len; ++i) {
-                ////更新图片数，检查是否超限
-                //var num = $("#uploaderFiles li").length + 1;
-                //alert("总数：" + num);
-                //$(".weui-uploader__info").html(num + "/8");
-                //if (num > 8) {
-                    
                 //}
                 var file = files[i];
                 //判定图片是否重复，不重复就将图片文件名记录下来
@@ -110,9 +106,7 @@ var choosedPicNames = [];
                 } else {
                     src = e.target.result;
                 }
-
                 $uploaderFiles.append($(tmpl.replace('#url#', src)));
-
             };
             //更新已选图片数量提示
             var imgNum = $("#uploaderFiles li").length;
@@ -178,9 +172,4 @@ var isShow = false;
         for (var p in obj) { temp += (p + ":" + obj[p] + '\n\r'); }
         return temp;
     }
-}
-
-//上传功能
-{
-
 }

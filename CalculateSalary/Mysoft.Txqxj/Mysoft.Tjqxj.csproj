@@ -5,16 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\tjqxj\uploadimg\**" />
+    <Content Remove="wwwroot\tjqxj\uploadimg\**" />
+    <EmbeddedResource Remove="wwwroot\tjqxj\uploadimg\**" />
+    <None Remove="wwwroot\tjqxj\uploadimg\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Common\MySoft.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\tjqxj\uploadimg\" />
   </ItemGroup>
 
 </Project>
