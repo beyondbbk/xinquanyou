@@ -4,7 +4,7 @@ var blobPics = [];//存放压缩后的图片二进制数据
     //传入单图片文件进行压缩
     function CompressPic(file,picNum) {
         photoCompress(file, {
-            quality: 0.1//压缩质量
+            quality: 0.2//压缩质量
         }, function (base64Codes) {
             var blob = convertBase64UrlToBlob(base64Codes);
             choosedPicBlobs[picNum] = blob;
@@ -72,6 +72,7 @@ var blobPics = [];//存放压缩后的图片二进制数据
 
 var unicodeId = Date.parse(new Date()) + RndNum(5);//唯一标识
 var imgCompressDoneNum = 0;
+var isSuccess = true;
 //开始上传
 {
     //文件信息存放于choosedPics数组
@@ -83,7 +84,7 @@ var imgCompressDoneNum = 0;
         $(".weui-uploader__file").addClass("weui-uploader__file_status");
         $(".weui-uploader__file").append($(tmpl.replace("@temp", "上传")));
 
-        //先处理图片，并行压缩后上传
+        //先上传图片
         for (var picNum = 0; picNum < choosedPicBlobs.length;picNum++) {
             PostImgInfo(choosedPicBlobs[picNum], picNum);
         };
@@ -99,9 +100,8 @@ var imgCompressDoneNum = 0;
                 ob.address = $("#addressDetail").html();
                 ob.calamity = choosedCalamity;
                 ob.remark = $("#remark").val();
-          
                 PostTextInfo(JSON.stringify(ob));
-            }
+            } 
         }, 500);
     }
 
@@ -113,23 +113,35 @@ var imgCompressDoneNum = 0;
         form.append("file", blob, unicodeId + "-" + choosedPicNames[fileNum]); //文件对象
         xhr = new XMLHttpRequest();  // XMLHttpRequest 对象
         xhr.open("post", url, true); //true异步处理
-        //xhr.upload.onprogress = progressFunction;//上传进度
+        xhr.timeout = 20000;
         xhr.upload.addEventListener("progress", function (evt) {
             uploadProgress(evt, fileNum);
         }, false);
-        xhr.upload.addEventListener("loadend", function (evt) {
+        xhr.addEventListener("load", function (evt) {
             uploadComplete(evt, fileNum);
         }, false);
-        //xhr.upload.onloadend = uploadComplete;
-       
+        xhr.onerror = function() {
+            clearStatus();
+        };
+        xhr.ontimeout = function () {
+            clearStatus();
+        };
         xhr.send(form); //开始上传，发送form数据
     }
 
-    //上传成功响应
-    function uploadComplete(evt,fileNum) {
-        $(".weui-uploader__file-content").eq(fileNum).html(100);
-        imgCompressDoneNum++;
-        console.debug("图片" + fileNum+"上传完成");
+    //上传响应
+    function uploadComplete(evt, fileNum) {
+        if (!isSuccess) {
+            return;
+        }
+        if (evt.currentTarget.response == "success") {
+            $(".weui-uploader__file-content").eq(fileNum).html(100);
+            imgCompressDoneNum++;
+            console.debug("图片" + fileNum + "上传完成");
+        } else {
+            clearStatus();
+        }
+        
     }
 
     //上传进度实现
@@ -148,11 +160,36 @@ var imgCompressDoneNum = 0;
         form.append("json", jsonData); //文件对象
         xhr = new XMLHttpRequest();  // XMLHttpRequest 对象
         xhr.open("post", url, true); //true异步处理
-        xhr.upload.onloadend = uploadTextComplete;
+        xhr.timeout = 20000;
+        xhr.onload = uploadTextComplete;
+        xhr.onerror = function () {
+            clearStatus();
+        };
+        xhr.ontimeout = function () {
+            clearStatus();
+        };
         xhr.send(form); //开始上传，发送form数据
     }
 
     function uploadTextComplete(evt) {
-        window.location.href = "/tjqxj/home/success";
+        if (evt.currentTarget.response == "success") {
+            window.location.href = "/tjqxj/home/success";
+        } else {
+            clearStatus();
+        }
+    }
+
+    function clearStatus() {
+        isSuccess = false;
+        clearInterval(timeId);
+        //恢复状态
+        $(".weui-btn_primary").removeClass("weui-btn_loading");
+        $(".weui-btn_primary").children("i").remove();
+
+        $(".weui-uploader__file").removeClass("weui-uploader__file_status");
+        $(".weui-uploader__file").children("div").remove();
+
+        unicodeId = Date.parse(new Date()) + RndNum(5);//唯一标识
+        ShowMsg("请重试", "抱歉，上传出现了问题");
     }
 }

@@ -12,55 +12,21 @@
     <meta http-equiv="Access-Control-Allow-Origin" content="api.map.baidu.com">
     <title>灾情反馈</title>
     <link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
-    @*工具类js，提前加载*@
-    <script src="~/tjqxj/js/vconsole.min.js"></script>
-    <script src="~/tjqxj/js/feedback/common.js"></script>
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb"></script>
-    <script src="~/tjqxj/js/feedback/feedback.js"></script>
-    <script src="~/tjqxj/js/feedback/imgupload.js"></script>
-
+    <link href="~/tjqxj/css/feedback/feedback.css" rel="stylesheet" />
 </head>
 <body>
-@*操作反馈*@
-<div class="page msg_success js_show" id="successMsg" style="display: none">
-    <div class="weui-msg">
-        <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i>
-        </div>
-        <div class="weui-msg__text-area">
-            <h2 class="weui-msg__title">操作成功</h2>
-            <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a>
-            </p>
-        </div>
-        <div class="weui-msg__opr-area">
-            <p class="weui-btn-area">
-                <a href="javascript:history.back();" class="weui-btn weui-btn_primary">推荐操作</a>
-                <a href="javascript:history.back();" class="weui-btn weui-btn_default">辅助操作</a>
-            </p>
-        </div>
-        <div class="weui-msg__extra-area">
-            <div class="weui-footer">
-                <p class="weui-footer__links">
-                    <a href="javascript:void(0);" class="weui-footer__link">底部链接文本</a>
-                </p>
-                <p class="weui-footer__text">Copyright © 2008-2016 weui.io</p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="weui-panel weui-panel_access">
     @*位置*@
-    <div class="weui-panel__bd">
+    <div class="weui-panel__bd" id="locationbd">
         <div class="weui-media-box weui-media-box_text">
-            <h4 class="weui-media-box__title">当前位置</h4>
-            <p class="weui-media-box__desc" id="addressDetail">正在确定您的位置...</p>
+            <h4 class="weui-media-box__title" style="float: left">当前位置</h4>
+            <p class="weui-media-box__desc" id="addressDetail">正在定位...</p>
         </div>
     </div>
     @*位置-end*@
     @*灾害类型*@
-    <div class="weui-panel__bd">
+    <div class="weui-panel__bd" style="clear: both">
         <div class="weui-media-box weui-media-box_text">
             <h4 class="weui-media-box__title" id="kindName">灾害类型</h4>
             <div class="weui-grids">
@@ -128,21 +94,14 @@
                         高温
                     </p>
                 </a>
-                <a href="javascript:;" class="weui-grid">
-                    <div class="weui-grid__icon">
-                        <img src="~/tjqxj/images/df.png"/>
-                    </div>
-                    <p class="weui-grid__label">
-                        大风
-                    </p>
-                </a>
+                
             </div>
         </div>
 
     </div>
     @*灾害类型-end*@
     @*现场图片*@
-    <div class="weui-panel__bd">
+    <div class="weui-panel__bd" id="cssPic">
         <div class="weui-gallery" id="gallery">
             <span class="weui-gallery__img" id="galleryImg"></span>
             <div class="weui-gallery__opr">
@@ -151,7 +110,7 @@
                 </a>
             </div>
         </div>
-        <div class="weui-media-box weui-media-box_text">
+        <div class="weui-media-box weui-media-box_text" >
             @*<h4 class="weui-media-box__title">现场图片</h4>*@
             <div class="weui-uploader">
                 <div class="weui-uploader__hd">
@@ -173,17 +132,20 @@
     <div class="weui-panel__bd">
         <div class="weui-media-box weui-media-box_text">
             <h4 class="weui-media-box__title">其它信息</h4>
-            <div class="weui-cells weui-cells_form">
+            <div class="weui-cells weui-cells_form" id="remarkform">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <textarea class="weui-textarea" placeholder="请输入文本" rows="3" id="remark"></textarea>
+                        <textarea class="weui-textarea" placeholder="请描述下现场情况..." rows="3" id="remark"></textarea>
                         <div class="weui-textarea-counter" id="inputword">
                             <span id="inputNum">0</span>/100
                         </div>
                     </div>
                 </div>
             </div>
-            <a class="weui-btn weui-btn_primary" onclick="SumbitInfo()">提交</a>
+            <div style="text-align: center">
+                <a id="submitbtn" class="weui-btn weui-btn_mini weui-btn_primary" onclick="SumbitInfo()">提交</a>
+            </div>
+           
         </div>
 
     </div>
@@ -207,6 +169,14 @@
 </body>
 
 </html>
+@*工具类js，提前加载*@
+<script src="~/tjqxj/js/vconsole.min.js"></script>
+<script src="~/tjqxj/js/feedback/common.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb"></script>
+<script src="~/tjqxj/js/feedback/feedback.js"></script>
+<script src="~/tjqxj/js/feedback/imgupload.js"></script>
 <script>
     
     ////提交所有信息

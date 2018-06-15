@@ -1,0 +1,48 @@
+﻿#locationbd {
+    margin-top: 13px;
+}
+/*地理位置*/
+#addressDetail {
+    padding-left: 7px;
+    margin-top: 7px;
+}
+
+/*灾害类型文字*/
+.weui-grids a p {
+    color: gray;
+    font-size: 14px;
+}
+
+.weui-grids a {
+    width: 25%
+}
+
+.weui-media-box {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#cssPic :before  {
+    border-top: aliceblue;
+}
+
+#uploaderInput :before {
+    border-top: gainsboro;
+}
+
+#submitbtn {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.weui-panel:after {
+    border-bottom: aliceblue;
+}
+
+#remarkform {
+    margin-top: 0px;
+}
+
+#remark {
+    font-size: 15px;
+}

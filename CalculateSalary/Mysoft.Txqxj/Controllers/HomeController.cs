@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -50,6 +51,7 @@ namespace Mysoft.Txqxj.Controllers
         {
             if (Request.Form.Files.Any())
             {
+                //去重
                 var file = Request.Form.Files[0];
                 var fileId = file.FileName.Split("-")[0];
                 var path = Path.Combine(_host.WebRootPath, "tjqxj", "uploadimg",fileId);
@@ -65,7 +67,7 @@ namespace Mysoft.Txqxj.Controllers
                 var temp = JsonHelper.DeserializeStringToDictionary<string,string>(Request.Form["json"]);
                 LogHelper.Info("收到灾情反馈："+ Request.Form["json"]);
             }
-            return new ClientResult(ResultDto.DefaultSuccess("success"));
+            return Content("success");
         }
 
         public IActionResult Success()
