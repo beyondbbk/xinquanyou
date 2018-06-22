@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 
 namespace MySoft.Common
@@ -41,9 +42,10 @@ namespace MySoft.Common
         public static string Get(string url, string getDataStr, string requestEncodeType = "UTF-8", string responseEncodeType = "UTF-8", bool keepAlive = true)
         {
             var request = (HttpWebRequest)WebRequest.Create($"{url}?{getDataStr}");
+            LogHelper.Debug("请求地址信息："+ $"{url}?{getDataStr}");
             request.Method = "Get";
-            request.ContentType = "application/json";
-            request.KeepAlive = keepAlive;
+            //request.ContentType = "application/json";
+            //request.KeepAlive = keepAlive;
 
             var response = (HttpWebResponse)request.GetResponse();
             var myResponseStream = response.GetResponseStream();
@@ -56,6 +58,15 @@ namespace MySoft.Common
                 return retString;
             }
             return null;
+        }
+
+        public static string HttpGet(string url)
+        {
+            HttpClient httpClient = new HttpClient();
+            var t = httpClient.GetByteArrayAsync(url);
+            t.Wait();
+            var ret = Encoding.UTF8.GetString(t.Result);
+            return ret;
         }
     }
 }

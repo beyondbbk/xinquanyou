@@ -1,0 +1,58 @@
+﻿/*页面整体布局*/
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+} 
+
+#maindiv {
+    text-align: center;
+    height: 100%;
+}
+
+#tempturediv {
+    background: url('/tjqxj/images/weather/dycaijian.png');
+    background-size: 100% 100%;
+
+    background-repeat: no-repeat;
+    height: 60%;
+    /*background: #fff url('/tjqxj/images/weather/dycaijian.png') no-repeat left top;
+    background-size: auto;*/
+}
+
+
+    #tempturediv .weui-media-box__title {
+        font-size: 2.5em;
+        color: #6988DA;
+    }
+
+    #tempturediv .weui-media-box__desc {
+        font-size: 0.9em;
+        color: #6F8EDE;
+    }
+
+    #tempturediv .img {
+        /*margin-left: 10px;*/
+    }
+
+    #tempturediv .desc {
+        text-align: left;
+    }
+
+#otherdatadiv {
+    /*height: 20%;*/
+    font-size: 1.1em;
+}
+
+    #otherdatadiv .weui-flex__item {
+        margin-top: 1%;
+        margin-bottom: 1%;
+    }
+    .weui-grids a {
+        width: 25%
+    }
+
+    .weui-grids p,div {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }

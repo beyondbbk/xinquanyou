@@ -1,5 +1,5 @@
 ﻿
-@model Mysoft.Tjqxj.Models.ViewModel.TestJsVm
+@model Mysoft.Tjqxj.Models.ViewModel.SignVm
 @{
     Layout = null;
 }
@@ -168,20 +168,19 @@
         <a id="submitbtn" class="weui-btn weui-btn_mini weui-btn_primary" onclick="SumbitInfo()">提交</a>
     </div>
 </footer>
-
 </body>
 
 </html>
 @*工具类js，提前加载*@
 <script src="~/tjqxj/js/vconsole.min.js"></script>
-<script src="~/tjqxj/js/feedback/common.js"></script>
+<script src="~/tjqxj/js/common.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb"></script>
 <script src="~/tjqxj/js/feedback/feedback.js"></script>
 <script src="~/tjqxj/js/feedback/imgupload.js"></script>
 <script>
-
+    var openid='@Model.OpenId';
     ////提交所有信息
     //function Submit1() {
     //    var files = $('#uploaderInput').prop('files');

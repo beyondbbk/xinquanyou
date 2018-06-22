@@ -1,0 +1,62 @@
+﻿/*页面整体布局*/
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    box-sizing: border-box; /*为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制*/
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+
+footer {
+    height: 60px;
+    margin-top: -60px;
+    /*opacity: 0.5;*/
+} 
+
+/*灾害类型文字*/
+.weui-grids a p {
+    color: gray;
+    font-size: 14px;
+}
+
+.weui-grids a {
+    width: 50%
+}
+
+.weui-media-box {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#cssPic :before  {
+    border-top: aliceblue;
+}
+
+#uploaderInput :before {
+    border-top: gainsboro;
+}
+
+#submitbtn {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.weui-panel:after {
+    border-bottom: aliceblue;
+}
+
+#remarkform {
+    margin-top: 0px;
+}
+
+#remark {
+    font-size: 15px;
+}
+
+#remarklist p {
+    margin-bottom: 8px;
+}

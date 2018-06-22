@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mysoft.Tjqxj.Models;
+using Mysoft.Tjqxj.Models.Template;
 using Mysoft.Tjqxj.Models.ViewModel;
 using MySoft.Common;
 
@@ -63,7 +65,7 @@ namespace Mysoft.Tjqxj.Services
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static TestJsVm GetJsSignVm(string url)
+        public static SignVm GetJsSignVm(string url)
         {
             var sortedDic = new SortedDictionary<string, string>
             {
@@ -73,12 +75,59 @@ namespace Mysoft.Tjqxj.Services
                 { "url", url }
             };
             var jsSign = EncryptHelper.GetSha1(CommonHelper.CreateGetStr(sortedDic)).ToLower();
-            var temp = new TestJsVm();
+            var temp = new SignVm();
             temp.AppId = WxAppId;
             temp.NonceStr = sortedDic["noncestr"];
             temp.Signature = jsSign;
             temp.TimeStamp = sortedDic["timestamp"];
             return temp;
+        }
+
+        public static string GetOpenId(string code)
+        {
+            //重新获取jsticket
+            string url = "https://api.weixin.qq.com/sns/oauth2/access_token";
+            string getData = $"appid={WxAppId}&secret={AppSecret}&code={code}&grant_type=authorization_code";
+            var result = HttpHelper.Get(url, getData);
+            var dic = JsonHelper.DeserializeStringToDictionary<string, object>(result);
+            if (!dic.ContainsKey("openid")) return "";//code可能过期了
+            return dic["openid"].ToString();
+        }
+
+        /// <summary>
+        /// 根据约定的模板标题获取模板Id
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public static string GetTemplateId(string title)
+        {
+            string url = "https://api.weixin.qq.com/cgi-bin/template/get_all_private_template";
+            string getData = $"access_token={GetAccessToken()}";
+            var result = HttpHelper.Get(url, getData);
+            var dic = JsonHelper.DeserializeStringToDictionary<string, List<object>>(result);
+            foreach (var template in dic["template_list"])
+            {
+                var temp = JsonHelper.DeserializeStringToDictionary<string, string>(template.ToString());
+                if (temp["title"] == title) return temp["template_id"];
+            }
+            LogHelper.Error($"模板未能找到，期望标题为{title}{Environment.NewLine}实际结果：{result}");
+            return null;
+        }
+
+        public static bool SendMsgToUser(string openId,string templateId,object data)
+        {
+            //重新获取jsticket
+            string url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + GetAccessToken();
+            var postDic = new Dictionary<string,object>();
+            postDic.Add("touser",openId);
+            postDic.Add("template_id", templateId);
+            postDic.Add("appid", WxAppId);
+            postDic.Add("data", data);
+            var result = HttpHelper.Post(url, JsonHelper.Serialize(postDic));
+            var res = JsonHelper.Serialize(postDic);
+            var dic = JsonHelper.DeserializeStringToDictionary<string, string>(result);
+            LogHelper.Info("消息发送结果："+JsonHelper.Serialize(dic));
+            return dic["errcode"]=="0";
         }
     }
 }

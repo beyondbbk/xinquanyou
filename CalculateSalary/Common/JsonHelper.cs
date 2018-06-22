@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -67,7 +68,32 @@ namespace MySoft.Common
             return jsonDict;
         }
 
-        //public static XmlDocument
+        public static string GetString(string jsonStr,params string[] keys)
+        {
+            var dicTemp=new Dictionary<string,object>();
+            for (var i = 0; i < keys.Length; i++)
+            {
+                var key = keys[i];
+                if(i==0) dicTemp = DeserializeStringToDictionary<string, object>(jsonStr);
+                if (!dicTemp.ContainsKey(key)) throw new Exception($"从Json数据中找不到对应key数据，Json数据为{Environment.NewLine + jsonStr}keys数组{keys.ToString()}当前key{key}");
+                if (i == keys.Length - 1) return dicTemp[key].ToString();
+                dicTemp = DeserializeStringToDictionary<string, object>(dicTemp[key].ToString());
+            }
+            return null;
+        }
 
+        public static T Get<T>(string jsonStr, params string[] keys) where T : class
+        {
+            var dicTemp = new Dictionary<string, object>();
+            for (var i = 0; i < keys.Length; i++)
+            {
+                var key = keys[i];
+                if (i == 0) dicTemp = DeserializeStringToDictionary<string, object>(jsonStr);
+                if (!dicTemp.ContainsKey(key)) throw new Exception($"从Json数据中找不到对应key数据，Json数据为{Environment.NewLine + jsonStr}keys数组{keys.ToString()}当前key{key}");
+                if (i == keys.Length - 1) {return Deserlize<T>(dicTemp[key].ToString());}
+                dicTemp = DeserializeStringToDictionary<string, object>(dicTemp[key].ToString());
+            }
+            return null;
+        }
     }
 }

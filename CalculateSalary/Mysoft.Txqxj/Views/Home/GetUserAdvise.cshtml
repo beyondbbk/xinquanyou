@@ -1,0 +1,143 @@
+﻿@model List<Mysoft.Tjqxj.Models.ViewModel.GetMsgVm>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>用户建议</title>
+    <link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
+    <style>
+        #advisetime {
+            font-size: 1em;
+        }
+
+        .weui-media-box__desc {
+            font-size: 15px;
+        }
+
+        #splitline {
+            height: 1px;
+            line-height: 1;
+            /*background-color: aliceblue;*/
+        }
+
+        #replymsg, #replyTextarea {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="weui-form-preview">
+
+    @foreach (var temp in Model)
+    {
+            @*<div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">留言时间</label>
+                        <em class="weui-form-preview__value" id="advisetime">@temp.UploadTime.ToString("MM月dd日 hh时mm分ss秒")</em>
+                    </div>
+                </div>
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">留言内容</label>
+                        <span class="weui-form-preview__value">@temp.Msg</span>
+                    </div>
+                </div>*@
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_text">
+
+                <p class="weui-media-box__desc">内容：@temp.Msg</p>
+                <ul class="weui-media-box__info">
+                    <li class="weui-media-box__info__meta">留言时间：@temp.UploadTime.ToString("MM月dd日 hh时mm分ss秒")</li>
+                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">@(temp.IsReply == 0 ? "暂未回复" : "已回复")</li>
+                </ul>
+                @if (temp.IsReply == 1)
+                {
+                    <p class="weui-media-box__desc" id="replymsg">回复：@temp.ReplyMsg</p>
+                }
+
+            </div>
+        </div>
+            @*<div class="weui-form-preview__ft">
+                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick='DeleteUserAdvise("@temp.ID",this)'>删除</a>
+                </div>*@
+        <div class="weui-form-preview__ft">
+            <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick='DeleteUserAdvise("@temp.ID",this)'>删除</a>
+
+            <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="ReplyUser('@temp.ID',this)">@(temp.IsReply == 0 ? "回复" : "已回复")</button>
+        </div>
+        <div class="weui-progress__bar">
+            <div class="weui-progress__inner-bar js_progress" style="width: 100%;" id="splitline"></div>
+        </div>
+    }
+
+</div>
+<div class="js_dialog" id="replyDialog" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog weui-skin_android">
+        @*<div class="weui-dialog__hd"><strong class="weui-dialog__title">回复内容</strong></div>*@
+      
+
+                <div class="weui-cells weui-cells_form" >
+                    <div class="weui-cell">
+              
+                            <textarea class="weui-textarea" placeholder="在这里回复用户..." rows="5" id="replyTextarea"></textarea>
+
+                    </div>
+                </div>
+
+   
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" onclick="CancelReply()">取消</a>
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="ReplyYes(this)">确认回复</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="~/tjqxj/js/common.js"></script>
+<script>
+    var isHandling = false;
+    var temp = "";
+    var $currentOb;
+    //改变数据类型
+    function DeleteUserAdvise(id, currentOb) {
+        
+        var ob = new Object();
+        ob.id = id;
+        CommonPost(ob, "/tjqxj/home/deleteuseradvise", currentOb, "正在删除...", "已删除", "删除失败，请重试");
+    }
+
+
+    var currentId = "";
+    var currentReplyOb;
+    function ReplyUser(id,currentOb) {
+        if ($(currentOb).html() == "已回复") {
+            return;
+        }
+        currentId = id;
+        currentReplyOb = $(currentOb);
+        $("#replyDialog").fadeIn(0);
+    }
+
+    function CancelReply() {
+        $("#replyDialog").fadeOut(0);
+    }
+
+    function ReplyYes(crrentOb) {
+        var ob = new Object();
+        ob.id = currentId;
+        ob.replyMsg = $("#replyTextarea").val();
+        var funcExtraSuccessTemp = function() {
+            $("#replyDialog").fadeOut(0);
+            currentReplyOb.html("已回复");
+
+        };
+        CommonPost(ob, "/tjqxj/home/savereply", crrentOb, "正在回复...", "回复成功", "请重试", funcExtraSuccessTemp);
+    }
+</script>

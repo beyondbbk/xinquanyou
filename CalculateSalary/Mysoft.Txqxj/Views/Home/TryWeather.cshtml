@@ -1,0 +1,186 @@
+﻿@model Mysoft.Tjqxj.Models.ViewModel.SignVm
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>正在获取天气信息...</title>
+    <link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
+    <link href="~/tjqxj/css/getweather/getweather.css" rel="stylesheet" />
+</head>
+<body>
+    @*<div class="page__bd page__bd_spacing" id="maindiv">
+        <div class="weui-flex" id="tempturediv">
+            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                <div class="weui-media-box__hd img">
+                    <img class="weui-media-box__thumb" src="/tjqxj/images/weather/wz.png" alt="">
+                </div>
+                <div class="weui-media-box__bd desc">
+                    <p class="weui-media-box__title">定位中...</p>
+                    <p class="weui-media-box__desc">下雨状况未知</p>
+                </div>
+            </a>
+        </div>
+        <div class="weui-flex" id="otherdatadiv">
+            <div class="weui-flex__item">
+                <div class="placeholder">
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__hd">
+                            <img src="~/tjqxj/images/weather/js.png" style="width:25px;margin-left:5px;display:block" />
+                        </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            <p>降雨量</p>
+                        </div>
+
+                    </a>
+                </div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="placeholder">
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__hd">
+                            <img src="~/tjqxj/images/weather/pm.png" style="width:25px;margin-left:5px;display:block" />
+                        </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            <p>AQI2.5</p>
+                        </div>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-flex">
+            <div class="weui-grids" style="width: 100%">
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">此刻</p>
+                    <p class="weui-grid__label">未知</p>
+                    <div class="weui-grid__icon">
+                        <img src="~/tjqxj/images/weather/wz.png" />
+                    </div>
+                    <p class="weui-grid__label">未知</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">明天</p>
+                    <p class="weui-grid__label">未知</p>
+                    <div class="weui-grid__icon">
+                        <img src="~/tjqxj/images/weather/wz.png" />
+                    </div>
+                    <p class="weui-grid__label">未知</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">后天</p>
+                    <p class="weui-grid__label">未知</p>
+                    <div class="weui-grid__icon">
+                        <img src="~/tjqxj/images/weather/wz.png" />
+                    </div>
+                    <p class="weui-grid__label">未知</p>
+                </a>
+            </div>
+        </div>
+    </div>*@
+</body>
+</html>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb"></script>
+<script>
+    $(function() {
+        console.debug("加载成功");
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@Model.AppId', // 必填，公众号的唯一标识
+            timestamp: @Model.TimeStamp, // 必填，生成签名的时间戳
+            nonceStr: '@Model.NonceStr', // 必填，生成签名的随机串
+            signature: '@Model.Signature', // 必填，签名
+            jsApiList: ['getLocation'] // 必填，需要使用的JS接口列表
+        });
+        wx.ready(function() {
+            console.debug("执行ready");
+            getLocation();//获取用户位置
+            // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+        });
+        wx.error(function(res) {
+            console.debug("执行error");
+            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+        });
+
+    });
+
+    var timeId = 0;
+    var long = "";
+    var lat = "";
+    //获取地理位置
+    function getLocation() {
+        
+
+        timeId = setInterval(function () {
+                wx.getLocation({
+                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function (res) {
+                        console.debug(res.latitude);
+                        //偶尔会有坐标获取不到的问题，增加重试机制
+                        if (res.latitude == "0.0" || res.longitude == "0.0") {
+                            console.log("定位失败了...");
+                        } else {
+                            long = res.longitude;
+                            lat = res.latitude;
+                            baiduLocation(res.longitude, res.latitude);
+                        }
+                    }
+                });
+            },
+            2000);//2秒后重试
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                console.debug(res.latitude);
+                //偶尔会有坐标获取不到的问题，增加重试机制
+                if (res.latitude == "0.0" || res.longitude == "0.0") {
+                    console.log("定位失败了...");
+                } else {
+                    long = res.longitude;
+                    lat = res.latitude;
+                    baiduLocation(res.longitude, res.latitude);
+                }
+            }
+        });
+    }
+
+    //根据微信经纬度去百度获取详细位置
+    function baiduLocation(longitude, latitude) {
+        clearInterval(timeId);
+        //增加百度坐标转换（腾讯坐标转为百度坐标）
+        var convertor = new BMap.Convertor();
+        var pointArr = [];
+        var ggPoint = new BMap.Point(longitude, latitude);
+        pointArr.push(ggPoint);
+        convertor.translate(pointArr, 1, 5, translateCallback);
+    };
+    //百度经纬度转换之后的回调
+    function translateCallback(data) {
+
+        var url =
+            'http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=' + data.points[0].lat + ',' + data.points[0].lng + '&output=json&pois=1&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb';
+        $.ajax(url,
+            {
+                dataType: 'jsonp',
+                crossDomain: true,
+                success: function (data) {
+
+                    if (data.status == '0') {
+                        window.location.href = "/tjqxj/home/getweather?long=" +
+                            long +
+                            "&lat=" +
+                            lat +
+                            "&address=" +
+                            data.result.addressComponent.city + " " + data.result.addressComponent.district +" "+ data.result.addressComponent.street;
+                        return;
+                    }
+                }
+            });
+    }
+</script>

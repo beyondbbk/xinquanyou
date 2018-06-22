@@ -1,0 +1,191 @@
+﻿
+@model Mysoft.Tjqxj.Models.ViewModel.SearchProductVm
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.ProductType</title>
+    <link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
+    <style>
+        #headBackImg {
+            height: 100px;
+            background-image: url(/tjqxj/images/bj.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        #productType {
+            color: #E1EFFF;
+            padding-top: 20px;
+            font-weight: 900;
+            font-size: 1.3em;
+        }
+        /*#dataDesc {
+            color: #E1EFFF;
+            margin-right: 20px;
+            font-weight: 900;
+            font-size: 0.8em;
+        }*/
+        .weui-cells {
+            font-size: 15px;
+        }
+
+        .searchWord {
+            color: red;
+            font-weight: bold
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="page__hd" id="headBackImg" style="text-align: center">
+            <p class="page__desc" id="productType">通江气象局-@Model.ProductType</p>
+
+            @*<p class="page__desc" id="dataDesc"></p>*@
+        </div>
+        <div class="page__bd">
+            <!--<a href="javascript:;" class="weui-btn weui-btn_primary">点击展现searchBar</a>-->
+            <div class="weui-search-bar weui-search-bar_focusing" id="searchBar">
+                <form class="weui-search-bar__form">
+                    <div class="weui-search-bar__box">
+                        <i class="weui-icon-search"></i>
+                        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="输入关键字进行搜索" required value="@Model.SearchWord"/>
+                        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                    </div>
+                    <label class="weui-search-bar__label" id="searchText">
+                        <i class="weui-icon-search"></i>
+                        <span>搜索</span>
+                    </label>
+                </form>
+                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchDo">搜索</a>
+            </div>
+            @*<div class="weui-cells searchbar-result" id="searchResult">
+                <div class="weui-cell weui-cell_access">
+                    <div class="weui-cell__bd weui-cell_primary">
+                        <p>实时搜索文本</p>
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_access">
+                    <div class="weui-cell__bd weui-cell_primary">
+                        <p>实时搜索文本</p>
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_access">
+                    <div class="weui-cell__bd weui-cell_primary">
+                        <p>实时搜索文本</p>
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_access">
+                    <div class="weui-cell__bd weui-cell_primary">
+                        <p>实时搜索文本</p>
+                    </div>
+                </div>
+            </div>*@
+            <div class="weui-cells">
+                @foreach (var temp in @Model.Products)
+                {
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__bd">
+                            @if (!string.IsNullOrEmpty(Model.SearchWord))
+                            {
+                                <p>@Html.Raw(temp.ProductTitle.Replace(Model.SearchWord, $"<span class='searchWord'>{Model.SearchWord}</span>"))</p>
+                            }
+                            else
+                            {
+                                <p>@temp.ProductTitle</p>
+                            }
+
+                        </div>
+                        <div class="weui-cell__ft" onclick='PreImg("@temp.ImgPath")'>详细</div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    $(function(){
+        var $searchBar = $('#searchBar'),
+            //$searchResult = $('#searchResult'),
+            $searchText = $('#searchText'),
+            $searchInput = $('#searchInput'),
+            $searchClear = $('#searchClear'),
+            $searchDo = $('#searchDo');
+
+        function hideSearchResult(){
+            //$searchResult.hide();
+            $searchInput.val('');
+        }
+        function cancelSearch(){
+            hideSearchResult();
+            $searchBar.removeClass('weui-search-bar_focusing');
+            $searchText.show();
+        }
+
+        $searchText.on('click', function(){
+            $searchBar.addClass('weui-search-bar_focusing');
+            $searchInput.focus();
+        });
+        $searchInput
+                .on('blur', function () {
+                    if(!this.value.length) cancelSearch();
+                })
+                .on('input', function(){
+                    if(this.value.length) {
+                        //$searchResult.show();
+                    } else {
+                        //$searchResult.hide();
+                    }
+                })
+            ;
+        $searchClear.on('click', function(){
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchDo.on('click', function() {
+            window.location.href =
+                "/tjqxj/home/searchproduct?productType=@(Html.UrlEncoder.Encode(Model.ProductType))&searchWord=" + $searchInput.val();
+            $searchInput.focus();
+        });
+    });
+</script>
+<script>
+    $(function() {
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@Model.SignVm.AppId', // 必填，公众号的唯一标识
+            timestamp: @Model.SignVm.TimeStamp, // 必填，生成签名的时间戳
+            nonceStr: '@Model.SignVm.NonceStr', // 必填，生成签名的随机串
+            signature: '@Model.SignVm.Signature', // 必填，签名
+            jsApiList: ['getLocation', 'chooseImage','previewImage'] // 必填，需要使用的JS接口列表
+        });
+        wx.ready(function() {
+            console.debug("签名通过");
+
+        });
+        wx.error(function(res) {
+            console.debug("签名不通过");
+        });
+
+    });
+
+    function PreImg(imgstr) {
+        var imgarray = imgstr.split('#');
+        var host="@Model.CurrentHost";
+        var finallarray = [];
+        for (var num=0;num<imgarray.length;num++) {
+            finallarray[num] = host+imgarray[num];
+        }
+        wx.previewImage({
+            current: "'" + finallarray[0]+"'", // 当前显示图片的http链接
+            urls: finallarray // 需要预览的图片http链接列表
+        });
+    }
+</script>

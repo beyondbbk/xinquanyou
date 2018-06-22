@@ -32,16 +32,16 @@ namespace Mysoft.Txqxj
             //    options.MultipartBodyLengthLimit = 60000000;
             //});
             services.AddMvc(options =>
-            {
-                options.Filters.Add<GloabException>();
-            })
-            .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); 
+                {
+                    options.Filters.Add<GloabException>();
+                })
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
         }

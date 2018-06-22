@@ -1,0 +1,12 @@
+﻿.weui-btn, .imglabel, .timeitem {
+    margin-top: 7px;
+}
+
+.weui-form-preview__hd .weui-form-preview__value {
+    font-size: 1.4em;
+}
+#splitline {
+    height: 1px;
+    line-height: 1;
+    /*background-color: aliceblue;*/
+}

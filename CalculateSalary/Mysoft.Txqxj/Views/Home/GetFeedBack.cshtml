@@ -1,0 +1,139 @@
+﻿
+@model Mysoft.Tjqxj.Models.ViewModel.GetFeedBackVm
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>灾情查看</title>
+    <link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
+    <link href="~/tjqxj/css/getfeedback/getfeedback.css" rel="stylesheet" />
+</head>
+<body>
+    @*顶部导航*@
+    <div class="page navbar">
+        <div class="page__bd" style="height: 100%;">
+            <div class="weui-tab">
+                <div class="weui-navbar">
+                    <div class="weui-navbar__item @(Model.Type==0?"weui-bar__item_on":"")" onclick="window.location.href='/tjqxj/home/getfeedback?type=0'">
+                        未处理
+                    </div>
+                    <div class="weui-navbar__item @(Model.Type==1?"weui-bar__item_on":"")" onclick="window.location.href='/tjqxj/home/getfeedback?type=1'">
+                        已处理
+                    </div>
+                </div>
+                <div class="weui-tab__panel">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @*详细list*@
+    <div class="weui-form-preview">
+
+        @foreach (var temp in Model.FeedBacks)
+        {
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">灾害类型</label>
+                    <em class="weui-form-preview__value">@temp.Climate</em>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">时间地点</label>
+                    <span class="weui-form-preview__value">@temp.Address</span>
+                </div>
+                <div class="weui-form-preview__item timeitem">
+                    <label class="weui-form-preview__label ">反馈时间</label>
+                    <span class="weui-form-preview__value">@temp.UploadTime.ToString("yyyy年MM月dd日 hh时mm分ss秒")</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label imglabel">现场图片</label>
+                    <span class="weui-form-preview__value">
+                        @if (string.IsNullOrEmpty(temp.Images))
+                        {
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">没有</a>
+                        }
+                        else
+                        {
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" onclick="PreImg('@temp.Images')">查看</a>
+                        }
+
+                    </span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">用户备注</label>
+                    <span class="weui-form-preview__value">@(string.IsNullOrEmpty(temp.Remark) ? "无" : temp.Remark)</span>
+                </div>
+            </div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="ChangeType('@Model.Type','@temp.ID',this)" type="@temp.IsHandled" dbid="@temp.ID">标记为@(Model.Type == 0 ? "已处理" : "未处理")</a>
+                <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="ThankUser('@temp.ID',this)">@(temp.IsThank==0?"感谢反馈者":"已感谢")</button>
+            </div>
+            <div class="weui-progress__bar">
+                <div class="weui-progress__inner-bar js_progress" style="width: 100%;" id="splitline"></div>
+            </div>
+        }
+
+    </div>
+</body>
+</html>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="~/tjqxj/js/common.js"></script>
+<script>
+    $(function() {
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@Model.SignVm.AppId', // 必填，公众号的唯一标识
+            timestamp: @Model.SignVm.TimeStamp, // 必填，生成签名的时间戳
+            nonceStr: '@Model.SignVm.NonceStr', // 必填，生成签名的随机串
+            signature: '@Model.SignVm.Signature', // 必填，签名
+            jsApiList: ['getLocation', 'chooseImage','previewImage'] // 必填，需要使用的JS接口列表
+        });
+        wx.ready(function() {
+            console.debug("签名通过");
+
+        });
+        wx.error(function(res) {
+            console.debug("签名不通过");
+        });
+
+    });
+
+    function PreImg(imgstr) {
+        var imgarray = imgstr.split('#');
+        var host="@Model.CurrentHost";
+        var finallarray = [];
+        for (var num=0;num<imgarray.length;num++) {
+            finallarray[num] = host+imgarray[num];
+        }
+        wx.previewImage({
+            current: "'" + finallarray[0]+"'", // 当前显示图片的http链接
+            urls: finallarray // 需要预览的图片http链接列表
+        });
+    }
+
+
+    //改变处理状态
+    function ChangeType(type, id,currentOb) {
+        var ob = new Object();
+        ob.id = id;
+        ob.type = type;
+        CommonPost(ob, "/tjqxj/home/changetype", currentOb, "正在标记...", "标记成功", "标记失败，请重试");
+    }
+
+    //感谢反馈者
+    function ThankUser(id,currentOb) {
+        
+        var ob = new Object();
+        ob.id = id;
+        CommonPost(ob, "/tjqxj/home/thankfeedbackuser", currentOb, "正在感谢...", "已感谢", "操作失败，请重试");
+    }
+</script>
+

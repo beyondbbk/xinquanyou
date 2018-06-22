@@ -73,10 +73,15 @@ var blobPics = [];//存放压缩后的图片二进制数据
 var unicodeId = Date.parse(new Date()) + RndNum(5);//唯一标识
 var imgCompressDoneNum = 0;
 var isSuccess = true;
+var isUploading = false;
 //开始上传
 {
     //文件信息存放于choosedPics数组
     function SumbitInfo() {
+        if (isUploading) {
+            return;
+        }
+        isUploading = true;
         $(".weui-btn_primary").addClass("weui-btn_loading");
         $(".weui-btn_primary").append($("<i class=\"weui-loading\"></i>"));
 
@@ -98,8 +103,9 @@ var isSuccess = true;
                 var ob = new Object();
                 ob.id = unicodeId;
                 ob.address = $("#addressDetail").html();
-                ob.calamity = choosedCalamity;
+                ob.climate = choosedClimate;
                 ob.remark = $("#remark").val();
+                ob.openid = openid;
                 PostTextInfo(JSON.stringify(ob));
             } 
         }, 500);
@@ -173,7 +179,7 @@ var isSuccess = true;
 
     function uploadTextComplete(evt) {
         if (evt.currentTarget.response == "success") {
-            window.location.href = "/tjqxj/home/success";
+            window.location.href = "/tjqxj/home/success?headTitle=反馈成功&desc=我们会认真处理您的反馈信息";
         } else {
             clearStatus();
         }
@@ -181,6 +187,7 @@ var isSuccess = true;
 
     function clearStatus() {
         isSuccess = false;
+        isUploading = false;
         clearInterval(timeId);
         //恢复状态
         $(".weui-btn_primary").removeClass("weui-btn_loading");

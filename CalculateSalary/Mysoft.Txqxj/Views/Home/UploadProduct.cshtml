@@ -1,0 +1,155 @@
+﻿
+@model Mysoft.Tjqxj.Models.ViewModel.SignVm
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="api.map.baidu.com">
+    <title>上传产品</title>
+    <link href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
+
+    <link href="~/tjqxj/css/uploadproduct/uploadproduct.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="weui-panel weui-panel_access" id="main">
+
+        @*产品类型*@
+        <div class="weui-panel__bd" style="clear: both">
+            <div class="weui-media-box weui-media-box_text">
+                <h4 class="weui-media-box__title" id="kindName">产品类型</h4>
+                <div class="weui-grids" id="chooseproduct">
+                    <a href="javascript:;" class="weui-grid">
+                        <div class="weui-grid__icon">
+
+                            <img src="~/tjqxj/images/yj.png" />
+                        </div>
+                        <p class="weui-grid__label">
+                            预警信号
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid">
+                        <div class="weui-grid__icon">
+                            <img src="~/tjqxj/images/yb.png" />
+
+                        </div>
+                        <p class="weui-grid__label">
+                            预报产品
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid">
+                        <div class="weui-grid__icon">
+                            <img src="~/tjqxj/images/jc.png" />
+                        </div>
+                        <p class="weui-grid__label">
+                            决策服务
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid">
+                        <div class="weui-grid__icon">
+                            <img src="~/tjqxj/images/ny.png" />
+                        </div>
+                        <p class="weui-grid__label">
+                            农业气象
+                        </p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        @*灾害类型-end*@
+        @*现场图片*@
+        <div class="weui-panel__bd" id="cssPic">
+            <div class="weui-gallery" id="gallery">
+                <span class="weui-gallery__img" id="galleryImg"></span>
+                <div class="weui-gallery__opr">
+                    <a href="javascript:" class="weui-gallery__del">
+                        @*<i class="weui-icon-delete weui-icon_gallery-delete"></i>*@
+                    </a>
+                </div>
+            </div>
+            <div class="weui-media-box weui-media-box_text">
+                @*<h4 class="weui-media-box__title">现场图片</h4>*@
+                <div class="weui-uploader">
+                    <div class="weui-uploader__hd">
+                        <p class="weui-uploader__title">产品图片</p>
+                        <div class="weui-uploader__info" id="imgchoosednum">0/3</div>
+                    </div>
+                    <div class="weui-uploader__bd">
+                        <ul class="weui-uploader__files" id="uploaderFiles"></ul>
+                        <div class="weui-uploader__input-box">
+                            <input id="uploaderInput" onclick="Test()" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*现场图片-end*@
+
+        @*说明*@
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_text" id="remarklist">
+                <h4 class="weui-media-box__title">说明</h4>
+                <p class="weui-media-box__desc">1，图片文件名将直接作为标题使用。</p>
+                <p class="weui-media-box__desc">2，后上传的同名图片文件将覆盖以前的。</p>
+            </div>
+        </div>
+        @*弹窗通知*@
+        <div style="display: none;" id="msg">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__hd">
+                    <strong class="weui-dialog__title" id="msgtitle">title</strong>
+                </div>
+                <div class="weui-dialog__bd" id="msgtxt">msg</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div style="text-align: center">
+            <a id="submitbtn" class="weui-btn weui-btn_mini weui-btn_primary" onclick="SumbitInfo()">开始上传</a>
+        </div>
+    </footer>
+</body>
+
+</html>
+@*工具类js，提前加载*@
+<script src="~/tjqxj/js/vconsole.min.js"></script>
+<script src="~/tjqxj/js/common.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb"></script>
+<script src="~/tjqxj/js/uploadproduct/imgupload.js"></script>
+<script src="~/tjqxj/js/uploadproduct/uploadproduct.js"></script>
+<script>
+
+    $(function() {
+        console.debug("加载成功");
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@Model.AppId', // 必填，公众号的唯一标识
+            timestamp: @Model.TimeStamp, // 必填，生成签名的时间戳
+            nonceStr: '@Model.NonceStr', // 必填，生成签名的随机串
+            signature: '@Model.Signature', // 必填，签名
+            jsApiList: ['getLocation', 'chooseImage','previewImage'] // 必填，需要使用的JS接口列表
+        });
+        wx.ready(function() {
+            console.debug("执行ready");
+            // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+        });
+        wx.error(function(res) {
+            console.debug("执行error");
+            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+        });
+    });
+</script>

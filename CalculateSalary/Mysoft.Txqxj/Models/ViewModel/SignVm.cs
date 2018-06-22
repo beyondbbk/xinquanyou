@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Mysoft.Tjqxj.Models.ViewModel
 {
-    public class TestJsVm
-    {
+    public class SignVm
+    { 
         public string AppId { get; set; }
 
         public string TimeStamp { get; set; }
@@ -14,5 +14,7 @@ namespace Mysoft.Tjqxj.Models.ViewModel
         public string NonceStr { get; set; }
 
         public string Signature { get; set; }
+
+        public string OpenId { get; set; }
     }
 }

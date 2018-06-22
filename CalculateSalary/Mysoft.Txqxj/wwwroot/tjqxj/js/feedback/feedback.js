@@ -52,7 +52,7 @@
 }
 
 
-var choosedCalamity = "";
+var choosedClimate = "";
 //灾害类型图片，点击后变色
 {
     $(function () {
@@ -61,7 +61,7 @@ var choosedCalamity = "";
                 $("#chooseclimate .weui-grid").css("background", "");
                 $(this).css("background", "#ECECEC");
                 var temp = $(this).children("p");
-                choosedCalamity = temp.html().replace(/(^\s*)|(\s*$)/g, "");
+                choosedClimate = temp.html().replace(/(^\s*)|(\s*$)/g, "");
                 
             });
     });
@@ -116,12 +116,10 @@ var tempTimeId = 0;
                     continue;
                 }
                 $uploaderFiles.append($(tmpl));
-                $("#uploaderFiles li").css("height", "65px");
-                $("#uploaderFiles li").css("width", "65px");
                 choosedPicNames.push(file.name);
                 //压缩图片
                 var fileNum = currentNum + i;
-                setTimeout(CompressPic(file, fileNum),800+(i*400));
+                setTimeout(CompressPic(file, fileNum),500+(i*300));
             };
             //更新已选图片数量提示
             currentChoosedPicNum = $("#uploaderFiles li").length;
@@ -139,14 +137,14 @@ var tempTimeId = 0;
                 if (isCompleted) {
                     clearInterval(tempTimeId);
                 }
-            }, 900);
+            }, 300);
         });
         $uploaderFiles.on("click", "li", function () {
             $galleryImg.attr("style", this.getAttribute("style"));
             $gallery.fadeIn(0);
         });
         $gallery.on("click", function () {
-            $gallery.fadeOut(300);
+            $gallery.fadeOut(0);
         });
         
     });
