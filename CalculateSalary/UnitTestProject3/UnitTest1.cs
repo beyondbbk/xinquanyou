@@ -37,5 +37,11 @@ namespace UnitTestProject3
         {
             var result =CaiyunService.GetPrediction(new RealtimeClimateInfo(), "104.06476", "30.5702");
         }
+
+        [TestMethod]
+        public void GetImageInfo()
+        {
+             //SatelliteLiveService.GetImageInfo();
+        }
     }
 }

@@ -15,17 +15,20 @@
 </head>
 <body>
 <div class="page__bd page__bd_spacing" id="maindiv">
-    <div class="weui-flex"  id="tempturediv">
-        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-            <div class="weui-media-box__hd img">
+    <div class="weui-flex" id="tempturediv" style="text-align: center">
+        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="width: 100%; display: block;margin-top: 20%">
+            <div class="weui-media-box__hd img" style="float: left">
                 <img class="weui-media-box__thumb" src="/tjqxj/images/weather/@(ClimateInfo.GetClimateIconName(Model.ClimateInfo.Skycons[0]["value"])).png" alt="">
             </div>
             <div class="weui-media-box__bd desc">
-                <p class="weui-media-box__title">@(Model.RealtimeClimateInfo.Tempture)&#8451;</p>
-                <p class="weui-media-box__desc">@(Model.RealtimeClimateInfo.ClimateDescription)</p>
-                <p class="weui-media-box__desc">@(Model.RealtimeClimateInfo.RainDescription)</p>
+                <p class="weui-media-box__title">@(Model.RealtimeClimateInfo.Tempture)&#8451;</p><br/>
+                <p class="weui-media-box__desc">天气：@(Model.RealtimeClimateInfo.ClimateDescription)</p><br/>
+                <p class="weui-media-box__desc">雨况：@(Model.RealtimeClimateInfo.RainDescription)</p>
             </div>
+
         </a>
+        
+
     </div>
     <div class="weui-flex" id="otherdatadiv">
         <div class="weui-flex__item">

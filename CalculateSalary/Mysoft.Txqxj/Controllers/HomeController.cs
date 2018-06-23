@@ -324,5 +324,20 @@ namespace Mysoft.Txqxj.Controllers
             var signVm = WxCommonService.GetJsSignVm(requestUrl);
             return View(signVm);
         }
+
+        /// <summary>
+        /// 获得实况资料，天气雷波回达和卫星云图
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult GetLive()
+        {
+            var first = Request.Query.ContainsKey("first") ? Request.Query["first"].ToString(): "";
+            var second = Request.Query.ContainsKey("second") ? Request.Query["second"].ToString() : "";
+            var third = Request.Query.ContainsKey("third") ? Request.Query["third"].ToString() : "";
+            var getLiveVm = new GetLiveVm(first,second,third);
+            getLiveVm.ImageList = SatelliteLiveService.GetImageInfo(getLiveVm.ApiName).OrderByDescending(u => u["v_SHIJIAN"])
+                .ToList();
+            return View(getLiveVm);
+        }
     }
 }
