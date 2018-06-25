@@ -44,16 +44,19 @@
                 </div>
             </div>
         </div>
+        <div class="weui-flex" style="text-align: center;margin-bottom:2%">
+            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" onclick="AutoChange(this)">动态轮播</a>
+        </div>
         <div class="weui-flex" style="text-align: center">
             <div class="weui-grids">
                 @for (var i = 0; i < Model.ImageList.Count; i++)
                 {
-                    <a href="javascript:;" class="weui-grid" imgSrc="@Model.ImageList[i]["fileURL"]" onclick="ChangeImg(this)" style="@(i==0?"background:#C8C8CD":"") ">
+                    <a href="javascript:;" class="weui-grid" imgSrc="@Model.ImageList[i]["fileURL"]" onclick="ChangeImg(this)" style="@(i == 0 ? "background:#C8C8CD" : "")">
                         <p class="weui-grid__label">@Model.GetDateInfo(Model.ImageList[i]["v_SHIJIAN"])</p>
                         <p class="weui-grid__label">@Model.GetTimeInfo(Model.ImageList[i]["v_SHIJIAN"])</p>
                     </a>
                 }
-                
+
             </div>
         </div>
     </div>
@@ -149,5 +152,26 @@
         $ob.css("background", "#C8C8CD");
     }
 
-
+    var isAuto = false;
+    var timeId = 0;
+    var index = 1;
+    function AutoChange(ob) {
+        $ob = $(ob);
+        if (isAuto) {
+            //停止轮播
+            $ob.html("再次轮播");
+            isAuto = false;
+            clearInterval(timeId);
+            return;
+        }
+        isAuto = true;
+        $ob.html("正在轮播");
+        timeId = setInterval(function() {
+            $(".weui-grids a")[index].click();
+            index++;
+            if (index > ($(".weui-grids a").length-1)) {
+                index = 0;
+            }
+        },1500);
+    }
 </script>

@@ -16,14 +16,14 @@
 <body>
 <div class="page__bd page__bd_spacing" id="maindiv">
     <div class="weui-flex" id="tempturediv" style="text-align: center">
-        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="width: 100%; display: block;margin-top: 20%">
+        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="width: 100%; display: block;margin-top: 35%">
             <div class="weui-media-box__hd img" style="float: left">
-                <img class="weui-media-box__thumb" src="/tjqxj/images/weather/@(ClimateInfo.GetClimateIconName(Model.ClimateInfo.Skycons[0]["value"])).png" alt="">
+                <img class="weui-media-box__thumb" src="/tjqxj/images/weather/@(ClimateInfo.GetClimateIconName(Model.ClimateInfo.Skycons[0]["value"],Model.RealtimeClimateInfo.LocalPrecipitation)).png" alt="">
             </div>
             <div class="weui-media-box__bd desc">
-                <p class="weui-media-box__title">@(Model.RealtimeClimateInfo.Tempture)&#8451;</p><br/>
-                <p class="weui-media-box__desc">天气：@(Model.RealtimeClimateInfo.ClimateDescription)</p><br/>
-                <p class="weui-media-box__desc">雨况：@(Model.RealtimeClimateInfo.RainDescription)</p>
+                <p class="weui-media-box__title">@(ClimateInfo.GetClimateDisplayName(Model.ClimateInfo.Skycons[0]["value"],Model.RealtimeClimateInfo.LocalPrecipitation)+" "+Model.RealtimeClimateInfo.Tempture)&#8451;</p><br/>
+                @*<p class="weui-media-box__desc">天气：@(ClimateInfo.GetClimateDisplayName(Model.ClimateInfo.Skycons[0]["value"]))</p><br/>
+                <p class="weui-media-box__desc">雨况：@(Model.RealtimeClimateInfo.RainDescription)</p>*@
             </div>
 
         </a>
@@ -34,17 +34,18 @@
         <div class="weui-flex__item">
             <div class="placeholder">
                 <a class="weui-cell weui-cell_access" href="javascript:;">
-                    <div class="weui-cell__hd">
+                    @*<div class="weui-cell__hd">
                         <img src="~/tjqxj/images/weather/aqi.png" style="width:25px;margin-left:5px;display:block" />
-                    </div>
+                    </div>*@
                     <div class="weui-cell__bd weui-cell_primary">
-                        <p>@(Model.RealtimeClimateInfo.AQI)</p>
+                        @*<img src="~/tjqxj/images/weather/aqi.png" style="width:25px;display:inline" />*@
+                        <p style="display: inline">空气质量 @(Html.Raw(ClimateInfo.GetAirRank(Model.RealtimeClimateInfo.AQI)))</p>
                     </div>
 
                 </a>
             </div>
         </div>
-        <div class="weui-flex__item">
+        @*<div class="weui-flex__item">
             <div class="placeholder">
                 <a class="weui-cell weui-cell_access" href="javascript:;">
                     <div class="weui-cell__hd">
@@ -56,7 +57,7 @@
 
                 </a>
             </div>
-        </div>
+        </div>*@
     </div>
 
     <div class="weui-flex">
@@ -65,9 +66,9 @@
             {
                 <a href="javascript:;" class="weui-grid">
                     <p class="weui-grid__label">@Model.ClimateInfo.DateDisplay[i]</p>
-                    <p class="weui-grid__label">@ClimateInfo.GetClimateDisplayName(Model.ClimateInfo.Skycons[i]["value"])</p>
+                    <p class="weui-grid__label">@ClimateInfo.GetClimateDisplayName(Model.ClimateInfo.Skycons[i]["value"],Model.ClimateInfo.Precipitations[i]["avg"])</p>
                     <div class="weui-grid__icon">
-                        <img src="~/tjqxj/images/weather/@(ClimateInfo.GetClimateIconName(Model.ClimateInfo.Skycons[i]["value"])).png"/>
+                        <img src="~/tjqxj/images/weather/@(ClimateInfo.GetClimateIconName(Model.ClimateInfo.Skycons[i]["value"],Model.ClimateInfo.Precipitations[i]["avg"])).png"/>
                     </div>
                     <p class="weui-grid__label">@(Model.ClimateInfo.Temperatures[i]["avg"])&#8451;</p>
                 </a>

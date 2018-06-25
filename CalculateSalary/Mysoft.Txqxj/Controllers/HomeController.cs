@@ -311,6 +311,7 @@ namespace Mysoft.Txqxj.Controllers
             //otherRealtimeInfo.NearRainDistance = realTimeInfo.Item4;
             realtimeClimateInfo.PM = realTimeInfo.Item3;
             realtimeClimateInfo.Tempture = realTimeInfo.Item6;
+            realtimeClimateInfo.LocalPrecipitation = realTimeInfo.Item7;//增加本地降水量指标
 
             getWeatherVm.ClimateInfo = CaiyunService.GetPrediction(realtimeClimateInfo, longitude, latitude).Item2;
 
@@ -335,7 +336,7 @@ namespace Mysoft.Txqxj.Controllers
             var second = Request.Query.ContainsKey("second") ? Request.Query["second"].ToString() : "";
             var third = Request.Query.ContainsKey("third") ? Request.Query["third"].ToString() : "";
             var getLiveVm = new GetLiveVm(first,second,third);
-            getLiveVm.ImageList = SatelliteLiveService.GetImageInfo(getLiveVm.ApiName).OrderByDescending(u => u["v_SHIJIAN"])
+            getLiveVm.ImageList = SatelliteLiveService.GetImageInfo(getLiveVm.ApiName).OrderBy(u => u["v_SHIJIAN"])
                 .ToList();
             return View(getLiveVm);
         }

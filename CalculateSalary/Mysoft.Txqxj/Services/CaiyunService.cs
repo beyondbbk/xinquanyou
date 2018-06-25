@@ -23,7 +23,7 @@ namespace Mysoft.Tjqxj.Services
         /// <param name="longitude"></param>
         /// <param name="latitude"></param>
         /// <returns></returns>
-        public static Tuple<bool, string,string,string,string,string> GetRealtimeInfo(string longitude, string latitude)
+        public static Tuple<bool, string,string,string,string,string,string> GetRealtimeInfo(string longitude, string latitude)
         {
             var url = $"http://api.caiyunapp.com/v2/{key}/{longitude},{latitude}/realtime.json";
             var getData = "unit=metric:v2";
@@ -34,8 +34,6 @@ namespace Mysoft.Tjqxj.Services
                 LogHelper.Error("获取实时天气错误："+result);
                 return null;
             }
-
-
             var resultDic = JsonHelper.DeserializeStringToDictionary<string, object>(tempDic["result"].ToString());
             var skycon = resultDic["skycon"].ToString();//天气类型
             var pm = resultDic["pm25"].ToString();
@@ -51,7 +49,8 @@ namespace Mysoft.Tjqxj.Services
             }
             //var local = JsonHelper.DeserializeStringToDictionary<string, string>(precipitation["local"].ToString());
             //var localIntensity = local["intensity"];
-            return new Tuple<bool, string, string, string, string,string>(true,skycon,pm,nearestDistance, aqi, tempture);
+            var localPrecipitation = JsonHelper.GetString(result, "result", "precipitation", "local", "intensity");
+            return new Tuple<bool, string, string, string, string,string,string>(true,skycon,pm,nearestDistance, aqi, tempture,localPrecipitation);
         }
 
         public static Tuple<bool, ClimateInfo> GetPrediction(RealtimeClimateInfo realtimeClimateInfo,string longitude, string latitude)
@@ -73,6 +72,8 @@ namespace Mysoft.Tjqxj.Services
             climateInfo.AQIs = JsonHelper.Get<List<Dictionary<string, string>>>(result, "result", "daily", "aqi");
             climateInfo.PMs= JsonHelper.Get<List<Dictionary<string, string>>>(result, "result", "daily", "pm25");
             climateInfo.Skycons = JsonHelper.Get<List<Dictionary<string, string>>>(result, "result", "daily", "skycon");
+            climateInfo.Precipitations = JsonHelper.Get<List<Dictionary<string,string>>>(result, "result", "daily", "precipitation");
+
             return new Tuple<bool, ClimateInfo>(true,climateInfo);
         }
     }
