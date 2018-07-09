@@ -26,11 +26,11 @@ var tempTimeId = 0;
 {
 
     function Test() {
-        if (currentChoosedPicNum == 3) {
+        if (currentChoosedPicNum == 20) {
             //阻止后续事件
             event.stopPropagation();
             event.preventDefault();
-            ShowMsg("图片超限", "最多只能上3张图片");
+            ShowMsg("图片超限", "最多只能上20张图片");
             return false;
         }
     };
@@ -47,8 +47,8 @@ var tempTimeId = 0;
             var files = e.target.files;
             var currentNum = $("#uploaderFiles li").length;
             var addNum = files.length;
-            if ((currentNum + addNum) > 3) {
-                ShowMsg('图片超限', '最多只能上传3张图片');
+            if ((currentNum + addNum) > 20) {
+                ShowMsg('图片超限', '最多只能上传20张图片');
                 return;
             }
 
@@ -69,7 +69,7 @@ var tempTimeId = 0;
             };
             //更新已选图片数量提示
             currentChoosedPicNum = $("#uploaderFiles li").length;
-            $("#imgchoosednum").html(currentChoosedPicNum + "/3");
+            $("#imgchoosednum").html(currentChoosedPicNum + "/20");
             tempTimeId = setInterval(function () {
                 isCompleted = true;
                 for (var fileNum = 0; fileNum < choosedPicNames.length; fileNum++) {

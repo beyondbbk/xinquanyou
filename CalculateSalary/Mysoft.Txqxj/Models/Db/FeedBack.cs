@@ -38,5 +38,14 @@ namespace Mysoft.Tjqxj.Models.Db
         public int IsThank { get; set; }
 
         public string OpenId { get; set; }
+
+        public List<string> ImagesList
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(Images)) return new List<string>();
+                return Images.Split("#").ToList();
+            }
+        }
     }
 }

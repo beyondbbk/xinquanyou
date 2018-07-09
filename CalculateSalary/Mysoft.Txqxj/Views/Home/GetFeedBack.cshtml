@@ -33,54 +33,66 @@
         </div>
     </div>
     @*详细list*@
-    <div class="weui-form-preview">
+<div class="weui-form-preview">
 
-        @foreach (var temp in Model.FeedBacks)
-        {
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">灾害类型</label>
-                    <em class="weui-form-preview__value">@temp.Climate</em>
-                </div>
+    @foreach (var temp in Model.FeedBacks)
+    {
+        <div class="weui-form-preview__hd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">灾害类型</label>
+                <em class="weui-form-preview__value">@temp.Climate</em>
             </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">时间地点</label>
-                    <span class="weui-form-preview__value">@temp.Address</span>
-                </div>
-                <div class="weui-form-preview__item timeitem">
-                    <label class="weui-form-preview__label ">反馈时间</label>
-                    <span class="weui-form-preview__value">@temp.UploadTime.ToString("yyyy年MM月dd日 hh时mm分ss秒")</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label imglabel">现场图片</label>
-                    <span class="weui-form-preview__value">
-                        @if (string.IsNullOrEmpty(temp.Images))
+        </div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">时间地点</label>
+                <span class="weui-form-preview__value">@temp.Address</span>
+            </div>
+            <div class="weui-form-preview__item timeitem">
+                <label class="weui-form-preview__label ">反馈时间</label>
+                <span class="weui-form-preview__value">@temp.UploadTime.ToString("yyyy年MM月dd日 hh时mm分ss秒")</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label imglabel">现场图片</label>
+                <span class="weui-form-preview__value">
+                    @if (string.IsNullOrEmpty(temp.Images))
+                    {
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">没有</a>
+                    }
+                    else
+                    {
+                        for (int i = 0; i < temp.ImagesList.Count; i++)
                         {
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">没有</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary viewImg" onclick="PreImg('@temp.ImagesList[i]')">图片@(i+1)</a>
                         }
-                        else
-                        {
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" onclick="PreImg('@temp.Images')">查看</a>
-                        }
+                            
+                    }
 
-                    </span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">用户备注</label>
-                    <span class="weui-form-preview__value">@(string.IsNullOrEmpty(temp.Remark) ? "无" : temp.Remark)</span>
-                </div>
+                </span>
             </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="ChangeType('@Model.Type','@temp.ID',this)" type="@temp.IsHandled" dbid="@temp.ID">标记为@(Model.Type == 0 ? "已处理" : "未处理")</a>
-                <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="ThankUser('@temp.ID',this)">@(temp.IsThank==0?"感谢反馈者":"已感谢")</button>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">用户备注</label>
+                <span class="weui-form-preview__value">@(string.IsNullOrEmpty(temp.Remark) ? "无" : temp.Remark)</span>
             </div>
-            <div class="weui-progress__bar">
-                <div class="weui-progress__inner-bar js_progress" style="width: 100%;" id="splitline"></div>
-            </div>
-        }
+        </div>
+        <div class="weui-form-preview__ft">
+            <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="ChangeType('@Model.Type','@temp.ID',this)" type="@temp.IsHandled" dbid="@temp.ID">标记为@(Model.Type == 0 ? "已处理" : "未处理")</a>
+            <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" onclick="ThankUser('@temp.ID',this)">@(temp.IsThank==0?"感谢反馈者":"已感谢")</button>
+        </div>
+        <div class="weui-progress__bar">
+            <div class="weui-progress__inner-bar js_progress" style="width: 100%;" id="splitline"></div>
+        </div>
+    }
 
+</div>
+<div class="weui-gallery" id="gallery">
+    <span class="weui-gallery__img" id="galleryImg"></span>
+    <div class="weui-gallery__opr">
+        <a href="javascript:" class="weui-gallery__del">
+            @*<i class="weui-icon-delete weui-icon_gallery-delete"></i>*@
+        </a>
     </div>
+</div>
 </body>
 </html>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -104,9 +116,21 @@
             console.debug("签名不通过");
         });
 
+        //图片消失
+        $gallery = $("#gallery");
+        $gallery.on("click", function () {
+            $gallery.fadeOut(0);
+        });
     });
 
     function PreImg(imgstr) {
+        $galleryImg = $("#galleryImg");
+        $galleryImg.css("background-image", "url(" + imgstr+")");
+        $gallery.fadeIn(0);
+    }
+
+    //废弃，不兼容PC
+    @*function PreImg(imgstr) {
         var imgarray = imgstr.split('#');
         var host="@Model.CurrentHost";
         var finallarray = [];
@@ -117,7 +141,7 @@
             current: "'" + finallarray[0]+"'", // 当前显示图片的http链接
             urls: finallarray // 需要预览的图片http链接列表
         });
-    }
+    }*@
 
 
     //改变处理状态

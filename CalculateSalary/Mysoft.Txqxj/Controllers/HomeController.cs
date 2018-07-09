@@ -283,7 +283,7 @@ namespace Mysoft.Txqxj.Controllers
             if (Request.Query.ContainsKey("searchWord")) searchWord = Request.Query["searchWord"];
 
             var db = new EFContext();
-            var dbList = db.Products.Where(u => u.ProductType == productType && u.ProductTitle.Contains(searchWord)).ToList();
+            var dbList = db.Products.Where(u => u.ProductType == productType && u.ProductTitle.Contains(searchWord)).OrderByDescending(u=>u.UploadTime).ToList();
             ViewData["productType"] = productType;
             var temp = new SearchProductVm();
             temp.ProductType = productType;
@@ -295,6 +295,35 @@ namespace Mysoft.Txqxj.Controllers
             temp.CurrentHost = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
             return View(temp);
         }
+
+        //删除产品
+        public IActionResult DeleteProduct()
+        {
+            var db = new EFContext();
+            //先删除数据
+            var deleteIds = Request.Query.ContainsKey("deleteIds") ? Request.Query["deleteIds"].ToString() : "";
+            if (!string.IsNullOrEmpty(deleteIds))
+            {
+                var delete = db.Products.Where(u => deleteIds.Contains(u.ID + ","));
+                db.RemoveRange(delete);
+                db.SaveChanges();
+            }
+
+            var searchWord = "";
+            if (Request.Query.ContainsKey("searchWord")) searchWord = Request.Query["searchWord"];
+
+            
+            var dbList = db.Products.Where(u=>u.ProductTitle.Contains(searchWord)).OrderByDescending(u => u.ProductTitle).ToList();
+            var temp = new DeleteProductVm();
+            temp.SearchWord = searchWord;
+            temp.Products = dbList;
+            var requestUrl =
+                $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{HttpContext.Request.Path}{HttpContext.Request.QueryString}";
+            temp.SignVm = WxCommonService.GetJsSignVm(requestUrl);
+            temp.CurrentHost = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            return View(temp);
+        }
+
 
         public IActionResult GetWeather()
         {
