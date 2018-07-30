@@ -1,0 +1,13 @@
+﻿
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
+}
+
+.testcolor {
+    background-color: grey;
+}
