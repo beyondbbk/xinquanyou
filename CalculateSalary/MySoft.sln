@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoft.ResManger", "MySoft.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mysoft.Tjqxj", "Mysoft.Txqxj\Mysoft.Tjqxj.csproj", "{448B7913-C67D-4475-B76D-FBAA93077629}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject3", "UnitTestProject3\UnitTestProject3.csproj", "{2A2E5CA8-4265-4941-B9AD-72DEBF3E985C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject3", "UnitTestProject3\UnitTestProject3.csproj", "{2A2E5CA8-4265-4941-B9AD-72DEBF3E985C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoft.Weeding", "MySoft.Weeding\MySoft.Weeding.csproj", "{EE04AE04-212C-44A3-A5C7-9601BCA9D513}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{2A2E5CA8-4265-4941-B9AD-72DEBF3E985C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A2E5CA8-4265-4941-B9AD-72DEBF3E985C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A2E5CA8-4265-4941-B9AD-72DEBF3E985C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE04AE04-212C-44A3-A5C7-9601BCA9D513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE04AE04-212C-44A3-A5C7-9601BCA9D513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE04AE04-212C-44A3-A5C7-9601BCA9D513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE04AE04-212C-44A3-A5C7-9601BCA9D513}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
