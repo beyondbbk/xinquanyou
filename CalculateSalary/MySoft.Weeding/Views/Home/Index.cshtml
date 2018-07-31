@@ -10,86 +10,93 @@
     @*
         <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.css" rel="stylesheet" />*@
     <link href="~/weeding/css/amazeui.css" rel="stylesheet" />
+    <link href="~/weeding/css/animate.css" rel="stylesheet" />
+    @*<link href="~/weeding/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />*@
     <link href="~/weeding/css/weeding.css" rel="stylesheet" />
+    @*<link href="~/weeding/css/typing.css" rel="stylesheet" />*@
+
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    @*<script src="~/weeding/lib/bootstrap/dist/js/bootstrap.js"></script>*@
     <script src="~/weeding/js/amazeui.js"></script>
     <script src="~/weeding/js/amazeui.ie8polyfill.js"></script>
     <script src="~/weeding/js/amazeui.widgets.helper.js"></script>
     <script src="~/weeding/js/typed.js"></script>
-    <script src="~/weeding/js/test.js"></script>
+    <!-- 加载 Babel -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        import '/weeding/js/weeding.js';
+    </script>
+    @*<script src="~/weeding/js/finalweeding.js"></script>*@
+    @*<script src="~/weeding/js/typing.js"></script>*@
     @*
         <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.js"></script>
         <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.ie8polyfill.js"></script>
         <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.widgets.helper.js"></script>*@
 </head>
-<body>
-<div class="am-vertical-align" style="height:50%;text-align: center">
-    <div class="am-vertical-align-middle" >
-       <span id="whatToSay"></span>
+
+<body >
+
+<div id="mainbody" style="height: 100%">
+    <div class="am-g" style="height: 10%">
+
+    </div>
+    <div class="am-g" style="height: 80%">
+        <div class="am-u-sm-11 am-u-sm-centered">
+            <div id="temp" style="display: none">
+                <div class="am-g" style="text-align:center">
+                    <h1>通知</h1>
+                </div>
+                <div class="am-g">&nbsp;&nbsp;&nbsp;&nbsp;本人xx与xxx已水到渠成，xx年x月x日x时于xx酒店，请各位亲友携款钱往，概不赊账。</div>
+           
+            </div>
+            <span id="whatToSay"></span>
+        </div>
+
+    </div>
+    <div class="am-g" style="height: 10%">
+
+    </div>
+    
+</div>
+   
+<div id="secondbody" style="display: none">
+    <div class="am-g" style="height: 10%">
+
+    </div>
+    
+    <div class="am-g" style="height: 20%">
+        <div class="am-u-sm-11 am-u-sm-centered">
+            <div id="secondtemp" style="display: none">
+                <div class="am-g" style="text-align:center">
+                    <h1>新郎是谁</h1>
+                </div>
+           
+            </div>
+            <span id="secondman"></span>
+        </div>
+    </div>
+    
+    <div class="am-g" style="height: 60%">
+        <div class="am-u-sm-11 am-u-sm-centered">
+            <div id="secondimgtemp" style="display: none">
+                <img class="am-circle am-img-thumbnail" style="width: 90%;height: 90%" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80"/>
+            </div>
+            <div id="secondimg" style="text-align: center"></div>
+        </div>
+    </div>
+    
+    <div class="am-g" style="height: 10%">
+
     </div>
 </div>
-<div class="am-vertical-align" style="height:50%;text-align: center">
-    <div class="am-vertical-align-middle" >
-        <span id="otherToSay"></span>
-    </div>
-</div>
-
-@*内容
-    <div id="typed-strings">
-        <p>哈哈哈哈</p>
-
-    </div>*@
 </body>
 
+
 </html>
+
 <script>
-    var whatToSay = new Typed('#whatToSay', {
-        strings:["XX：XXXXXXX","4234234"],
-        //stringsElement: '#typed-strings',
-        typeSpeed: 100,//打字延迟
-        backSpeed: 10,//删除延迟
-        //混序，会使句子以乱序输出
-        //shuffle: true,
+    
 
-        //控制删除的效果
-        //fadeOut: true,
-        //fadeOutClass: 'typed-fade-out',
-        //fadeOutDelay: 500,
-
-        //光标
-        cursorChar: '|',
-
-        onStringTyped: (arrayPos, self) => {
-            self.options.showCursor = false;
-            self.showCursor = false;
-        },
-        onComplete: (self) => {
-            
-            otherToSay();
-        }
-    });
-
-    function otherToSay() {
-        var otherToSay = new Typed('#otherToSay', {
-            strings:["没有什么好说的了，就这样吧。"],
-            //stringsElement: '#typed-strings',
-            typeSpeed: 100,//打字延迟
-            backSpeed: 10,//删除延迟
-            //混序，会使句子以乱序输出
-            //shuffle: true,
-
-            //控制删除的效果
-            //fadeOut: true,
-            //fadeOutClass: 'typed-fade-out',
-            //fadeOutDelay: 500,
-
-            //光标
-            cursorChar: '|',
-            onComplete: (self) => {
-            
-            }
-        });
-    }
 
 </script>
 
