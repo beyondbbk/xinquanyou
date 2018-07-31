@@ -21,11 +21,8 @@
     <script src="~/weeding/js/amazeui.ie8polyfill.js"></script>
     <script src="~/weeding/js/amazeui.widgets.helper.js"></script>
     <script src="~/weeding/js/typed.js"></script>
-    <!-- 加载 Babel -->
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script type="text/babel">
-        import '/weeding/js/weeding.js';
-    </script>
+
+    <script src="~/weeding/ts/weeding.js"></script>
     @*<script src="~/weeding/js/finalweeding.js"></script>*@
     @*<script src="~/weeding/js/typing.js"></script>*@
     @*
@@ -35,19 +32,42 @@
 </head>
 
 <body >
-
-<div id="mainbody" style="height: 100%">
+@*活动页面*@
+<div id="mainPage" style="height: 100%">
+    @for (var i = 0; i < 10; i++)
+    {
+        <div class="am-g" style="height: 10%">
+            @for (var j = 0; j < 12; j++)
+            {
+                
+                if (j > 3 && j < 9)
+                {
+                    <div class="am-u-sm-1" style="width: 64px">
+                        <img class="am-radius" alt="140*140" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80" width="60" height="60"/>
+                    </div>
+                }
+                else
+                {
+                    <div class="am-u-sm-1">
+                       
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>
+<div id="firstPage" style="display: none">
     <div class="am-g" style="height: 10%">
 
     </div>
     <div class="am-g" style="height: 80%">
         <div class="am-u-sm-11 am-u-sm-centered">
             <div id="temp" style="display: none">
-                <div class="am-g" style="text-align:center">
-                    <h1>通知</h1>
+                <div class="am-g" style="text-align: center">
+                    <h1>XX</h1>
                 </div>
-                <div class="am-g">&nbsp;&nbsp;&nbsp;&nbsp;本人xx与xxx已水到渠成，xx年x月x日x时于xx酒店，请各位亲友携款钱往，概不赊账。</div>
-           
+                <div class="am-g">&nbsp;&nbsp;&nbsp;&nbsp;XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX。</div>
+
             </div>
             <span id="whatToSay"></span>
         </div>
@@ -56,47 +76,33 @@
     <div class="am-g" style="height: 10%">
 
     </div>
-    
-</div>
-   
-<div id="secondbody" style="display: none">
-    <div class="am-g" style="height: 10%">
 
+</div>
+
+<div id="secondPage" style="display: none">
+    <div class="am-g" style="height: 10%">
     </div>
-    
     <div class="am-g" style="height: 20%">
         <div class="am-u-sm-11 am-u-sm-centered">
             <div id="secondtemp" style="display: none">
-                <div class="am-g" style="text-align:center">
-                    <h1>新郎是谁</h1>
+                <div class="am-g" style="text-align: center">
+                    <h1>XXXX</h1>
                 </div>
-           
             </div>
             <span id="secondman"></span>
         </div>
     </div>
-    
     <div class="am-g" style="height: 60%">
         <div class="am-u-sm-11 am-u-sm-centered">
             <div id="secondimgtemp" style="display: none">
-                <img class="am-circle am-img-thumbnail" style="width: 90%;height: 90%" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80"/>
+                <img class="am-circle am-img-thumbnail" style="width: 90%; height: 90%" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80"/>
             </div>
             <div id="secondimg" style="text-align: center"></div>
         </div>
     </div>
-    
     <div class="am-g" style="height: 10%">
-
     </div>
 </div>
 </body>
-
-
 </html>
-
-<script>
-    
-
-
-</script>
 

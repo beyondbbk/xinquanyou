@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mysoft.Tjqxj", "Mysoft.Txqx
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject3", "UnitTestProject3\UnitTestProject3.csproj", "{2A2E5CA8-4265-4941-B9AD-72DEBF3E985C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoft.Weeding", "MySoft.Weeding\MySoft.Weeding.csproj", "{EE04AE04-212C-44A3-A5C7-9601BCA9D513}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoft.Weeding", "MySoft.Weeding\MySoft.Weeding.csproj", "{EE04AE04-212C-44A3-A5C7-9601BCA9D513}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{730B6E62-1A2B-47B0-9D88-9FD090087469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{EE04AE04-212C-44A3-A5C7-9601BCA9D513}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE04AE04-212C-44A3-A5C7-9601BCA9D513}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE04AE04-212C-44A3-A5C7-9601BCA9D513}.Release|Any CPU.Build.0 = Release|Any CPU
+		{730B6E62-1A2B-47B0-9D88-9FD090087469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{730B6E62-1A2B-47B0-9D88-9FD090087469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{730B6E62-1A2B-47B0-9D88-9FD090087469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{730B6E62-1A2B-47B0-9D88-9FD090087469}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
