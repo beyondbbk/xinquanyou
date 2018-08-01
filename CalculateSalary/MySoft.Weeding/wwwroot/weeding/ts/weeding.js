@@ -34,8 +34,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 $(function () {
-    per10Height = $(".am-g").css("height");
+    per10Height = $("#mainPage").height(); //640
     console.log(per10Height);
+    console.log($("#mainPage").width()); //360
     //secondAction();
 });
 function firstAction() {

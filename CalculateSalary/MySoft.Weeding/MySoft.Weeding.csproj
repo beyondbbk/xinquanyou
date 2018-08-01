@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="scripts\imgword.js" />
+    <None Remove="scripts\imgword.js.map" />
+    <None Remove="scripts\imgword.ts" />
     <None Remove="scripts\weeding.ts" />
   </ItemGroup>
 

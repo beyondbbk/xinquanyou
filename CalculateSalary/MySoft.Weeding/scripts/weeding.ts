@@ -4,8 +4,9 @@ declare var Promise;
 declare var per10Height;//页面10%高度
 
 $(() => {
-    per10Height = $(".am-g").css("height");
+    per10Height = $("#mainPage").height();//640
     console.log(per10Height);
+    console.log($("#mainPage").width());//360
     //secondAction();
 
 });
