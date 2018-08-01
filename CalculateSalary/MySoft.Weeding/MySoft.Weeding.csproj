@@ -6,18 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="scripts\imgword.js" />
-    <None Remove="scripts\imgword.js.map" />
-    <None Remove="scripts\imgword.ts" />
-    <None Remove="scripts\weeding.ts" />
+    <Compile Remove="scripts\**" />
+    <Content Remove="scripts\**" />
+    <EmbeddedResource Remove="scripts\**" />
+    <None Remove="scripts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="package.json" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="scripts\weeding.ts" />
+    <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>

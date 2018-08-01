@@ -1,8 +1,7 @@
 ////var $ = selectors => document.querySelector(selectors);
 //var $all = selectors => document.querySelectorAll(selectors);
 
-//用于展示的图片
-var imgList1 = Array.from({ length: 11 }, (v, i) => `weeding/images/face${i+1}.jpg`);
+
 //var imgList2 = Array.from({ length: 11 }, (v, i) => `weeding/images/face${i+1}.jpg`);
 //var imgList3 = Array.from({ length: 11 }, (v, i) => `weeding/images/face${i+1}.jpg`);
 //var imgList = imgList1.concat(imgList2, imgList3);
@@ -42,20 +41,5 @@ var imgList1 = Array.from({ length: 11 }, (v, i) => `weeding/images/face${i+1}.j
 
 //];
 
-var EOITextArr =
-[
-    '              ',
-    '   xxxxxxx    ',
-    '   x     x    ',
-    '   x     x    ',
-    '   xxxxxxx    ',
-    '         x    ',
-    '         x    ',
-    '   xxxxxxx    ',
-    '              ',
-    '              '
 
-];
-
-typeImgWord("mainPage", EOITextArr, imgList1);
 
