@@ -28,25 +28,25 @@ namespace MySoft.Common
 
         public static void Debug(object msg)
         {
-            Logger.Debug(msg);
+            Logger.Debug(msg+"\n\r");
    
         }
 
         public static void Info(object msg)
         {
-            Logger.Info(msg);
+            Logger.Info(msg + "\n\r");
 
         }
 
         public static void Error(object msg)
         {
-            Logger.Error(msg);
+            Logger.Error(msg + "\n\r");
 
         }
 
         public static void Fatal(object msg)
         {
-            Logger.Fatal(msg);
+            Logger.Fatal(msg + "\n\r");
 
         }
 

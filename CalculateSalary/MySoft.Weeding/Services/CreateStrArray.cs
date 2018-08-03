@@ -19,7 +19,7 @@ namespace MySoft.Weeding.Services
         public static List<string> GetFormBmp(string imgName,int width,int height)
         {
             var list = new List<string>();
-            Image img = Image.FromFile(@"C:\1.jpg");
+            Image img = Image.FromFile(imgName+".jpg");
             Bitmap bmpobj = (Bitmap)img;
             Bitmap result = new Bitmap(width, height);
             var heightRatio = (double)bmpobj.Height / result.Height;
@@ -44,8 +44,8 @@ namespace MySoft.Weeding.Services
                 }
                 list.Add(string.Join('#', temp));
             }
-            Image img1 = (Image)result;
-            img1.Save(@"C:/hui.jpg");
+            //Image img1 = (Image)result;
+            //img1.Save(@"C:/hui.jpg");
             return list;
         }
 
@@ -62,35 +62,45 @@ namespace MySoft.Weeding.Services
             //g.DrawString("A", new Font(FontFamily.GenericSerif,10), Brushes.Black, new PointF() { X = Convert.ToSingle(1), Y = Convert.ToSingle(1) });
 
             var bmp = TextToBitmap(str, new Font(fontName, fontSize), Rectangle.Empty, Color.Black, Color.AliceBlue);
-            //bmp.Save("c:\\save.jpg", ImageFormat.Jpeg);
+            bmp.Save("save.jpg", ImageFormat.Jpeg);
             //var result = string.Join("", Enumerable.Range(0, 256).Select(a => new { x = a % bmp.Height, y = a / bmp.Width })
             //    .Select(x => bmp.GetPixel(x.x, x.y).GetBrightness() > 0.5f ? " " : "1"));
 
             var final = new List<string>();
+            bool isFirst = false;
+            int firstHasDataNum = 0;
+            int lastHasDataNum = 0;
             for (int hIndex = 0; hIndex < bmp.Height; hIndex++)
             {
                 var line = "";
                 for (int wIndex = 0; wIndex < bmp.Width; wIndex++)
                 {
-
-                    var temp = bmp.GetPixel(wIndex, hIndex).GetBrightness() > 0.5f ? "1" : "0";
+                    //x-不生效区域 y-生效区域
+                    var temp = bmp.GetPixel(wIndex, hIndex).GetBrightness() > 0.5f ? "x" : "y";
                     line += temp;
 
                 }
-                if (line.Any(u => u != '1'))
+                final.Add(line);
+                if (line.Any(u => u == 'y') && !isFirst) //从上至下，仅处理一次
                 {
-                    final.Add(line);
+                    firstHasDataNum = hIndex;
+                    isFirst = true;
+
+                }
+                else if(line.Any(u => u == 'y') && isFirst)//记住最后的位置
+                {
+                    lastHasDataNum = hIndex;
                 }
 
             }
-
-            var startIndex = 0;
-            var endIndex = 0;
+            final = final.GetRange(firstHasDataNum, lastHasDataNum - firstHasDataNum+1);
+            var startIndex = -1;
+            var endIndex = -1;
 
             var tempCpunt = new List<int>();
             for (int i = 0; i < final[0].Length; i++)
             {
-                var count = final.Where(u => u[i] == '0').Count();
+                var count = final.Count(u => u[i] == 'y');
                 tempCpunt.Add(count);
                 if (count == 0)
                 {
@@ -103,7 +113,7 @@ namespace MySoft.Weeding.Services
             }
             for (int i = final[0].Length-1; i>0; i--)
             {
-                var count = final.Where(u => u[i] == '0').Count();
+                var count = final.Count(u => u[i] == 'y');
                 if (count == 0)
                 {
                     endIndex = i;
@@ -114,12 +124,25 @@ namespace MySoft.Weeding.Services
                 }
             }
 
-
-            var newTemp = new List<string>();
-            for (int i = 0; i < final.Count; i++)
+            var tempResult = "";
+            foreach (var line in final)
             {
-                LogHelper.Debug("strat:"+startIndex + " end:" +endIndex+" end-start:"+(endIndex-startIndex));
-                newTemp.Add(final[i].Substring(startIndex, endIndex - startIndex));
+                tempResult += $"'{line}',\n\r";
+            }
+            tempResult = $"[{tempResult}]";
+            var newTemp = new List<string>();
+            LogHelper.Debug($"字符串：{str}\n\r结果：{tempResult}");
+
+            foreach (var t in final)
+            {
+                if (endIndex - startIndex > 0)
+                {
+                    newTemp.Add(t.Substring(startIndex, endIndex - startIndex));
+                }
+                else
+                {
+                    newTemp.Add(t.Substring(startIndex));
+                }
             }
 
             return newTemp;

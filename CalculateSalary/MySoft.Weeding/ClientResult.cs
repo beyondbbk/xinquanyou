@@ -52,20 +52,21 @@ namespace MySoft.Weeding
                 milliSeconds = Environment.TickCount - startMilliSecond;
             }
             var request = context.HttpContext.Request;
-            LogHelper.Info("test");
 
-            LogHelper.Info($"耗时：{milliSeconds}毫秒{Environment.NewLine}" +
-                                $"请求地址：{request.Host + request.Path}{(!request.QueryString.HasValue ? "" : request.QueryString.ToString())}{Environment.NewLine}" +
-                                $"Post参数：{(Convert.ToInt32(request.ContentLength) == 0 ? "无" : GetRequestBodyStr(context))}{Environment.NewLine}" +
+            LogHelper.Info($"耗时：{milliSeconds}毫秒\n\r" +
+                                $"请求地址：{request.Host + request.Path}{(!request.QueryString.HasValue ? "" : request.QueryString.ToString())}\n\r" +
+                                $"Post参数：{(Convert.ToInt32(request.ContentLength) == 0 ? "无" : GetRequestBodyStr(context))}\n\r" +
                                 $"响应参数：{ret}");
         }
         private string GetRequestBodyStr(ActionContext filterContext)
         {
+            var result = "";
             var request = filterContext.HttpContext.Request;
-            //request.Body.Position = 0;
-            var buffer = new byte[Convert.ToInt32(request.ContentLength)];
-            request.Body.Read(buffer, 0, buffer.Length);
-            return Encoding.UTF8.GetString(buffer);
+            foreach (var key in request.Form.Keys)
+            {
+                result += $"{key}:{request.Form[key]} ";
+            }
+            return result.Replace("\n\r","换行符");
         }
     }
 }

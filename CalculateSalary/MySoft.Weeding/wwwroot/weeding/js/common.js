@@ -86,7 +86,7 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
     var arr = [];
     strArr.forEach(function (v, i) {
         for (var j = 0; j < v.length; j++) {
-            if (v[j] === '0') {
+            if (v[j] === 'y') {
                 arr.push(i * strWidth + j);
             }
         }
@@ -108,30 +108,24 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
 
         var length = textArr.length;
         var showNumber = textArr.splice(Math.random() * length, 1);
-        $(divEles[showNumber]).css("background-color","#ebece5");
-        tempList.push((divEles[showNumber]));
-        //imgEles[showNumber].src = imgArr[Math.floor(Math.random() * imgArr.length)];
-        //$(imgEles[showNumber]).css("height", '100%');
-        //$(imgEles[showNumber]).css("width", '100%');
-
-
+        //直接替换为背景图
+        //$(divEles[showNumber]).css("background-color", "#ebece5");
+        $(divEles[showNumber]).css("background", "url(" + imgArr[Math.floor(Math.random() * imgArr.length)] + ") no-repeat");
+        $(divEles[showNumber]).css("background-size", "cover");
+        //tempList.push((divEles[showNumber]));
 
         if (!textArr.length) {
             clearInterval(timer);
-            if (imgArr != null) {
-                showImg();
-            } else {
-                if (nextFunc != null) {
-                    awaitFunc(function () { nextFunc(); }, 1000);
-                }
+            //if (imgArr != null) {
+            //    showImg();
+            //} else {
+            //    if (nextFunc != null) {
+            //        awaitFunc(function () { nextFunc(); }, 1000);
+            //    }
+            //}
+            if (nextFunc != null) {
+                awaitFunc(function () { nextFunc(); }, 1000);
             }
-           
-
-            //awaitFunc(function () {
-            //    $(tempList).css("background", "url(" + imgArr[Math.floor(Math.random() * imgArr.length)] + ") no-repeat");
-            //    $(tempList).css("background-size", "cover");
-            //}, 1000);
-
         }
     }, 0);
 
