@@ -6,8 +6,18 @@
     var imgList1 = Array.from({ length: 11 }, function (v, i) {
         return "weeding/images/face" + (i + 1) + ".jpg";
     });
-    ajaxTypeImg("国家\n\r哈\n\r骄", 20, "楷体", "welcome", imgList1);
-    typedWord("wanttosay", "", "word", null);
+    //隶书最佳
+  
+
+    SeqTypeImgWord("邀请", [30], "隶书", "yaoqing", imgList1);
+    SeqTypeImgWord("鹏哥", [25], "隶书", "shui", imgList1);
+    SeqTypeImgWord("张玉❤杨健", [25], "隶书", "zhangyu", imgList1);
+    SeqTypeImgWord("参\n\r加\n\r我\n\r们\n\r的\n\r婚\n\r礼", [20], "隶书", "hunli", imgList1);
+    //SeqTypeImgWord("杨健", [40], "隶书", "yangjian", imgList1);
+    //ajaxTypeImg("1", "name", 60, 60, null);
+    
+
+    //typedWord("wanttosay", "", "word", null);
 });
 
 function firstAction() {
@@ -27,10 +37,10 @@ function secondAction() {
 function secondOne() {
     $("#secondimg").addClass('animated rollIn');
     typed("secondimgtemp", "", "secondimg", secondTwo);
-    awaitFunc(function() {
+    awaitFunc(function () {
         $("#secondimg").addClass('animated rollOut');
     }, 2000);
-    
+
 }
 
 //2.2

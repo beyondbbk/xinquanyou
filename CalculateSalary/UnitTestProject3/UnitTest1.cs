@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -167,6 +168,44 @@ namespace UnitTestProject3
             g.FillRectangle(new SolidBrush(backColor), rect);
             g.DrawString(text, font, Brushes.Black, rect, format);
             return bmp;
+        }
+
+        [TestMethod]
+        public void TestFormBmp()
+        {
+            var list = new List<string>();
+            Image img = Image.FromFile(@"C:\1.jpg");
+            Bitmap bmpobj = (Bitmap)img;
+            Bitmap result = new Bitmap(80,80);
+            var heightRatio = (double)bmpobj.Height / result.Height;
+            var widthRatio = (double)bmpobj.Width / result.Width;
+            for (int i = 0; i < result.Height; i++)
+            {
+                var temp = new List<string>();
+                for (int j = 0; j < result.Width; j++)
+                {
+                    //int tmpValue = GetGrayNumColor(bmpobj.GetPixel(j, i));
+
+                    //bmpobj.SetPixel(j, i, Color.FromArgb(tmpValue, tmpValue, tmpValue));
+                    //color
+                    
+                    var color = bmpobj.GetPixel(Convert.ToInt32(j*widthRatio), Convert.ToInt32(i*heightRatio));
+                    temp.Add($"({color.R},{color.G},{color.B})");
+                    //var resultWidth = (int)Math.Floor(j / widthRatio);
+                    //var resultHeight = (int)Math.Floor(i / heightRatio);
+        
+                    //Debug.WriteLine("Width:"+resultWidth + "Height:"+resultHeight);
+                    result.SetPixel(j, i, color);
+                }
+                list.Add(string.Join('#',temp));
+            }
+            Image img1 = (Image)result;
+            img1.Save(@"C:/hui.jpg");
+        }
+
+        private static int GetGrayNumColor(System.Drawing.Color posClr)
+        {
+            return (posClr.R * 19595 + posClr.G * 38469 + posClr.B * 7472) >> 16;
         }
     }
 }

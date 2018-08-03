@@ -22,7 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\weeding\ts\" />
+    <ProjectReference Include="..\Common\MySoft.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Filter\" />
   </ItemGroup>
 
 </Project>
