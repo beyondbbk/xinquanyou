@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Content Remove="package.json" />
+    <Content Remove="Views\Home\Index-feiqi.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,10 @@
 
   <ItemGroup>
     <Folder Include="Filter\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Home\Index-feiqi.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

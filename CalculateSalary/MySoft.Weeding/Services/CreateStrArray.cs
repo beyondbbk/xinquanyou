@@ -94,7 +94,7 @@ namespace MySoft.Weeding.Services
 
             }
             final = final.GetRange(firstHasDataNum, lastHasDataNum - firstHasDataNum+1);
-            var startIndex = -1;
+            var startIndex = 0;
             var endIndex = -1;
 
             var tempCpunt = new List<int>();
@@ -124,14 +124,9 @@ namespace MySoft.Weeding.Services
                 }
             }
 
-            var tempResult = "";
-            foreach (var line in final)
-            {
-                tempResult += $"'{line}',\n\r";
-            }
-            tempResult = $"[{tempResult}]";
+
             var newTemp = new List<string>();
-            LogHelper.Debug($"字符串：{str}\n\r结果：{tempResult}");
+  
 
             foreach (var t in final)
             {
@@ -145,6 +140,13 @@ namespace MySoft.Weeding.Services
                 }
             }
 
+            var tempResult = "";
+            foreach (var line in newTemp)
+            {
+                tempResult += $"'{line}',\n\r";
+            }
+            tempResult = $"[{tempResult}]";
+            LogHelper.Debug($"字符串：{str}\n\r结果：{tempResult}");
             return newTemp;
         }
 

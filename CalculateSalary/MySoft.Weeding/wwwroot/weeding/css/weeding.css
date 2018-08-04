@@ -1,21 +1,69 @@
 ﻿
 html {
     height: 100%;
+    overflow: hidden;
 }
 
 body {
+    /*部分元素需要js调整*/
+    /*visibility: hidden;*/
     height: 100%;
     font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
-    background: url(/weeding/images/bg.jpg) no-repeat;
+    background: url(/weeding/images/bg.src) no-repeat;
+    /*animation: zoomIn 1000ms ease 3000ms 1 both;*/
+    /*background-color: lightskyblue;*/
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
+ 
 }
 
 
 
 .testcolor {
     background-color: lightblue;
+ 
 }
 
+/*所有的花图片*/
+.flower {
+    position: absolute;
+    opacity: 1;
+    overflow: hidden;
+}
+    .flower div {
+  
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+ 
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: 0px 0px;
+
+    }
+/*所有右边的花需要翻转*/
+.rightflower {
+    transform: rotateY(180deg);
+    overflow: hidden;
+}
+    /*顶部花*/
+#topflower div {
+    background-image: url(/weeding/images/top.src);
+    animation: zoomIn 1000ms ease 1000ms 1 both;
+    overflow: hidden;
+}
+
+/*顶部左边的花*/
+#topleftbesideflower div {
+    background-image: url(/weeding/images/topbeside.src);
+    animation: fadeInLeft 1000ms ease 2000ms 1 both;
+    overflow: hidden;
+}
+
+#toprightbesideflower div {
+    background-image: url(/weeding/images/topbeside.src);
+    animation: fadeInLeft 1000ms ease 2000ms 1 both;
+    overflow: hidden;
+}

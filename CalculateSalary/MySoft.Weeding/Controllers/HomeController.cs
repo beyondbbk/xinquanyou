@@ -24,7 +24,7 @@ namespace MySoft.Weeding.Controllers
  
             lock (ob)
             {
-                var result = CreateStrArray.GetFormText(getStrVm.Text, getStrVm.FontSize, getStrVm.FontName);
+               var result = CreateStrArray.GetFormText(getStrVm.Text, getStrVm.FontSize, getStrVm.FontName);
                 return new ClientResult(ResultDto.DefaultSuccess(result));
             }
         }

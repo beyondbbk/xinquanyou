@@ -38,36 +38,42 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
     var obfinalWidth = 0;
     var finalAdjustWidth = 0;
     var finalAdjustHeight = 0;
+    var setWidth = 0;
+    var setHeight = 0;
     if (rowHeight > rowWidth) {
 
-        finalSize = Math.floor(rowWidth);
-        if (finalSize == 0) finalSize = rowWidth;
+        finalSize = rowWidth.toFixed(1);
 
         //上下填充
-        var adjustTopMargin = Math.floor((rowHeight - finalSize) * strHeight / 2);
-        $(ob).css("padding-top", adjustTopMargin);
-        $(ob).css("padding-bottom", adjustTopMargin);
-        obfinalHeight = adjustTopMargin * 2 + finalSize * strHeight;
+        var adjustTopMargin = ((rowHeight - finalSize) * strHeight / 2).toFixed(1);
+        $(ob).css("padding-top", adjustTopMargin + "px");
+        $(ob).css("padding-bottom", adjustTopMargin + "px");
+        obfinalHeight =finalSize * strHeight;
         obfinalWidth = finalSize * strWidth;
-        finalAdjustWidth = (width - obfinalWidth) / 2;
-        $(ob).css("padding-left", finalAdjustWidth);
-        $(ob).css("padding-right", finalAdjustWidth);
+
+        setWidth = obfinalWidth;
+        setHeight = obfinalHeight + adjustTopMargin * 2;
 
     } else {
-        finalSize = Math.floor(rowHeight);
-        if (finalSize == 0) finalSize = rowHeight;
 
+        finalSize = rowHeight.toFixed(1);
         //左右填充
-        var adjustLeftMargin = Math.floor((rowWidth - finalSize) * strWidth / 2);
-        $(ob).css("padding-left", adjustLeftMargin);
-        $(ob).css("padding-right", adjustLeftMargin);
+        var adjustLeftMargin = ((rowWidth - finalSize) * strWidth / 2).toFixed(1);
+        $(ob).css("padding-left", adjustLeftMargin+"px");
+        $(ob).css("padding-right", adjustLeftMargin+"px");
         obfinalHeight = finalSize * strHeight;
-        obfinalWidth = adjustLeftMargin * 2 + finalSize * strWidth;
-        finalAdjustHeight = (height - obfinalHeight) / 2;
-        $(ob).css("padding-top", finalAdjustHeight);
-        $(ob).css("padding-bottom", finalAdjustHeight);
+        obfinalWidth = finalSize * strWidth;
+        setWidth = obfinalWidth + adjustLeftMargin * 2;
+        setHeight = obfinalHeight;
     }
-    //ob.css("height", obfinalHeight + "px").css("width", obfinalWidth + "px");
+    var height = parseFloat(ob.height());
+    var width = parseFloat(ob.width());
+    console.log("元素改前的宽度：" + width + " 改前的高度：" + height);
+    $(ob).css("height", setHeight + "px");
+    $(ob).css("width", setWidth + "px");
+    var height = parseFloat(ob.height());
+    var width = parseFloat(ob.width());
+    console.log("元素改后的宽度：" + width + " 改后的高度：" + height);
 
     var tempClassName = elementId + "Temp";
 
@@ -75,7 +81,7 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
         var row = $(
             '<div class="am-g" style="height: ' + finalSize + 'px;margin-left:0px;margin-right:0px;"></div>');
         for (var j = 0; j < strWidth; j++) {
-            var col = $('<div class="am-u-sm-1 ' + tempClassName+' " style="height:' + finalSize + 'px;width:' + finalSize + 'px;padding-left:0px;padding-right:0px;"></div>');
+            var col = $('<div class="am-u-sm-1 ' + tempClassName+' " style="height:' + finalSize + 'px;width:' + finalSize + 'px;padding-left:0px;padding-right:0px;float:left"></div>');
             row.append(col);
         }
         ob.append(row);//这里添加会导致背景图变化
@@ -109,8 +115,9 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
         var length = textArr.length;
         var showNumber = textArr.splice(Math.random() * length, 1);
         //直接替换为背景图
-        //$(divEles[showNumber]).css("background-color", "#ebece5");
-        $(divEles[showNumber]).css("background", "url(" + imgArr[Math.floor(Math.random() * imgArr.length)] + ") no-repeat");
+        $(divEles[showNumber]).css("background-color", "#DC143C");
+
+        //$(divEles[showNumber]).css("background", "url(" + imgArr[Math.floor(Math.random() * imgArr.length)] + ") no-repeat");
         $(divEles[showNumber]).css("background-size", "cover");
         //tempList.push((divEles[showNumber]));
 
@@ -182,41 +189,63 @@ function typeImg(elementId, strArr, nextFunc) {
     var obfinalWidth = 0;
     var finalAdjustWidth = 0;
     var finalAdjustHeight = 0;
+    var setWidth = 0;
+    var setHeight = 0;
     if (rowHeight > rowWidth) {
 
-        finalSize = Math.floor(rowWidth);
-        if (finalSize == 0) finalSize = rowWidth;
+        //finalSize = Math.ceil(rowWidth);
+        //if (finalSize == 0) finalSize = rowWidth;
+        finalSize = rowWidth.toFixed(1);
 
         //上下填充
-        var adjustTopMargin = Math.floor((rowHeight - finalSize) * strHeight / 2);
-        $(ob).css("padding-top", adjustTopMargin);
-        $(ob).css("padding-bottom", adjustTopMargin);
-        obfinalHeight = adjustTopMargin * 2 + finalSize * strHeight;
+        var adjustTopMargin = ((rowHeight - finalSize) * strHeight / 2).toFixed(1);
+        $(ob).css("padding-top", adjustTopMargin + "px");
+        $(ob).css("padding-bottom", adjustTopMargin + "px");
+        obfinalHeight = finalSize * strHeight;
         obfinalWidth = finalSize * strWidth;
-        finalAdjustWidth = (width - obfinalWidth) / 2;
-        $(ob).css("padding-left", finalAdjustWidth);
-        $(ob).css("padding-right", finalAdjustWidth);
+        //finalAdjustWidth = ((width - obfinalWidth) / 2).toFixed(1);
+        //$(ob).css("padding-left", finalAdjustWidth + "px");
+        //$(ob).css("padding-right", finalAdjustWidth + "px");
+        setWidth = obfinalWidth;
+        setHeight = obfinalHeight + adjustTopMargin * 2;
 
     } else {
-        finalSize = Math.floor(rowHeight);
-        if (finalSize == 0) finalSize = rowHeight;
-
+        //finalSize = Math.ceil(rowHeight);
+        //if (finalSize == 0) finalSize = rowHeight;
+        finalSize = rowHeight.toFixed(1);
         //左右填充
-        var adjustLeftMargin = Math.floor((rowWidth - finalSize) * strWidth / 2);
-        $(ob).css("padding-left", adjustLeftMargin);
-        $(ob).css("padding-right", adjustLeftMargin);
+        var adjustLeftMargin = ((rowWidth - finalSize) * strWidth / 2).toFixed(1);
+        $(ob).css("padding-left", adjustLeftMargin + "px");
+        $(ob).css("padding-right", adjustLeftMargin + "px");
         obfinalHeight = finalSize * strHeight;
-        obfinalWidth = adjustLeftMargin * 2 + finalSize * strWidth;
-        finalAdjustHeight = (height - obfinalHeight) / 2;
-        $(ob).css("padding-top", finalAdjustHeight);
-        $(ob).css("padding-bottom", finalAdjustHeight);
+        obfinalWidth = finalSize * strWidth;
+
+        //finalAdjustHeight = ((height - obfinalHeight) / 2).toFixed(1);
+        ////if (temp < 0) {
+        ////    finalAdjustHeight = Math.floor(temp);
+        ////} else {
+        ////    finalAdjustHeight = Math.ceil(temp);
+        ////}
+
+        //$(ob).css("padding-top", finalAdjustHeight + "px");
+        //$(ob).css("padding-bottom", finalAdjustHeight + "px");
+        setWidth = obfinalWidth + adjustLeftMargin * 2;
+        setHeight = obfinalHeight;
     }
+    var height = parseFloat(ob.height());
+    var width = parseFloat(ob.width());
+    console.log("元素改前的宽度：" + width + " 改前的高度：" + height);
+    $(ob).css("height", setHeight + "px");
+    $(ob).css("width", setWidth + "px");
+    var height = parseFloat(ob.height());
+    var width = parseFloat(ob.width());
+    console.log("元素改后的宽度：" + width + " 改后的高度：" + height);
 
     var tempClassName = elementId + "Temp";
 
     for (var i = 0; i < strHeight; i++) {
         var row = $(
-            '<div class="am-g" style="height: ' + finalSize + 'px;margin-left:0px;margin-right:0px;"></div>');
+            '<div class="am-g" style="height: ' + finalSize + 'px;margin-left:0px;margin-right:0px;float:left"></div>');
         for (var j = 0; j < strWidth; j++) {
             var col = $('<div class="am-u-sm-1 ' + tempClassName + '  " style="height:' + finalSize + 'px;width:' + finalSize + 'px;padding-left:0px;padding-right:0px;background-color:'+strArr[i].split("#")[j]+';"></div>');
             row.append(col);
