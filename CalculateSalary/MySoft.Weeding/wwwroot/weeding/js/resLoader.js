@@ -49,8 +49,8 @@
             else{
                 url = baseUrl + r;
             }
-            if (url.indexOf(".src") != -1) {
-                this.option.resourceType = "png";
+            if (url.indexOf(".src") != -1 || url.indexOf(".gif") != -1) {
+                this.option.resourceType = "image";
                 var image = new Image();
                 image.onload = function(){_this.loaded();};
                 image.onerror = function(){_this.loaded();};
@@ -63,15 +63,8 @@
                 audio.onerror = function () { _this.loaded(); };
                 audio.src = url;
                 audio.play();
-
                 audio.pause();
-
-
             }
-
-            //audio.autoplay = true;
-
-     
         }
         if(isFunc(this.option.onStart)){
             this.option.onStart(this.total);

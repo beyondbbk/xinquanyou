@@ -1,5 +1,7 @@
-﻿var loader = new resLoader({
+﻿//资源预加载
+var loader = new resLoader({
     resources: [
+
         'weeding/music/Building%20A%20Family.mp3',
         'weeding/images/bg.src',
         'weeding/images/top.src',
@@ -8,13 +10,15 @@
         'weeding/images/bottomleftandright.src',
         'weeding/images/bottom.src',
         'weeding/images/zhangyuimgtopandbottom.src',
+        'weeding/images/zhangyu.png',
+        'weeding/images/huge.gif',
 
     ],
     onStart: function (total) {
-        console.log('start:' + total);
+        
     },
     onProgress: function (current, total) {
-        console.log(current + '/' + total);
+        
     },
     onComplete: function (total) {
         console.log("加载完毕"+total);
