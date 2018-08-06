@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Folder Include="Filter\" />
+    <Folder Include="wwwroot\weeding\fonts\" />
   </ItemGroup>
 
   <ItemGroup>

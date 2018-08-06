@@ -6,85 +6,117 @@
     <meta name="description" content="OK，这是一个测试页面">
     <meta name="keywords" content="没有关键字">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    @*
-    <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.css" rel="stylesheet" />*@
-    <link href="~/weeding/css/amazeui.css" rel="stylesheet" />
-    <link href="~/weeding/css/animate.css" rel="stylesheet" />
-    @*
-    <link href="~/weeding/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />*@
-    <link href="~/weeding/css/weeding.css" rel="stylesheet" />
-    @*
-    <link href="~/weeding/css/typing.css" rel="stylesheet" />*@
-
-
-
-    @*
-    <script src="~/weeding/js/finalweeding.js"></script>*@
-    @*
-    <script src="~/weeding/js/typing.js"></script>*@
-    @*
-    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.js"></script>
-    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.ie8polyfill.js"></script>
-    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.widgets.helper.js"></script>*@
-
-    <style>
-
-        .div-relative {
-            position: relative;
-        }
-
-        .div-a {
-            position: absolute;
-            z-index: 1;
-            /*height: 96%;
-            width: 96%;
-            margin: 2%;*/
-        }
-        /* css注释说明： 背景为红色 */
-        .div-b {
-            position: absolute;
-            z-index: 2;
-            opacity: 1;
-        }
-        /* 背景为黄色 */
-        .div-c {
-            position: absolute;
-            z-index: 3;
-        }
-
-        .div-d {
-            position: absolute;
-            z-index: 2;
-        }
-        /*#huazhi:hover {
-            transform: rotate(10deg);
-            transform-origin: 0 0;
-        }*/
-        /* DIV背景颜色为蓝色 */
-    </style>
+    <link href="~/weeding/css/preload.css" rel="stylesheet" />
 </head>
 
 <body>
+    
+    @*主屏*@
+<div id="mainDiv" style="height: 100%; width: 100%">
+        <div style="height: 35%">
 
+        </div>
+        <div style="height: 10%">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
 
-
-    @*最顶上花*@
-    <div id="topflower" class="flower">
+    </div>
+    
+    @*首屏*@
+<div id="firstScreen" style="display: none">
+        @*最顶上花*@
+        <div id="topflower" class="flower">
+            <div></div>
+        </div>
+        @*顶端左边的花*@
+        <div id="topleftbesideflower" class="flower">
+            <div></div>
+        </div>
+        @*顶端右边的花*@
+        <div id="toprightbesideflower" class="flower rightflower">
             <div></div>
         </div>
 
-
-
-    @*顶端左边的花*@
-    <div id="topleftbesideflower" class="flower">
+        @*左边的花*@
+        <div id="left" class="flower">
             <div></div>
         </div>
-    @*顶端右边的花*@
-    <div id="toprightbesideflower" class="flower rightflower">
+        @*右边的花*@
+        <div id="right" class="flower rightflower">
             <div></div>
         </div>
-    @*<div class="am-g" style="height: 20%; width: 70%;left: 18.1125px; top: -64.6875px; position: absolute; opacity: 1;">
+
+        @*底边左边的花*@
+        <div id="bottomleft" class="flower">
+            <div></div>
+        </div>
+        @*底边右边的花*@
+        <div id="bottomright" class="flower rightflower">
+            <div></div>
+        </div>
+
+        @*底部*@
+        <div id="bottom" class="flower rightflower">
+            <div></div>
+        </div>
+        <div style="height: 10%">
+
+        </div>
+        <div style="height: 10%">
+            <div id="yaoqing" style="text-align: center">
+                <div class="midword">-邀请-</div>
+            </div>
+
+        </div>
+        <div style="height: 10%">
+            <div id="name" style="text-align: center">
+                <div class="bigword" id="relaceName"></div>
+            </div>
+        </div>
+        <div style="height: 48%">
+            <div id="hunli" style="text-align: center">
+                <div class="midword">
+                    参<br>加<br>我<br>的<br>婚<br>礼
+                </div>
+            </div>
+        </div>
+        <div style="height: 10%">
+            <div id="remark" style="text-align: center">
+                <div class="smallword" id="replaceRemark"></div>
+            </div>
+        </div>
+    </div>
+    
+@*第二屏新娘介绍*@
+<div id="secondScreen" style="display: none">
+    @*上半部分花*@
+    <div id="secondtopflower" class="flower">
+        <div>
+
+        </div>
+    </div>
+    @*下半部分花*@
+    <div id="secondbottomflower" class="flower">
+        <div>
+
+        </div>
+    </div>
+    <div style="height: 10%">
+        
+    </div>
+    @*圆形图片位置*@
+    <div style="height: 40%;text-align: center">
+        <img id="zhangyuimg" class="am-circle am-img-thumbnail mycenterdiv" src="weeding/images/bg1.png"/>
+    </div>
+</div>
+
+@*<div class="am-g" style="height: 20%; width: 70%;left: 18.1125px; top: -64.6875px; position: absolute; opacity: 1;">
             <div class="mycenterdiv" style="position: absolute; width: 100%; height: 100%; overflow: hidden;  background-image: url(/weeding/images/top.src); background-repeat: no-repeat; background-size: 100% 100%; background-position: 0px 0px; animation: zoomIn 1000ms ease 1000ms 1 alternate;">
 
             </div>
@@ -109,16 +141,16 @@
     @*
         </div>*@
 
-    <div style="display: none">
-        <div style="height: 40%">
-            <div class="am-g" style="height: 100%">
-                <div class="am-u-sm-8 am-u-sm-centered" style="height: 100%" id="zhangyu">
-                    <img class="am-circle am-img-thumbnail mycenterdiv" src="weeding/images/bg.png" />
+    @*<div style="display: none">
+            <div style="height: 40%">
+                <div class="am-g" style="height: 100%">
+                    <div class="am-u-sm-8 am-u-sm-centered" style="height: 100%" id="zhangyu">
+                        <img class="am-circle am-img-thumbnail mycenterdiv" src="weeding/images/bg.png" />
+                    </div>
                 </div>
-            </div>
 
-        </div>
-    </div>
+            </div>
+        </div>*@
 
     @*活动页面*@
     <div id="mainPage" style="height: 100%; display: none">
@@ -160,10 +192,8 @@
                 </div>
             </div>
         </div>
-        <img src="~/weeding/music/Building%20A%20Family.mp3" />
-        <div style="display: none">
-            <audio id="bgmusic" src="~/weeding/music/Building%20A%20Family.mp3" controls="controls" loop="false" hidden="true"></audio>
-        </div>
+
+
         @*<div style="height:20%">
                 <div id="word"></div>
             </div>
@@ -223,20 +253,69 @@
         <div class="am-g" style="height: 10%">
         </div>
     </div>
-
-
-
-
+    <div style="display: none">
+        @*<audio id="bgmusic" controls="controls">
+                <source src="/weeding/music/Building%20A%20Family.mp3" type="audio/mpeg" />
+            </audio>*@
+        @*<img src="/weeding/images/bg.src"/>
+            <img src="/weeding/images/top.src"/>
+            <img src="/weeding/images/topbeside.src"/>
+            <img src="/weeding/images/leftandright.src"/>
+            <img src="/weeding/images/bottomleftandright.src"/>
+            <img src="/weeding/images/bottom.src"/>*@
+        <text>李涛大涛哥大涛姥爷请携款前往，概不赊账。携款前往，可以赊账。</text>
+    </div>
 </body>
 
 
 
+
+
+
 </html>
+<script>
+    //不知道为什么必须要设置audio为autoplay才会加载，蛋疼啊
+    //$("#bgmusic").removeAttr("autoplay");
+    //var myAuto = document.getElementById('bgmusic');
+    //myAuto.play();
+    //setTimeout(function() {
+    //    myAuto.pause();
+    //    myAuto.autoplay = false;
+    //    console.log("设置了false");
+    //}, 50);
 
+</script>
+
+
+
+@*资源预加载*@
+
+<link href="~/weeding/css/amazeui.css" rel="stylesheet" />
+<link href="~/weeding/css/animate.css" rel="stylesheet" />
+<link href="~/weeding/css/weeding.css" rel="stylesheet" />
+
+<script src="~/weeding/js/resLoader.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<script src="~/weeding/js/common.js"></script>
-<script src="~/weeding/js/csscontrol.js"></script>
 
+
+
+<script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
+
+<script type="text/javascript">
+    //$youziku.load("body", "216c783fdaf74c23b303b6448a5c07d5", "LiDeBiao-Xing3");
+    //$youziku.load("body", "713f3a2f70c349dba7719507e51648ba", "Source-Han-Light");
+    //$youziku.load("body", "b23ee14640db47ba9d1db23075912209", "HanWangKaiMedium-Gb5");
+    $youziku.load("body", "c980004284a24cc4b84d38c7ab932500", "jdlibianjian");
+    //$youziku.load("body", "798f6646f9524432874c8c89bf021307", "jdzhonyuanjian");
+    /*$youziku.load("#id1,.class1,h1", "c980004284a24cc4b84d38c7ab932500", "jdlibianjian");*/
+    /*．．．*/
+    $youziku.draw();
+</script>
+
+
+<script src="~/weeding/js/preLoad.js"></script>
+<script src="~/weeding/js/common.js"></script>
+@*<script src="~/weeding/js/csscontrol.js"></script>*@
 
 <script src="~/weeding/js/amazeui.js"></script>
 <script src="~/weeding/js/amazeui.ie8polyfill.js"></script>
@@ -244,4 +323,5 @@
 <script src="~/weeding/js/typed.js"></script>
 
 <script src="~/weeding/js/main.js"></script>
+
 

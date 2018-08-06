@@ -1,22 +1,41 @@
-﻿
+﻿@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
 html {
     height: 100%;
     overflow: hidden;
 }
 
+.mycenterdiv{}
+
 body {
     /*部分元素需要js调整*/
-    /*visibility: hidden;*/
     height: 100%;
-    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
-    background: url(/weeding/images/bg.src) no-repeat;
+    font-family: 'jdlibianjian', "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
     /*animation: zoomIn 1000ms ease 3000ms 1 both;*/
     /*background-color: lightskyblue;*/
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
- 
 }
 
 
@@ -33,11 +52,9 @@ body {
     overflow: hidden;
 }
     .flower div {
-  
         width: 100%;
         height: 100%;
         overflow: hidden;
- 
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 0px 0px;
@@ -45,25 +62,92 @@ body {
     }
 /*所有右边的花需要翻转*/
 .rightflower {
-    transform: rotateY(180deg);
     overflow: hidden;
 }
     /*顶部花*/
 #topflower div {
     background-image: url(/weeding/images/top.src);
-    animation: zoomIn 1000ms ease 1000ms 1 both;
     overflow: hidden;
 }
 
 /*顶部左边的花*/
 #topleftbesideflower div {
     background-image: url(/weeding/images/topbeside.src);
-    animation: fadeInLeft 1000ms ease 2000ms 1 both;
+
     overflow: hidden;
 }
 
 #toprightbesideflower div {
     background-image: url(/weeding/images/topbeside.src);
-    animation: fadeInLeft 1000ms ease 2000ms 1 both;
+
     overflow: hidden;
 }
+
+/*左边的花*/
+#left div {
+    background-image: url(/weeding/images/leftandright.src);
+
+    overflow: hidden;
+}
+
+#right div {
+    background-image: url(/weeding/images/leftandright.src);
+
+    overflow: hidden;
+}
+
+#bottomleft div {
+    background-image: url(/weeding/images/bottomleftandright.src);
+
+    overflow: hidden;
+}
+
+#bottomright div {
+    background-image: url(/weeding/images/bottomleftandright.src);
+
+    overflow: hidden;
+}
+
+#bottom div {
+    background-image: url(/weeding/images/bottom.src);
+
+    overflow: hidden;
+}
+
+#word {
+    position: absolute;
+    height: 20%;
+    width: 40%;
+    color: rgb(82, 124, 135);
+    font-size: 30px;
+}
+
+#yaoqing {
+    color: rgb(153, 28, 52);
+}
+
+#name {
+    color: rgb(153, 28, 52);
+}
+
+#hunli {
+    color: rgb(153, 28, 52);
+}
+
+#secondtopflower {
+    z-index: 1;
+}
+
+#secondtopflower div {
+    background-image: url(/weeding/images/zhangyuimgtopandbottom.src);
+    overflow: hidden;
+}
+#secondbottomflower {
+    z-index: 1;
+}
+
+    #secondbottomflower div {
+        background-image: url(/weeding/images/zhangyuimgtopandbottom.src);
+        overflow: hidden;
+    }
+

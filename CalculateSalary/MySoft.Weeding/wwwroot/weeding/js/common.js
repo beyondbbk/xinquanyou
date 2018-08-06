@@ -13,7 +13,7 @@ function awaitFunc(func, timeout) {
 }
 
 //用于文字墙效果
-function typeImgWord(elementId, strArr, imgArr,nextFunc) {
+function typeImgWord(elementId, strArr, imgArr, nextFunc) {
     var ob = $("#" + elementId);
     if (ob == null) {
         console.log("没有元素：" + elementId);
@@ -48,7 +48,7 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
         var adjustTopMargin = ((rowHeight - finalSize) * strHeight / 2).toFixed(1);
         $(ob).css("padding-top", adjustTopMargin + "px");
         $(ob).css("padding-bottom", adjustTopMargin + "px");
-        obfinalHeight =finalSize * strHeight;
+        obfinalHeight = finalSize * strHeight;
         obfinalWidth = finalSize * strWidth;
 
         setWidth = obfinalWidth;
@@ -59,8 +59,8 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
         finalSize = rowHeight.toFixed(1);
         //左右填充
         var adjustLeftMargin = ((rowWidth - finalSize) * strWidth / 2).toFixed(1);
-        $(ob).css("padding-left", adjustLeftMargin+"px");
-        $(ob).css("padding-right", adjustLeftMargin+"px");
+        $(ob).css("padding-left", adjustLeftMargin + "px");
+        $(ob).css("padding-right", adjustLeftMargin + "px");
         obfinalHeight = finalSize * strHeight;
         obfinalWidth = finalSize * strWidth;
         setWidth = obfinalWidth + adjustLeftMargin * 2;
@@ -81,7 +81,7 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
         var row = $(
             '<div class="am-g" style="height: ' + finalSize + 'px;margin-left:0px;margin-right:0px;"></div>');
         for (var j = 0; j < strWidth; j++) {
-            var col = $('<div class="am-u-sm-1 ' + tempClassName+' " style="height:' + finalSize + 'px;width:' + finalSize + 'px;padding-left:0px;padding-right:0px;float:left"></div>');
+            var col = $('<div class="am-u-sm-1 ' + tempClassName + ' " style="height:' + finalSize + 'px;width:' + finalSize + 'px;padding-left:0px;padding-right:0px;float:left"></div>');
             row.append(col);
         }
         ob.append(row);//这里添加会导致背景图变化
@@ -104,13 +104,13 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
     var divEles = $('.' + tempClassName);
     var imgEles = $('#' + elementId + ' img');
 
-        
+
 
 
     var tempList = [];
     //先替换为红色背景块
     var timer = setInterval(function () {
-        
+
 
         var length = textArr.length;
         var showNumber = textArr.splice(Math.random() * length, 1);
@@ -151,7 +151,7 @@ function typeImgWord(elementId, strArr, imgArr,nextFunc) {
                 clearInterval(imgTimer);
                 //$(".testcolor").addClass('animated rollOut');
                 if (nextFunc != null) {
-                    awaitFunc(function() { nextFunc(); }, 1000);
+                    awaitFunc(function () { nextFunc(); }, 1000);
                 }
             }
         }, 0);
@@ -247,7 +247,7 @@ function typeImg(elementId, strArr, nextFunc) {
         var row = $(
             '<div class="am-g" style="height: ' + finalSize + 'px;margin-left:0px;margin-right:0px;float:left"></div>');
         for (var j = 0; j < strWidth; j++) {
-            var col = $('<div class="am-u-sm-1 ' + tempClassName + '  " style="height:' + finalSize + 'px;width:' + finalSize + 'px;padding-left:0px;padding-right:0px;background-color:'+strArr[i].split("#")[j]+';"></div>');
+            var col = $('<div class="am-u-sm-1 ' + tempClassName + '  " style="height:' + finalSize + 'px;width:' + finalSize + 'px;padding-left:0px;padding-right:0px;background-color:' + strArr[i].split("#")[j] + ';"></div>');
             row.append(col);
         }
         ob.append(row);
@@ -336,9 +336,15 @@ function typeImg(elementId, strArr, nextFunc) {
 //动态输出文字
 //sourceId-来源id strarray-如果没有sourceId未提供，就提供拼接好的文本数组 
 //output-目标输出id nextfun-后续动作
-function typedWord(sourceId, strarray, outputId, nextfun) {
+function typedWord(sourceId, strarray, outputId, nextfun, typeSpeed, delSpeed) {
+    if (typeSpeed == null) {
+        typeSpeed = 500;
+    }
+    if (delSpeed == null) {
+        delSpeed = 300;
+    }
     var desstr = [];
-    if (sourceId != "") {
+    if (sourceId != null) {
         //剔除多余空格，但保留样式之间的空格
         desstr.push($("#" + sourceId).html().replace(/\s{2,1000}/g, ""));
     } else {
@@ -348,8 +354,8 @@ function typedWord(sourceId, strarray, outputId, nextfun) {
         //strings: ['<img class="am-radius" alt="140*140" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80" width="140" height="140" />'],
         strings: desstr,
         //stringsElement: '#typed-strings',
-        typeSpeed: 100,//打字延迟
-        backSpeed: 100,//删除延迟
+        typeSpeed: typeSpeed,//打字延迟
+        backSpeed: delSpeed,//删除延迟
         //混序，会使句子以乱序输出
         //shuffle: true,
 
@@ -366,7 +372,7 @@ function typedWord(sourceId, strarray, outputId, nextfun) {
         //    self.options.showCursor = false;
         //    self.showCursor = false;
         //},
-        onComplete: function (self){
+        onComplete: function (self) {
             if (nextfun != null) {
                 nextfun();
             }
@@ -376,7 +382,7 @@ function typedWord(sourceId, strarray, outputId, nextfun) {
 }
 
 
-function ajaxTypeWord(str, fontSize,fontName,outPutId,imgList,nextFunc) {
+function ajaxTypeWord(str, fontSize, fontName, outPutId, imgList, nextFunc) {
     var ob = new Object();
     ob.Text = str;
     ob.FontSize = fontSize;
@@ -387,12 +393,12 @@ function ajaxTypeWord(str, fontSize,fontName,outPutId,imgList,nextFunc) {
         function (result) {
             var jsonResult = jQuery.parseJSON(result);
             console.log(jsonResult.result);
-            typeImgWord(outPutId, jsonResult.result, imgList,nextFunc);
+            typeImgWord(outPutId, jsonResult.result, imgList, nextFunc);
         });
 }
 
 
-function ajaxTypeImg(imgName,outPutId, width,height,nextFunc) {
+function ajaxTypeImg(imgName, outPutId, width, height, nextFunc) {
     var ob = new Object();
     ob.ImgName = imgName;
     ob.Width = width;
@@ -472,5 +478,28 @@ function SeqTypeImgWord(str, fontSizeArr, fontName, elementId, imgList) {
     }
 
     ajaxTypeWord(str, fontSizeArr[0], fontName, elementId, imgList, fun1);
+
+}
+
+function centerOb(elementId) {
+    //让元素左右垂直居中
+    var ob = $("#" + elementId);
+    if (ob == null) return;
+    parent = ob.parent();
+    margintop = ((parent.height() - ob.height()) / 2).toFixed(2);
+    marginleft = ((parent.width() - ob.width()) / 2).toFixed(2);
+    if (margintop < 0) {
+        ob.css("height", parent.height());
+    } else {
+        ob.css("margin-top", margintop + "px");
+        ob.css("margin-bottom", margintop + "px");
+    }
+
+    if (marginleft < 0) {
+        ob.css("width", parent.width());
+    } else {
+        ob.css("margin-left", marginleft + "px");
+        ob.css("margin-right", marginleft + "px");
+    }
 
 }
