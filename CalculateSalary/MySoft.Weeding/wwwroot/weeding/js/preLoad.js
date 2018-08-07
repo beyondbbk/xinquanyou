@@ -11,7 +11,6 @@ var loader = new resLoader({
         'weeding/images/bottom.src',
         'weeding/images/zhangyuimgtopandbottom.src',
         'weeding/images/zhangyu.png',
-        'weeding/images/huge.gif',
 
     ],
     onStart: function (total) {
