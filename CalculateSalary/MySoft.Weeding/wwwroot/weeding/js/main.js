@@ -1,5 +1,17 @@
 ﻿var bodywidth;
 var bodyheight;
+//动画运行状态，默认正在运行
+var obRunState = new Object();
+obRunState.firstScreenIsRun = true;
+obRunState.secondScreenIsRun = true;
+obRunState.thirdScreenIsRun = true;
+obRunState.fourScreenIsRun = true;
+
+//动画定时器
+var secondTimeId = 0;
+var thirdTimeId = 0;
+var fourTimeId = 0;
+
 window.onload = function () {
     bodywidth = $("body").width();
     bodyheight = $("body").height();
@@ -10,57 +22,284 @@ window.onload = function () {
     audio.src = './weeding/music/Building%20A%20Family.mp3';
     audio.play();
 
-    //适配字体
+    //根据屏幕高度来适配字体
     console.log(0.1 * bodyheight);
     $(".bigword").css("font-size", 0.06 * bodyheight + "px");
     $(".midword").css("font-size", 0.05 * bodyheight + "px");
     $(".smallword").css("font-size", 0.03 * bodyheight + "px");
 
-    //首屏动画
-    console.log("FirstSreen-Start" + new Date());
-    firstAction(firstActionDisappear);
-    
-    //第二屏
-    awaitFunc(secondAction, 26000);
+    ////首屏动画
+    //firstAction(firstActionDisappear);
 
+    ////第二屏
+    //secondAction(secondActionDisapear);
+
+    ////第三屏
+    //thirdAction(thirdActionDisapear);
+
+    obRunState.thirdScreenIsRun = false;
+    fourAction(fourActionDisapear);
+    //fourAction();
+    //测试代码
+    //var image = $("#huge");
+    //image.attr("src", "weeding/images/huge.gif");
+    //console.log("播放了gif");
 };
 
-function secondAction() {
-    console.log("执行secondAction");
 
-    var mainDiv = $("#mainDiv");
-    mainDiv.css("visibility", "hidden");
-    mainDiv.html($("#secondScreen").html());
-    //让头像垂直居中
-    centerOb("zhangyuimg");
-    $("#zhangyuimg").css("animation", "fadeInLeft 1000ms ease 1000ms 1 both");
-    //先飞入，再转圈
-    awaitFunc(function() {
+function fourAction(nextAction) {
+    fourTimeId = setInterval(function () {
+        if (obRunState.thirdScreenIsRun) {
+            return;
+        }
+        console.log("执行fourAction");
+        clearInterval(fourTimeId);
+
+        var mainDiv = $("#mainDiv");
+        mainDiv.css("visibility", "hidden");
+        mainDiv.html($("#fourScreen").html());
+        ////让头像垂直居中
+        //centerOb("yangjianimg");
+        //$("#yangjianimg").css("animation", "fadeInLeft 1000ms ease 1000ms 1 both");
+        ////先飞入，再转圈
+        //awaitFunc(function () {
+        //        $("#yangjianimg").css("animation", "spin 15s infinite linear");
+        //    },
+        //    2000);
+        {
+            var temp = $("#fourbottomleftflower");
+            temp.css("width", "40%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "0%");
+            temp.css("bottom", "-5%");
+            temp.css("animation", "fadeInUp 2000ms ease 1000ms 1 both");
+        }
+        {
+            var temp = $("#fourbottommidflower");
+            temp.css("width", "40%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "30%");
+            temp.css("bottom", "-5%");
+            temp.css("animation", "fadeInUp 2000ms ease 1000ms 1 both");
+        }
+        {
+            var temp = $("#fourbottomrightflower");
+            temp.css("width", "40%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "60%");
+            temp.css("bottom", "-5%");
+            temp.css("animation", "fadeInUp 2000ms ease 1000ms 1 both");
+        }
+
+        mainDiv.css("visibility", "visible");
+        awaitFunc(function () {
+            if (nextAction != null) {
+                nextAction();
+            } else {
+                obRunState.fourScreenIsRun = false;
+            }
+        },
+            3000);
+    },
+        700);
+}
+
+function fourActionDisapear() {
+    console.log("执行fourActionDisapear");
+
+    $("#fourbottomleftflower").css("animation", "fadeOutDown 1500ms ease 1000ms 1 both");
+    $("#fourbottommidflower").css("animation", "fadeOutDown 1500ms ease 1000ms 1 both");
+    $("#fourbottomrightflower").css("animation", "fadeOutDown 1500ms ease 1000ms 1 both");
+
+
+    awaitFunc(function () {
+        obRunState.thirdScreenIsRun = false;
+        console.log("fourAction结束");
+    }, 2500);
+}
+
+function thirdAction(nextAction) {
+
+    thirdTimeId = setInterval(function () {
+        if (obRunState.secondScreenIsRun) {
+            return;
+        }
+        console.log("执行thirdAction");
+        clearInterval(thirdTimeId);
+
+        var mainDiv = $("#mainDiv");
+        mainDiv.css("visibility", "hidden");
+        mainDiv.html($("#thirdScreen").html());
+        //让头像垂直居中
+        centerOb("yangjianimg");
+        $("#yangjianimg").css("animation", "fadeInLeft 1000ms ease 1000ms 1 both");
+        //先飞入，再转圈
+        awaitFunc(function () {
+            $("#yangjianimg").css("animation", "spin 15s infinite linear");
+        },
+            2000);
+        {
+            var temp = $("#thirdtopflower");
+            temp.css("width", "70%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "15%");
+            temp.css("top", "2%");
+            temp.css("animation", "fadeInUp 2000ms ease 2000ms 1 both");
+        }
+        {
+            $("#thirdbottomflower div").css("transform", "rotateZ(180deg)");
+            var temp = $("#thirdbottomflower");
+            temp.css("width", "70%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "15%");
+            temp.css("top", "38%");
+            temp.css("animation", "fadeInDown 2000ms ease 2000ms 1 both");
+        }
+
+        $("#zuanqianyangjian").css("animation", "fadeIn 1000ms ease 4500ms 1 both");
+
+        {
+            var temp = $("#thirdbottomleftflower");
+            temp.css("width", "60%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "-10%");
+            temp.css("bottom", "-5%");
+            temp.css("animation", "fadeInUp 1000ms ease 5500ms 1 both");
+        }
+
+        {
+            var temp = $("#thirdbottomrightflower");
+            temp.css("width", "60%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "45%");
+            temp.css("bottom", "-5%");
+            temp.css("animation", "fadeInUp 1000ms ease 5500ms 1 both");
+        }
+
+        mainDiv.css("visibility", "visible");
+        awaitFunc(function () {
+            if (nextAction != null) {
+                nextAction();
+            } else {
+                obRunState.thirdScreenIsRun = false;
+            }
+        },
+            9000);
+    },
+        700);
+}
+
+function thirdActionDisapear() {
+    console.log("执行thirdActionDisapear");
+
+    $("#thirdtopflower").css("animation", "fadeOutUp 1500ms ease 1000ms 1 both");
+    $("#thirdbottomflower").css("animation", "fadeOutDown 1500ms ease 1000ms 1 both");
+
+    $("#thirdbottomleftflower").css("animation", "fadeOutDown 1500ms ease 2500ms 1 both");
+    $("#thirdbottomrightflower").css("animation", "fadeOutDown 1500ms ease 2500ms 1 both");
+
+    $("#zuanqianyangjian").css("animation", "bounceOut 2000ms ease 4000ms 1 both");
+
+    awaitFunc(function () {
+        $("#yangjianimg").css("animation", "zoomOut 2000ms ease 0ms 1 both");
+    }, 8000);
+
+    awaitFunc(function () {
+        obRunState.thirdScreenIsRun = false;
+        console.log("thirdAction结束");
+    }, 8000);
+}
+
+function secondActionDisapear() {
+    console.log("执行secondActionDisapear");
+
+    $("#secondtopflower").css("animation", "fadeOutUp 1500ms ease 1000ms 1 both");
+    $("#secondbottomflower").css("animation", "fadeOutDown 1500ms ease 1000ms 1 both");
+
+    $("#secondbottomleftflower").css("animation", "fadeOutDown 1500ms ease 2500ms 1 both");
+    $("#secondbottomrightflower").css("animation", "fadeOutDown 1500ms ease 2500ms 1 both");
+
+    $("#maomeiruhua").css("animation", "bounceOut 2000ms ease 4000ms 1 both");
+
+    awaitFunc(function () {
+        $("#zhangyuimg").css("animation", "zoomOut 2000ms ease 0ms 1 both");
+    }, 8000);
+
+    awaitFunc(function () {
+        obRunState.secondScreenIsRun = false;
+        console.log("secondAction结束");
+    }, 9000);
+}
+
+function secondAction(nextAction) {
+
+    secondTimeId = setInterval(function () {
+        if (obRunState.firstScreenIsRun) {
+            return;
+        }
+        clearInterval(secondTimeId);
+        console.log("执行secondAction");
+        var mainDiv = $("#mainDiv");
+        mainDiv.css("visibility", "hidden");
+        mainDiv.html($("#secondScreen").html());
+        //让头像垂直居中
+        centerOb("zhangyuimg");
+        $("#zhangyuimg").css("animation", "fadeInLeft 1000ms ease 1000ms 1 both");
+        //先飞入，再转圈
+        awaitFunc(function () {
             $("#zhangyuimg").css("animation", "spin 15s infinite linear");
         },
-        2000);
-    
+            2000);
+        {
+            var temp = $("#secondtopflower");
+            temp.css("width", "70%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "15%");
+            temp.css("top", "2%");
+            temp.css("animation", "fadeInUp 2000ms ease 2000ms 1 both");
+        }
+        {
+            $("#secondbottomflower div").css("transform", "rotateZ(180deg)");
+            var temp = $("#secondbottomflower");
+            temp.css("width", "70%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "15%");
+            temp.css("top", "38%");
+            temp.css("animation", "fadeInDown 2000ms ease 2000ms 1 both");
+        }
 
-    {
-        var temp = $("#secondtopflower");
-        temp.css("width", "70%"); //宽度70%
-        temp.css("height", "20%"); //高度20%
-        temp.css("left", "15%");
-        temp.css("top", "2%");
-        temp.css("animation", "fadeInUp 2000ms ease 2000ms 1 both");
-    }
+        $("#maomeiruhua").css("animation", "fadeIn 1000ms ease 4500ms 1 both");
 
-    {
-        $("#secondbottomflower div").css("transform", "rotateZ(180deg)");
-        var temp = $("#secondbottomflower");
-        temp.css("width", "70%"); //宽度70%
-        temp.css("height", "20%"); //高度20%
-        temp.css("left", "15%");
-        temp.css("top", "38%");
-        temp.css("animation", "fadeInDown 2000ms ease 2000ms 1 both");
-    }
+        {
+            var temp = $("#secondbottomleftflower");
+            temp.css("width", "60%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "-10%");
+            temp.css("bottom", "-5%");
+            temp.css("animation", "fadeInUp 1000ms ease 5500ms 1 both");
+        }
 
-    mainDiv.css("visibility", "visible");
+        {
+            var temp = $("#secondbottomrightflower");
+            temp.css("width", "60%"); //宽度70%
+            temp.css("height", "20%"); //高度20%
+            temp.css("left", "45%");
+            temp.css("bottom", "-5%");
+            temp.css("animation", "fadeInUp 1000ms ease 5500ms 1 both");
+        }
+
+        mainDiv.css("visibility", "visible");
+        awaitFunc(function () {
+            if (nextAction != null) {
+                nextAction();
+            } else {
+                obRunState.secondScreenIsRun = false;
+            }
+        },
+            9000);
+    },
+        500);
+
 }
 
 function firstActionDisappear() {
@@ -79,21 +318,20 @@ function firstActionDisappear() {
     $("#bottom").css("animation", "fadeOutDown 1000ms ease 3500ms 1 both");
 
     $("#yaoqing").css("animation", "bounceOut 1000ms ease 4500ms 1 both");
-    $("#name").css("animation", "hinge 2500ms ease 5500ms 1 both");
-    $("#hunli").css("animation", "bounceOutRight 2500ms ease 8500ms 1 both");
+    $("#name").css("animation", "hinge 2000ms ease 5500ms 1 both");
+    $("#hunli").css("animation", "bounceOutRight 2000ms ease 7500ms 1 both");
 
-   
-        awaitFunc(function() {
-            console.log("FirstSreen-End" + new Date());
-        }, 11000);
-    
+    awaitFunc(function () {
+        //标识动画已经结束
+        obRunState.firstScreenIsRun = false;
+        console.log("firstAction结束");
+    }, 8000);
 }
 
-
 function firstAction(nextAction) {
-
+    console.log("执行firstAction");
+    obRunState.firstScreenIsRun = true;
     var mainDiv = $("#mainDiv");
-    //mainDiv.css("visibility", "hidden");
     mainDiv.html($("#firstScreen").html());
 
     //调整花束位置
@@ -105,7 +343,7 @@ function firstAction(nextAction) {
         temp.css("width", "70%"); //宽度70%
         temp.css("height", "20%"); //高度20%
         temp.css("left", "15%");
-        temp.css("top", "-10%");
+        temp.css("top", "-50%");
         temp.css("animation", "fadeInDown 2000ms ease 1500ms 1 both");
     }
     {

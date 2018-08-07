@@ -32,6 +32,7 @@ body {
     font-family: 'jdlibianjian', "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
     /*animation: zoomIn 1000ms ease 3000ms 1 both;*/
     /*background-color: lightskyblue;*/
+    
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -134,6 +135,14 @@ body {
     color: rgb(153, 28, 52);
 }
 
+#maomeiruhua {
+    color: rgb(153, 28, 52);
+}
+
+#zuanqianyangjian {
+    color: rgb(153, 28, 52);
+}
+
 #secondtopflower {
     z-index: 1;
 }
@@ -151,3 +160,55 @@ body {
         overflow: hidden;
     }
 
+#secondbottomleftflower div {
+    background-image: url(/weeding/images/top.src);
+    overflow: hidden;
+}
+
+#secondbottomrightflower div {
+    background-image: url(/weeding/images/bottom.src);
+    overflow: hidden;
+}
+
+
+#thirdtopflower {
+    z-index: 1;
+}
+
+#thirdtopflower div {
+    background-image: url(/weeding/images/zhangyuimgtopandbottom.src);
+    overflow: hidden;
+}
+#thirdbottomflower {
+    z-index: 1;
+}
+
+#thirdbottomflower div {
+    background-image: url(/weeding/images/zhangyuimgtopandbottom.src);
+    overflow: hidden;
+}
+
+#thirdbottomleftflower div {
+    background-image: url(/weeding/images/top.src);
+    overflow: hidden;
+}
+
+#thirdbottomrightflower div {
+    background-image: url(/weeding/images/bottom.src);
+    overflow: hidden;
+}
+
+#fourbottomleftflower div {
+    background-image: url(/weeding/images/fourbottomleftflower.src);
+    overflow: hidden;
+}
+
+#fourbottommidflower div {
+    background-image: url(/weeding/images/fourbottommidflower.src);
+    overflow: hidden;
+}
+
+#fourbottomrightflower div {
+    background-image: url(/weeding/images/fourbottomrightflower.src);
+    overflow: hidden;
+}
