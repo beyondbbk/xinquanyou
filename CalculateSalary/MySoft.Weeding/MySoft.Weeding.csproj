@@ -7,9 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="scripts\**" />
+    <Compile Remove="wwwroot\weeding\fonts\**" />
     <Content Remove="scripts\**" />
+    <Content Remove="wwwroot\weeding\fonts\**" />
     <EmbeddedResource Remove="scripts\**" />
+    <EmbeddedResource Remove="wwwroot\weeding\fonts\**" />
     <None Remove="scripts\**" />
+    <None Remove="wwwroot\weeding\fonts\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Filter\" />
-    <Folder Include="wwwroot\weeding\fonts\" />
   </ItemGroup>
 
   <ItemGroup>
