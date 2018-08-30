@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Content Remove="package.json" />
-    <Content Remove="Views\Home\Index-feiqi.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Home\Index-feiqi.cshtml" />
+    <Reference Include="aliyun-net-sdk-core">
+      <HintPath>wwwroot\weeding\images\dysms_net\net\api_demo\aliyun-net-sdk-core.dll</HintPath>
+    </Reference>
+    <Reference Include="aliyun-net-sdk-dysmsapi">
+      <HintPath>wwwroot\weeding\images\dysms_net\net\api_demo\aliyun-net-sdk-dysmsapi.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

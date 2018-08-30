@@ -16,14 +16,14 @@ function awaitFunc(func, timeout) {
 function typeImgWord(elementId, strArr, imgArr, nextFunc) {
     var ob = $("#" + elementId);
     if (ob == null) {
-        console.log("没有元素：" + elementId);
+        SaveWebLog("没有元素：" + elementId);
         return;
     }
     ob.html("");
     ob.css("padding", "0");
     var height = parseFloat(ob.height());
     var width = parseFloat(ob.width());
-    console.log("元素宽度：" + width + " 高度：" + height);
+    SaveWebLog("元素宽度：" + width + " 高度：" + height);
 
     var strHeight = strArr.length;
     var strWidth = strArr[0].length;
@@ -68,12 +68,12 @@ function typeImgWord(elementId, strArr, imgArr, nextFunc) {
     }
     var height = parseFloat(ob.height());
     var width = parseFloat(ob.width());
-    console.log("元素改前的宽度：" + width + " 改前的高度：" + height);
+    SaveWebLog("元素改前的宽度：" + width + " 改前的高度：" + height);
     $(ob).css("height", setHeight + "px");
     $(ob).css("width", setWidth + "px");
     var height = parseFloat(ob.height());
     var width = parseFloat(ob.width());
-    console.log("元素改后的宽度：" + width + " 改后的高度：" + height);
+    SaveWebLog("元素改后的宽度：" + width + " 改后的高度：" + height);
 
     var tempClassName = elementId + "Temp";
 
@@ -168,18 +168,18 @@ function typeImgWord(elementId, strArr, imgArr, nextFunc) {
 function typeImg(elementId, strArr, nextFunc) {
     var ob = $("#" + elementId);
     if (ob == null) {
-        console.log("没有元素：" + elementId);
+        SaveWebLog("没有元素：" + elementId);
         return;
     }
     ob.html("");
     ob.css("padding", "0");
     var height = parseFloat(ob.height());
     var width = parseFloat(ob.width());
-    console.log("元素宽度：" + width + " 高度：" + height);
+    SaveWebLog("元素宽度：" + width + " 高度：" + height);
 
     var strHeight = strArr.length;
     var strWidth = strArr[0].split('#').length;
-    console.log("字符长度：" + strHeight + "字符宽度：" + strWidth);
+    SaveWebLog("字符长度：" + strHeight + "字符宽度：" + strWidth);
     var rowHeight = height / strHeight;
     var rowWidth = width / strWidth;
 
@@ -234,12 +234,12 @@ function typeImg(elementId, strArr, nextFunc) {
     }
     var height = parseFloat(ob.height());
     var width = parseFloat(ob.width());
-    console.log("元素改前的宽度：" + width + " 改前的高度：" + height);
+    SaveWebLog("元素改前的宽度：" + width + " 改前的高度：" + height);
     $(ob).css("height", setHeight + "px");
     $(ob).css("width", setWidth + "px");
     var height = parseFloat(ob.height());
     var width = parseFloat(ob.width());
-    console.log("元素改后的宽度：" + width + " 改后的高度：" + height);
+    SaveWebLog("元素改后的宽度：" + width + " 改后的高度：" + height);
 
     var tempClassName = elementId + "Temp";
 
@@ -336,7 +336,7 @@ function typeImg(elementId, strArr, nextFunc) {
 //动态输出文字
 //sourceId-来源id strarray-如果没有sourceId未提供，就提供拼接好的文本数组 
 //output-目标输出id nextfun-后续动作
-function typedWord(sourceId, strarray, outputId, nextfun, typeSpeed, delSpeed) {
+function typedWord(sourceId, strarray, outputId, nextfun, typeSpeed, delSpeed, typedFunc) {
     if (typeSpeed == null) {
         typeSpeed = 500;
     }
@@ -368,10 +368,11 @@ function typedWord(sourceId, strarray, outputId, nextfun, typeSpeed, delSpeed) {
         //cursorChar: '|',
         showCursor: false,
         //arrayPos是string数组的Index
-        //onStringTyped: (arrayPos, self) => {
-        //    self.options.showCursor = false;
-        //    self.showCursor = false;
-        //},
+        onStringTyped: (arrayPos, self) => {
+            if (typedFunc != null) {
+                typedFunc(arrayPos, self);
+            }
+        },
         onComplete: function (self) {
             if (nextfun != null) {
                 nextfun();
@@ -392,9 +393,37 @@ function ajaxTypeWord(str, fontSize, fontName, outPutId, imgList, nextFunc) {
         ob,
         function (result) {
             var jsonResult = jQuery.parseJSON(result);
-            console.log(jsonResult.result);
+            SaveWebLog(jsonResult.result);
             typeImgWord(outPutId, jsonResult.result, imgList, nextFunc);
         });
+}
+
+function SaveWebLog(str) {
+    var ob = new Object();
+    ob.Name = nameInfos[0];
+    ob.LogMsg = str;
+    ob.Time = GetTimeStr();
+    console.log(str);
+    ajaxSendLog(ob);
+}
+
+function ajaxSendLog(ob) {
+    AjaxHelper('weeding/Home/WebLog',
+        ob,
+        function (result) {
+            console.log(result);
+        });
+}
+
+function GetTimeStr() {
+    var date = new Date();//实例一个时间对象；
+    var year = date.getFullYear();//获取系统的年；
+    var month = date.getMonth() + 1;//获取系统月份，由于月份是从0开始计算，所以要加1
+    var day = date.getDate(); //获取系统日
+    var hour = date.getHours();//获取系统时间
+    var minute = date.getMinutes(); //分
+    var second = date.getSeconds();//秒
+    return (year + '年' + month + '月' + day + '日 ' + hour + ':' + minute + ':' + second);
 }
 
 
@@ -408,7 +437,7 @@ function ajaxTypeImg(imgName, outPutId, width, height, nextFunc) {
         ob,
         function (result) {
             var jsonResult = jQuery.parseJSON(result);
-            console.log(jsonResult.result);
+            SaveWebLog(jsonResult.result);
             typeImg(outPutId, jsonResult.result, nextFunc);
         });
 }

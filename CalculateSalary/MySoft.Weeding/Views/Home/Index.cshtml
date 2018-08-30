@@ -1,55 +1,53 @@
-﻿@{
-    bool isDebug = true;
-}
+﻿@model MySoft.Weeding.Models.Respone.HomeRes
 <!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="OK，这是一个测试页面">
+    <meta name="description" content="婚礼邀请函，创意由新娘张喻设计，代码由新郎杨健实现，素材参考MAKA。">
     <meta name="keywords" content="没有关键字">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="weeding/images/logo.jpg">
+
     <link href="~/weeding/css/preload.css" rel="stylesheet" />
     <link href="~/weeding/css/weeding.css" rel="stylesheet" />
-
+    <title>正在加载资源</title>
     @*本地配置*@
     @*<link href="~/weeding/css/amazeui.css" rel="stylesheet" />
-    <link href="~/weeding/css/animate.css" rel="stylesheet" />*@
+        <link href="~/weeding/css/animate.css" rel="stylesheet" />*@
 
     @*线上配置*@
     <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
-        <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
-    
+    <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
     <style>
-        #huge
-        {
-            border:10px solid;
-            border-radius:20px;
-            border-color:lightcyan;
- 
-        }
     </style>
 </head>
 
 <body>
-    @*主屏*@
-<div id="mainDiv" style="height: 100%; width: 100%;background-color: #f2f2f2;">
-    
-    @*加载动画*@
-    <div style="height: 35%">
-        @*<img id="huge" />*@
-    </div>
-    <div style="height: 10%">
-        <div class="spinner">
-            <div class="rect1"></div>
-            <div class="rect2"></div>
-            <div class="rect3"></div>
-            <div class="rect4"></div>
-            <div class="rect5"></div>
-        </div>
+
+    <div style='margin:0 auto;display:none;'>
+        <img src='weeding/images/logo.jpg' />
     </div>
 
-</div>
+    @*主屏*@
+    <div id="mainDiv" style="height: 100%; width: 100%; background-color: #f2f2f2;">
+
+        @*加载动画*@
+        <div style="height: 35%">
+        </div>
+        <div style="height: 10%; font-family: Droidsansfallback">
+            <div id="progress" class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+                <div class="rect6"></div>
+                <div class="rect7"></div>
+                <div class="rect8"></div>
+            </div>
+        </div>
+    </div>
 
     @*首屏*@
     <div id="firstScreen" style="display: none">
@@ -66,12 +64,22 @@
             <div></div>
         </div>
 
-        @*左边的花*@
+        @*左上的花*@
         <div id="left" class="flower">
             <div></div>
         </div>
-        @*右边的花*@
+
+        @*左下的花*@
+        <div id="leftbottom" class="flower">
+            <div></div>
+        </div>
+
+        @*右上的花*@
         <div id="right" class="flower rightflower">
+            <div></div>
+        </div>
+        @*右下的花*@
+        <div id="rightbottom" class="flower rightflower">
             <div></div>
         </div>
 
@@ -88,340 +96,446 @@
         <div id="bottom" class="flower rightflower">
             <div></div>
         </div>
-        <div style="height: 10%">
+        <div style="height: 15%">
 
         </div>
-        <div style="height: 10%">
-            <div id="yaoqing" style="text-align: center">
-                <div class="midword">-邀请-</div>
+        <div>
+            <div id="yaoqing" style="height: 10%; text-align: center">
+                <div class="midwordbyheight">-邀请-</div>
             </div>
+        </div>
+        <div style="height: 2%">
 
         </div>
-        <div style="height: 10%">
-            <div id="name" style="text-align: center">
-                <div class="bigword" id="relaceName"></div>
+        <div>
+            <div id="name" style="height: 10%; text-align: center">
+                <div class="bigwordbyheight" id="relaceName"></div>
             </div>
         </div>
-        <div style="height: 48%">
-            <div id="hunli" style="text-align: center">
-                <div class="midword">
-                    参<br>加<br>我<br>的<br>婚<br>礼
+        <div style="height: 2%">
+
+        </div>
+        <div>
+            <div id="hunli" style="height: 30%; text-align: center">
+                <div class="midwordbyheight">
+                    参加<br/>我们的婚礼
                 </div>
             </div>
         </div>
-        <div style="height: 10%">
+        <div style="height: 23%; text-align: center;visibility: hidden">
+            <img id="firstimg" class="am-circle am-img-thumbnail" src="weeding/images/first.png" />
+        </div>
+        <div>
+            <div id="time" style="height: 10%; text-align: center">
+                <div class="smallwordbyheight">
+                    <span class="num">2018</span>年<span class="num">09</span>月<span class="num">24</span>日
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="address" style="height: 10%; text-align: center">
+                <div class="smallwordbyheight">
+                    乐山市沙湾区老家
+                </div>
+            </div>
+        </div>
+        @*<div style="height: 10%">
             <div id="remark" style="text-align: center">
                 <div class="smallword" id="replaceRemark"></div>
             </div>
-        </div>
+        </div>*@
     </div>
 
     @*第二屏新娘介绍*@
-<div id="secondScreen" style="display: none">
-    @*上半部分花*@
-    <div id="secondtopflower" class="flower">
-        <div>
-
-        </div>
-    </div>
-    @*下半部分花*@
-    <div id="secondbottomflower" class="flower">
-        <div>
-
-        </div>
-    </div>
-    @*最底部左边的花*@
-    <div id="secondbottomleftflower" class="flower" >
-        <div>
-
-        </div>
-    </div>
-    @*最底部右边的花*@
-    <div id="secondbottomrightflower" class="flower" >
-        <div>
-
-        </div>
-    </div>
-    <div style="height: 10%">
-
-    </div>
-    @*圆形图片位置*@
-    <div style="height: 40%;text-align: center">
-        <img id="zhangyuimg" class="am-circle am-img-thumbnail" src="weeding/images/zhangyu.png" />
-    </div>
-    <div style="height: 15%">
-            
-    </div>
-
-    @*负责貌美如花*@
-    <div style="height: 10%">
-        <div id="maomeiruhua" style="text-align: center">
-            <div class="midword">负责貌美如花的新娘<br>张喻</div>
-        </div>
-    </div>
-</div>
-    
-@*第三屏新郎介绍*@
-<div id="thirdScreen" style="display: none">
-    @*上半部分花*@
-    <div id="thirdtopflower" class="flower">
-        <div>
-
-        </div>
-    </div>
-    @*下半部分花*@
-    <div id="thirdbottomflower" class="flower">
-        <div>
-
-        </div>
-    </div>
-    @*最底部左边的花*@
-    <div id="thirdbottomleftflower" class="flower" >
-        <div>
-
-        </div>
-    </div>
-    @*最底部右边的花*@
-    <div id="thirdbottomrightflower" class="flower" >
-        <div>
-
-        </div>
-    </div>
-    <div style="height: 10%">
-
-    </div>
-    @*圆形图片位置*@
-    <div style="height: 40%;text-align: center">
-        <img id="yangjianimg" class="am-circle am-img-thumbnail" src="weeding/images/yangjian.png" />
-    </div>
-    <div style="height: 15%">
-            
-    </div>
-
-    @*负责貌美如花*@
-    <div style="height: 10%">
-        <div id="zuanqianyangjian" style="text-align: center">
-            <div class="midword">负责赚钱养家的新郎<br>杨健</div>
-        </div>
-    </div>
-</div>
-    
-@*第四屏我们的过去*@
-<div id="fourScreen">
-    @*底部左边的花*@
-    <div id="fourbottomleftflower" class="flower">
-        <div>
-
-        </div>
-    </div>
-    <div id="fourbottommidflower" class="flower">
-        <div>
-
-        </div>
-    </div>
-    <div id="fourbottomrightflower" class="flower">
-        <div>
-
-        </div>
-    </div>
-    
-    <div style="height: 20%">
-        
-    </div>
-    <div style="height: 50%">
-        <img/>
-    </div>
-    <div style="height: 30%">
-        
-    </div>
-</div>
-
-@*<div class="am-g" style="height: 20%; width: 70%;left: 18.1125px; top: -64.6875px; position: absolute; opacity: 1;">
-            <div class="mycenterdiv" style="position: absolute; width: 100%; height: 100%; overflow: hidden;  background-image: url(/weeding/images/top.src); background-repeat: no-repeat; background-size: 100% 100%; background-position: 0px 0px; animation: zoomIn 1000ms ease 1000ms 1 alternate;">
+    <div id="secondScreen" style="display: none">
+        @*上半部分花*@
+        <div id="secondtopflower" class="flower">
+            <div>
 
             </div>
-        </div>*@
-
-    @*<div class="div-relative" style="height: 40%">
-        <div id="imgtemp" class="am-g div-a" style="height: 100%; width: 100%; background-image: url(/weeding/images/huahuan6.png); background-size: contain; background-repeat: no-repeat;background-position: center">
-
-
         </div>
-        <div class="am-g div-b" style="height: 100%">
-
-            <img id="imgbg" class="am-circle am-img-thumbnail mycenterdiv" src="weeding/images/bg.png" />
-
-        </div>
-        <div id="huazhidiv" class="div-c">
-            <img id="huazhi" src="~/weeding/images/huazhi.png" />
-        </div>
-        @*<div id="baihuazhidiv" class="div-d">
-            <img id="baihuazhi" src="~/weeding/images/baihuazhi.png" />
-        </div>*@
-    @*
-        </div>*@
-
-    @*<div style="display: none">
-            <div style="height: 40%">
-                <div class="am-g" style="height: 100%">
-                    <div class="am-u-sm-8 am-u-sm-centered" style="height: 100%" id="zhangyu">
-                        <img class="am-circle am-img-thumbnail mycenterdiv" src="weeding/images/bg.png" />
-                    </div>
-                </div>
+        @*下半部分花*@
+        <div id="secondbottomflower" class="flower">
+            <div>
 
             </div>
-        </div>*@
+        </div>
+        @*最底部左边的花*@
+        <div id="secondbottomleftflower" class="flower">
+            <div>
 
-    @*活动页面*@
-    <div id="mainPage" style="height: 100%; display: none">
-        <div style="height: 32%">
+            </div>
+        </div>
+        @*最底部右边的花*@
+        <div id="secondbottomrightflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        <div style="height: 10%">
 
         </div>
-        <div style="height: 16%;">
-            <div class="am-g" style="height: 100%">
-                <div class="am-u-sm-11 am-u-sm-centered" style="height: 100%" id="zhangyu">
+        @*圆形图片位置*@
+        <div style="height: 40%; text-align: center">
+            <img id="zhangyuimg" class="am-circle am-img-thumbnail" src="weeding/images/zhangyu.png" />
+        </div>
+        <div style="height: 10%">
 
+        </div>
+
+        @*负责貌美如花*@
+        <div style="height: 10%">
+            <div id="maomeiruhua" style="text-align: center">
+                <div class="midwordbyheight">
+                    负责貌美如花的新娘<br>&lt;张喻&gt;
                 </div>
             </div>
         </div>
-        <div style="height: 3%;">
-            <div class="am-g" style="height: 100%">
-                <div class="am-u-sm-12" style="height: 100%" id="yaoqing">
+    </div>
+
+    @*第三屏新郎介绍*@
+    <div id="thirdScreen" style="display: none">
+        @*上半部分花*@
+        <div id="thirdtopflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        @*下半部分花*@
+        <div id="thirdbottomflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        @*最底部左边的花*@
+        <div id="thirdbottomleftflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        @*最底部右边的花*@
+        <div id="thirdbottomrightflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        <div style="height: 10%">
+
+        </div>
+        @*圆形图片位置*@
+        <div style="height: 40%; text-align: center">
+            <img id="yangjianimg" class="am-circle am-img-thumbnail" src="weeding/images/yangjian.png" />
+        </div>
+        <div style="height: 10%">
+
+        </div>
+
+        @*负责貌美如花*@
+        <div style="height: 10%">
+            <div id="zuanqianyangjian" style="text-align: center">
+                <div class="midwordbyheight">
+                    负责赚钱养家的新郎<br>&lt;杨健&gt;
                 </div>
             </div>
         </div>
-        <div style="height: 2%;">
-            <div class="am-g" style="height: 100%">
+    </div>
+
+    @*第四屏我们的过去*@
+    <div id="fourScreen" style="display: none">
+        @*底部左边的花*@
+        <div id="fourbottomleftflower" class="flower">
+            <div>
 
             </div>
         </div>
-        <div style="height: 5%;">
-            <div class="am-g" style="height: 100%">
-                <div class="am-u-sm-12" style="height: 100%" id="shui">
+        <div id="fourbottommidflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        <div id="fourbottomrightflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        @*这里展示大学，毕业，工作等*@
+        <div style="height: 1%"></div>
+
+        <div id="fourtitle" style="text-align: center; height: 13%">
+            <div class="bigword"></div>
+        </div>
+
+        <div style="height: 1%"></div>
+        <div style="height: 50%; text-align: center" id="imgWall">
+            <img id="gifImg" class="am-circle am-img-thumbnail" style="height: 100%" />
+        </div>
+        <div style="height: 5%"></div>
+        @*这里是年份事件备注信息*@
+
+        <div id="fourremark" style="text-align: center; height: 15%">
+            <div class="smallword"></div>
+        </div>
+
+    </div>
+
+    @*第五屏*@
+    <div id="fiveScreen" style="display: none">
+        @*花束位置*@
+        <div id="fiveleftflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        <div id="fivemidflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        <div id="fiverightflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        <div style="height: 3%"></div>
+        <div style="height: 10%">
+            <div id="fivetitletxt" style="text-align: center">
+                <div class="smallword"></div>
+            </div>
+        </div>
+        <div style="height: 60%">
+            <div id="fivetxt" style="text-align: center">
+                <div class="smallword" id="typeOut"></div>
+            </div>
+        </div>
+        @*<div style="height: 10%">
+                <div id="fiveweed" style="text-align: center">
+                    <div class="midword"></div>
                 </div>
-            </div>
-        </div>
-        <div style="height: 2%;">
-            <div class="am-g" style="height: 100%">
-
-            </div>
-        </div>
-        <div style="height: 30%;">
-            <div class="am-g" style="height: 100%">
-                <div class="am-u-sm-12" style="height: 100%" id="hunli">
-                </div>
-            </div>
-        </div>
-
-
-        @*<div style="height:20%">
-                <div id="word"></div>
-            </div>
-            <div id="wanttosay" style="display: none">
-                <div class="am-g" style="text-align: center">
-                    <h1>XX</h1>
-                </div>
-                <div class="am-g">&nbsp;&nbsp;&nbsp;&nbsp;XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX。</div>
-
             </div>*@
     </div>
 
-    <div id="firstPage" style="display: none">
-        <div class="am-g" style="height: 10%">
+    @*第六屏-婚礼时间地点*@
+    <div id="sixScreen" style="display: none">
+        @*花束位置*@
+        <div id="sixleftflower" class="flower">
+            <div>
 
+            </div>
         </div>
-        <div class="am-g" style="height: 80%">
-            <div class="am-u-sm-11 am-u-sm-centered">
-                <div id="temp" style="display: none">
-                    <div class="am-g" style="text-align: center">
-                        <h1>XX</h1>
+        <div id="sixmidflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+        <div id="sixrightflower" class="flower">
+            <div>
+
+            </div>
+        </div>
+
+        <div style="height: 1%"></div>
+
+        <div style="text-align: center; height: 16%">
+            <div id="sixtime"></div>
+        </div>
+
+        <div id="sixtimesource" style="display: none">
+            <div class="midwordbyheight">
+                时间
+
+            </div>
+            <div class="smallwordbyheight">
+                <span class="num">2018</span>年<span class="num">09</span>月<span class="num">24</span>日@{if (!string.IsNullOrEmpty(Model.FriendInfo.PhoneNo))
+                                                                                                                                   {<button id="sendsms" onclick="SendSms('@Model.FriendInfo.urlName')" type="button" class="am-btn am-btn-xs am-btn-success am-radius verysmallwordbyheight">短信提醒</button>}}
+            </div>
+            <div class="verysmallwordbyheight">
+                [留给你准备红包的时间还有<span class="num">@(Model.PrepareDays)</span>天]
+            </div>
+        </div>
+
+
+        <div style="text-align: center; height: 16%">
+            <div id="sixaddress"></div>
+        </div>
+
+        <div id="sixaddresssource" style="display: none">
+            <div class="midwordbyheight">
+                地点
+            </div>
+            <div class="smallwordbyheight">乐山市沙湾区老家<button id="viewnavigate" onclick="ViewNavigate()" type="button" class="am-btn am-btn-xs am-btn-success am-radius verysmallwordbyheight">查看导航</button></div>
+            <div class="verysmallwordbyheight">
+                [正儿八经的户外坝坝宴]
+            </div>
+            <div class="am-modal am-modal-alert" tabindex="-1" id="navigate">
+                <div class="am-modal-dialog" id="navigatemodal">
+                    <div class="am-modal-hd smallwordbyheight">导航信息</div>
+                    <div id="navigatecontent">
+                        <div class="am-modal-bd" id="baiduMap">
+
+                        </div>
+                        <div id="baiduresult" class="verysmallwordbyheight">
+                            当前位置驾车至婚礼地点<br>
+                            总路程<span class="symbol">：</span><span id="distance"></span><br>
+                            总时长<span class="symbol">：</span><span id="duartion"></span>
+                        </div>
                     </div>
-                    <div class="am-g">&nbsp;&nbsp;&nbsp;&nbsp;XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX。</div>
 
-                </div>
-                <span id="whatToSay"></span>
-            </div>
-
-        </div>
-        <div class="am-g" style="height: 10%">
-
-        </div>
-
-    </div>
-
-    <div id="secondPage" style="display: none">
-        <div class="am-g" style="height: 10%">
-        </div>
-        <div class="am-g" style="height: 20%">
-            <div class="am-u-sm-11 am-u-sm-centered">
-                <div id="secondtemp" style="display: none">
-                    <div class="am-g" style="text-align: center">
-                        <h1>XXXX</h1>
+                    <div class="am-modal-footer">
+                        @*<button type="button" class="am-btn am-btn-xs am-btn-success am-radius am-modal-btn verysamllbtnbyheight">我知道了</button>*@
+                        <span class="am-modal-btn verysmallwordbyheight" style="color: rgb(153, 28, 52); padding-top: 5px; padding-bottom: 10px;">关闭导航</span>
                     </div>
                 </div>
-                <span id="secondman"></span>
             </div>
         </div>
-        <div class="am-g" style="height: 60%">
-            <div class="am-u-sm-11 am-u-sm-centered">
-                <div id="secondimgtemp" style="display: none">
-                    <img class="am-circle am-img-thumbnail" style="width: 90%; height: 90%" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80" />
+
+        <div style="height: 50%">
+            <div id="trafficremark"></div>
+        </div>
+        <div id="trafficremarksource" style="display: none">
+            <div style="text-align: center">
+                <div class="midwordbyheight">备注</div>
+            </div>
+            <div style="margin-left: 5%; margin-right: 5%">
+                <div class="verysmallwordbyheight">
+                    <span class="num">1</span><span class="symbol">，</span>如果你在乐山市外<span class="symbol">，</span>直接坐高铁到乐山高铁站<span class="symbol">，</span>有车来接你<span class="symbol">。</span><br>
+                    <span class="num">2</span><span class="symbol">，</span>如果你在乐山市内<span class="symbol">，</span>到高铁站或沙湾沫若大桥<span class="symbol">，</span>这两个地方有车来接你<span class="symbol">。</span><br>
+                    <span class="num">3</span><span class="symbol">，</span>自驾的同学我将单独告知你路线及停车地点<span class="symbol">。</span><br>
+                    <span class="num">4</span><span class="symbol">，</span>女同学最好不要穿细高跟<span class="symbol">，</span>田坝头不经踩哈<span class="symbol">。</span><br>
+                    <span class="num">5</span><span class="symbol">，</span>记得带钱<span class="symbol">，</span>大量<span class="symbol">。</span>
                 </div>
-                <div id="secondimg" style="text-align: center"></div>
+
             </div>
         </div>
-        <div class="am-g" style="height: 10%">
+
+        <div id="about" style="text-align: center; height: 15%">
+            <div class="verysmallwordbyheight">
+                创意设计<span class="symbol">：</span>新娘<br>
+                代码实现<span class="symbol">：</span>新郎<br>
+                素材参考<span class="symbol">：</span><span class="num">MAKA</span><br>
+                <button id="replay" type="button" onclick="Replay()" class="am-btn am-btn-xs am-btn-success am-radius verysmallwordbyheight">再次回放</button>
+            </div>
         </div>
-    </div>
-    <div style="display: none">
-        @*<audio id="bgmusic" controls="controls">
-                <source src="/weeding/music/Building%20A%20Family.mp3" type="audio/mpeg" />
-            </audio>*@
-        @*<img src="/weeding/images/bg.src"/>
-            <img src="/weeding/images/top.src"/>
-            <img src="/weeding/images/topbeside.src"/>
-            <img src="/weeding/images/leftandright.src"/>
-            <img src="/weeding/images/bottomleftandright.src"/>
-            <img src="/weeding/images/bottom.src"/>*@
-        <text>李涛大涛哥大涛姥爷请携款前往，概不赊账。携款前往，可以赊账。</text>
     </div>
 </body>
 </html>
-@*<script>
-        //不知道为什么必须要设置audio为autoplay才会加载，蛋疼啊
-        //$("#bgmusic").removeAttr("autoplay");
-        //var myAuto = document.getElementById('bgmusic');
-        //myAuto.play();
-        //setTimeout(function() {
-        //    myAuto.pause();
-        //    myAuto.autoplay = false;
-        //    console.log("设置了false");
-        //}, 50);
 
-    </script>*@
+<script>
+    //信息暂存
+    var nameInfos = @Html.Raw(Model.FriendInfo.JsArrNameInfos);
+    var day = @Model.TogetherDays;
+    var firstScreenTypeSpeed = @Model.FriendInfo.TypeSpeed;
 
 
-@*媒体资源预加载*@
-<script src="~/weeding/js/resLoader.js"></script>
-<script src="~/weeding/js/preLoad.js"></script>
+    //判断是否触发重载
+    @{
+        if (Model.IsReload)
+        {
+            var url = "/weeding?name="+Model.FriendInfo.urlName+"&timeid="+Model.TimeId;
+
+            @:window.location.href = window.location.protocol + "//" + window.location.host + "@Html.Raw(url)";
+        }
+    }
+</script>
+
 
 @*Jquery和自己写的js*@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script src="~/weeding/js/common.js"></script>
 <script src="~/weeding/js/main.js"></script>
+@*媒体资源预加载*@
+<script src="~/weeding/js/resLoader.js"></script>
+<script src="~/weeding/js/preLoad.js"></script>
+<script src="~/weeding/js/vconsole.min.js"></script>
 
 @*字体CDN*@
-<script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
+<script src="~/weeding/js/youziku.min.js"></script>
 <script type="text/javascript">
-    $youziku.load("body", "c980004284a24cc4b84d38c7ab932500", "jdlibianjian");
-    $youziku.draw();
+    @{
+        if (Model.FriendInfo.urlName == "yangjian")
+        {
+            @:var vConsole = new VConsole();
+        }
+    }
+
+    var usedTxt = "-邀请-来参加我们的婚礼" +
+        "负责貌美如花的新娘<张喻>" +
+        "负责赚钱养家的新郎<杨健>" +
+        "结缘缘，起于2009，成于2011" +
+        "相识2012，我们一起走过了大学青春好年华" +
+        "2013，新郎大学毕业了" +
+        "2014，新娘也大学毕业了" +
+        "相知2015，初入职场，也辛苦也快乐" +
+        "2016，努力学习，共同进步" +
+        "2017-新的目标，新的期望" +
+        "我们已经一起走过了7年209天" +
+        "一生有你太短一生没你太长" +
+        "如今水到渠成，木已成舟生米煮成了熟饭，而后又熬成了稀饭，眼看着快要煮炸锅了我们决定还是先把婚结了吧" +
+        "时间2018年09月24日" +
+        "留给你准备红包的时间还有24天短信提醒正在提醒提醒成功正在设置" +
+        "地点乐山市沙湾区老家查看导航稍候设置稍等一下" +
+        "正儿八经的户外坝坝宴" +
+        "备注如果你在乐山市外告诉我你的身份证号直接坐高铁到乐山高铁站有车来接你" +
+        "如果你在乐山市内到高铁站或沙湾沫若大桥这两个地方有车来接你" +
+        "自驾的同学我将单独告知你路线及停车地点" +
+        "女同学最好不要穿细高跟田坝头不经踩哈" +
+        "记得带钱大量" +
+        "导航信息关闭导航从当前位置驾车至婚礼地点总路程总里程总时间总时长很抱歉，定位失败了，无法发起导航 163公里 2小时34分钟" +
+        "创意设计新娘代码实现新郎素材参考" +
+        "回放一次再次回放";
+    var addTxt = "@Html.Raw(Model.FriendInfo.NormalStr)";
+
+    var data = { Tags: [] };
+    data.Tags.push({ AccessKey: '4e58d483609c4466b61e7a0f25696aa4', Content: '，。<>！-=+%￥#！……&*（）：:', Tag: '.symbol' });//Tag参数可不填
+    data.Tags.push({ AccessKey: 'b1b18a09db774b4383297f8e783d4159', Content: '0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm', Tag: '.num' });
+    data.Tags.push({ AccessKey: 'c980004284a24cc4b84d38c7ab932500', Content: "'"+usedTxt+addTxt+"'", Tag: 'body' });
+    $youzikuClient.getBatchFontFace(data,
+        function (result) {
+            var length = result.FontfaceList.length;
+            for (var i = 0; i < length; i++) {
+                console.log(result.FontfaceList[i].ErrorMessage);
+                console.log("有字库结果：" + result.FontfaceList[i].Code);
+                if (result.FontfaceList[i].Code != "200") {
+                    SaveWebLog("字体渲染服务返回错误码：" + result.FontfaceList[i].Code + " " + result.FontfaceList[i].ErrorMessage);
+                    alert("很抱歉，字体渲染服务出了点问题...");
+                    window.reload();
+                }
+            }
+        });
+    //var entity = {
+    //    AccessKey:'c980004284a24cc4b84d38c7ab932500', 　//AccessKey即是字体的代码，需要登录有字库后，在目标字体的使用页面中获取。
+    //    Content:'邀请', 　　　　　　// Content即时当前需要用到的文字内容
+    //    Tag: 'body'   　　　　　　 //可不填的参数
+    //};
+    //$youzikuClient.getFontFace(entity,
+    //    function (result) {
+    //        console.log(result.ErrorMessage);
+    //        console.log(result.Code);
+    //    });
+    //try {
+    //    //标点符号
+    //    $youziku.load(".symbol", "4e58d483609c4466b61e7a0f25696aa4", "chenwixun-jian");
+    //    //中文
+    //    $youziku.load("body", "c980004284a24cc4b84d38c7ab932500", "jdlibianjian");
+    //    //英文数字
+    //    $youziku.load(".num", "b1b18a09db774b4383297f8e783d4159", "Source-Han-Normal");
+    //    $youziku.draw();
+    //} catch (error) {
+    //    SaveWebLog("渲染字体发生异常：" + error);
+    //    SaveWebLog("重新刷新网页");
+    //    alert(error);
+    //    location.reload();
+    //}
+
 </script>
+
+@*百度地图 ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb*@
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZKLhoXcO2o1DvaKLa9CqpTBoj7S8Ygnb"></script>
 
 @*本地配置*@
 @*<script src="~/weeding/js/amazeui.js"></script>
-<script src="~/weeding/js/amazeui.ie8polyfill.js"></script>
-<script src="~/weeding/js/amazeui.widgets.helper.js"></script>
-<script src="~/weeding/js/typed.js"></script>*@
+    <script src="~/weeding/js/amazeui.ie8polyfill.js"></script>
+    <script src="~/weeding/js/amazeui.widgets.helper.js"></script>
+    <script src="~/weeding/js/typed.js"></script>*@
 
 @*线上配置*@
 <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script>

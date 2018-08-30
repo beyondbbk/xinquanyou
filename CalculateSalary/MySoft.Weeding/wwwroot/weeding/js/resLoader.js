@@ -17,7 +17,7 @@
     function resLoader(config){
         this.option = {
             resourceType: 'media', //资源类型，默认为图片
-            baseUrl : './', //基准url
+            baseUrl : '', //基准url
             resources : [], //资源路径数组
             onStart : null, //加载开始回调函数，传入参数total
             onProgress : null, //正在加载回调函数，传入参数currentIndex, total
@@ -49,7 +49,7 @@
             else{
                 url = baseUrl + r;
             }
-            if (url.indexOf(".src") != -1 || url.indexOf(".gif") != -1) {
+            if (url.indexOf(".src") != -1 || url.indexOf(".gif") != -1 || url.indexOf(".png") != -1) {
                 this.option.resourceType = "image";
                 var image = new Image();
                 image.onload = function(){_this.loaded();};
@@ -63,7 +63,8 @@
                 audio.onerror = function () { _this.loaded(); };
                 audio.src = url;
                 audio.play();
-                audio.pause();
+                audio.muted = true;
+                musics.push(audio);
             }
         }
         if(isFunc(this.option.onStart)){

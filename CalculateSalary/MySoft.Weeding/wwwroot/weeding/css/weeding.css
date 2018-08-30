@@ -24,22 +24,50 @@ html {
     overflow: hidden;
 }
 
-.mycenterdiv{}
+/*图片墙*/
+#imgWall img {
+    border: 2px solid;
+    border-radius: 10px;
+    border-color: gainsboro;
+    margin-bottom: 5px;
+}
+
+#baiduMap {
+    border: 2px solid;
+    border-radius: 10px;
+    border-color: gainsboro;
+    margin-bottom: 5px;
+}
 
 body {
     /*部分元素需要js调整*/
     height: 100%;
-    font-family: 'jdlibianjian', "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
+    font-family: 'jdlibianjian';
     /*animation: zoomIn 1000ms ease 3000ms 1 both;*/
     /*background-color: lightskyblue;*/
-    
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    overflow: hidden;
 }
 
+/*数字*/
+.num {
+    font-family: 'Source-Han-Normal';
+    font-size: 80%;
+}
 
+/*标点符号*/
+.symbol {
+    font-family: 'henwixun-jian';
+}
+
+/*强调文本*/
+.strongtxt {
+    font-size: 120%;
+    font-weight: bold;
+}
 
 .testcolor {
     background-color: lightblue;
@@ -97,6 +125,18 @@ body {
     overflow: hidden;
 }
 
+/*左边靠下边的花*/
+#leftbottom div {
+    background-image: url(/weeding/images/leftbottom.src);
+    overflow: hidden;
+}
+
+#rightbottom div {
+    background-image: url(/weeding/images/leftbottom.src);
+    overflow: hidden;
+}
+
+
 #bottomleft div {
     background-image: url(/weeding/images/bottomleftandright.src);
 
@@ -134,6 +174,13 @@ body {
 #hunli {
     color: rgb(153, 28, 52);
 }
+#time {
+    color: rgb(153, 28, 52);
+}
+#address {
+    color: rgb(153, 28, 52);
+}
+
 
 #maomeiruhua {
     color: rgb(153, 28, 52);
@@ -141,6 +188,90 @@ body {
 
 #zuanqianyangjian {
     color: rgb(153, 28, 52);
+}
+
+#fourtitle {
+    color: rgb(153, 28, 52);
+}
+
+
+#fourremark {
+    color: rgb(153, 28, 52);
+}
+
+#fivetxt {
+    color: rgb(153, 28, 52);
+}
+
+#fivetitletxt {
+    color: rgb(153, 28, 52);
+}
+
+#fivetitleyear {
+    color: rgb(153, 28, 52);
+}
+
+.fiveweed {
+    color: rgb(153, 28, 52);
+    font-size: 115%;
+    font-weight: bold;
+}
+
+#sixtime {
+    color: rgb(153, 28, 52);
+}
+
+
+#sixaddress {
+    color: rgb(153, 28, 52);
+}
+
+#trafficremark {
+    color: rgb(153, 28, 52);
+}
+
+#about {
+    color: rgb(153, 28, 52);
+}
+
+#end {
+    color: rgb(153, 28, 52);
+}
+
+#sendsms {
+    color: rgb(153, 28, 52);
+    background-color: rgb(242, 242, 242);
+    border-color: rgb(153, 28, 52);
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 1px;
+    padding-bottom: 0px;
+    margin-left: 2px;
+
+    font-size: 76.5%;
+}
+
+#replay {
+    color: rgb(153, 28, 52);
+    background-color: rgb(242, 242, 242);
+    border-color: rgb(153, 28, 52);
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 76.5%;
+}
+
+#viewnavigate {
+    color: rgb(153, 28, 52);
+    background-color: rgb(242, 242, 242);
+    border-color: rgb(153, 28, 52);
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 1px;
+    padding-bottom: 0px;
+    margin-left: 2px;
+    font-size: 76.5%;
 }
 
 #secondtopflower {
@@ -210,5 +341,35 @@ body {
 
 #fourbottomrightflower div {
     background-image: url(/weeding/images/fourbottomrightflower.src);
+    overflow: hidden;
+}
+
+#fiveleftflower div {
+    background-image: url(/weeding/images/fiveleft.src);
+    overflow: hidden;
+}
+
+#fivemidflower div {
+    background-image: url(/weeding/images/fivemid.src);
+    overflow: hidden;
+}
+
+#fiverightflower div {
+    background-image: url(/weeding/images/fiveright.src);
+    overflow: hidden;
+}
+
+#sixleftflower div {
+    background-image: url(/weeding/images/sixleft.src);
+    overflow: hidden;
+}
+
+#sixmidflower div {
+    background-image: url(/weeding/images/sixmid.src);
+    overflow: hidden;
+}
+
+#sixrightflower div {
+    background-image: url(/weeding/images/sixright.src);
     overflow: hidden;
 }
